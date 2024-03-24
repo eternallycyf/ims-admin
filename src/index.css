@@ -1,73 +1,17 @@
-:root {
-  background-color: #242424;
-  color: rgba(255, 255, 255, 0.87);
-  font-weight: 400;
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+@import '@unocss/reset/tailwind-compat.css';
+@unocss all;
 
-  color-scheme: light dark;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family: 'OperatorMonoItalic';
+  src: url('/public/fonts/OperatorMono-LightItalic.otf');
 }
 
-a {
-  color: #646cff;
-  text-decoration: inherit;
-  font-weight: 500;
+@font-face {
+  font-family: 'OperatorMono';
+  src: url('/public/fonts/OperatorMono-Bold.otf');
 }
 
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  display: flex;
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-
-  place-items: center;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  padding: 0.6em 1.2em;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  background-color: #1a1a1a;
-  font-weight: 500;
-  font-size: 1em;
-  font-family: inherit;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-
-button:hover {
-  border-color: #646cff;
-}
-
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    background-color: #ffffff;
-    color: #213547;
-  }
-
-  a:hover {
-    color: #747bff;
-  }
-
-  button {
-    background-color: #f9f9f9;
-  }
+@font-face {
+  font-family: 'FiraCode';
+  src: url('/public/fonts/FiraCode-Medium.ttf');
 }
