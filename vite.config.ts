@@ -24,8 +24,8 @@ export default defineConfig({
   },
   define: {},
   plugins: [
-    react(),
     UnoCSS(),
+    react(),
     svgr(),
     // 同步tsconfig.json的path设置alias
     tsconfigPaths(),
