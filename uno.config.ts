@@ -54,7 +54,7 @@ export default defineConfig({
   ],
   transformers: [transformerDirectives(), transformerVariantGroup()],
   rules: [
-    [/^m-([\.\d]+)$/, ([_, num]) => ({ margin: `${num}px` })],
-    [/^p-([\.\d]+)$/, ([_, num]) => ({ padding: `${num}px` })],
+    [/^m-([\\.\d]+)$/, ([_, num]) => ({ margin: `${num}px` })],
+    [/^p-([\\.\d]+)$/, ([_, num]) => ({ padding: `${num}px` })],
   ],
 });

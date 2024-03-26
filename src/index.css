@@ -3,15 +3,15 @@
 
 @font-face {
   font-family: 'OperatorMonoItalic';
-  src: url('/public/fonts/OperatorMono-LightItalic.otf');
+  src: url('/fonts/OperatorMono-LightItalic.otf');
 }
 
 @font-face {
   font-family: 'OperatorMono';
-  src: url('/public/fonts/OperatorMono-Bold.otf');
+  src: url('/fonts/OperatorMono-Bold.otf');
 }
 
 @font-face {
   font-family: 'FiraCode';
-  src: url('/public/fonts/FiraCode-Medium.ttf');
+  src: url('/fonts/FiraCode-Medium.ttf');
 }
