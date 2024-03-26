@@ -1,4 +1,13 @@
+import axios from 'axios';
+import { useEffect } from 'react';
+
 function App() {
+  useEffect(() => {
+    axios.get('/api/get-user-info').then((res) => {
+      console.log(res);
+    });
+  }, []);
+
   return (
     <div>
       <div>

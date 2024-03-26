@@ -40,6 +40,7 @@
   "devDependencies": {
     "@commitlint/cli": "^19.2.1",
     "@commitlint/config-conventional": "^19.1.0",
+    "@faker-js/faker": "^8.4.1",
     "@iconify-json/logos": "^1.1.42",
     "@iconify/json": "^2.2.158",
     "@types/color": "^3.0.4",
@@ -90,6 +91,7 @@
     "typescript": "^5.2.2",
     "unocss": "^0.58.6",
     "vite": "^5.2.0",
+    "vite-plugin-fake-server": "^2.1.1",
     "vite-plugin-svg-icons": "^2.0.1",
     "vite-plugin-svgr": "^4.2.0",
     "vite-tsconfig-paths": "^4.2.1"

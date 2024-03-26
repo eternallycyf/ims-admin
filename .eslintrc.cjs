@@ -96,10 +96,6 @@ module.exports = {
             group: 'internal',
           },
           {
-            pattern: '#/**',
-            group: 'type',
-          },
-          {
             pattern: '*.{scss,css,less,styl,stylus}',
             group: 'parent',
           },
