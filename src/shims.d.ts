@@ -6,6 +6,27 @@ type UppercaseKey<Obj extends object> = {
 
 declare module 'react' {
   interface HTMLAttributes<T> extends UppercaseKey<AttributifyAttributes> {
-    'ims-font'?: AttributifyAttributes['font'] | 'code' | 'mone' | 'moneItalic';
+    'ims-font'?:
+      | AttributifyAttributes['font']
+      | 'code'
+      | 'mone'
+      | 'moneItalic'
+      | 'lato'
+      | 'lobster'
+      | 'sans';
+  }
+}
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'ims-bg-red': {
+        children?: React.ReactNode;
+      };
+      // 'my-custom-tag': {
+      //   'my-custom-attribute'?: string;
+      // };
+      // 'ims-flex': React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+    }
   }
 }

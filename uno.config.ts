@@ -7,7 +7,9 @@ import {
   presetWebFonts,
   transformerDirectives,
   transformerVariantGroup,
+  presetTagify,
 } from 'unocss';
+import presetRemToPx from '@unocss/preset-rem-to-px';
 
 // function withOpacityValue(variable: string) {
 //   return `rgba(var(${variable}), %alpha)`;
@@ -16,7 +18,7 @@ import {
 export default defineConfig({
   shortcuts: [
     {
-      'flex-center': 'flex justify-center items-center',
+      center: 'flex justify-center items-center',
       'flex-col-center': 'flex flex-col justify-center items-center',
       btn: 'p-2 font-semibold rounded-lg select-none cursor-pointer hover:bg-[#8882] dark:hover:bg-[#fff2]',
     },
@@ -78,14 +80,23 @@ export default defineConfig({
   },
   presets: [
     presetUno({
-      dark: 'media',
+      dark: 'class',
     }),
+    // presetRemToPx({
+    //   baseFontSize: 4,
+    // }),
     presetAttributify({
       prefix: 'ims-',
       prefixedOnly: true,
     }),
+    presetTypography(),
+    presetTagify({
+      prefix: 'ims-',
+      extraProperties: { display: 'block' },
+    }),
     presetIcons({
       extraProperties: {
+        scale: '1.2',
         display: 'inline-block',
         height: '1.2em',
         width: '1.2em',
@@ -93,12 +104,41 @@ export default defineConfig({
       },
       warn: true,
     }),
-    presetTypography(),
-    presetWebFonts(),
+    presetWebFonts({
+      provider: 'google', // 默认提供者
+      fonts: {
+        // 这些将扩展默认主题
+        sans: 'Roboto',
+        mono: ['Fira Code', 'Fira Mono:400,700'],
+        // 自定义的
+        lobster: 'Lobster',
+        lato: [
+          {
+            name: 'Lato',
+            weights: ['400', '700'],
+            italic: true,
+          },
+          {
+            name: 'sans-serif',
+            provider: 'none',
+          },
+        ],
+      },
+    }),
   ],
   transformers: [transformerDirectives(), transformerVariantGroup()],
   rules: [
+    // [
+    //   'p-safe',
+    //   {
+    //     padding:
+    //       'env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)',
+    //   },
+    // ],
+    // ['pt-safe', { 'padding-top': 'env(safe-area-inset-top)' }],
+    // ['pb-safe', { 'padding-bottom': 'env(safe-area-inset-bottom)' }],
     [/^m-([\\.\d]+)$/, ([_, num]) => ({ margin: `${num}px` })],
     [/^p-([\\.\d]+)$/, ([_, num]) => ({ padding: `${num}px` })],
+    [/^bg-?([0123456789abcdef]+)$/i, ([_, rgb]) => ({ background: `#${rgb}` })],
   ],
 });
