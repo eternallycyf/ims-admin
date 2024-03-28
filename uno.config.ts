@@ -14,9 +14,6 @@ import {
 // }
 
 export default defineConfig({
-  content: {
-    filesystem: ['**/*.{html,js,ts,jsx,tsx}'],
-  },
   shortcuts: [
     {
       'flex-center': 'flex justify-center items-center',
