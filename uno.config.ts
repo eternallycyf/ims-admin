@@ -8,6 +8,7 @@ import {
   transformerDirectives,
   transformerVariantGroup,
   presetTagify,
+  transformerAttributifyJsx,
 } from 'unocss';
 import presetRemToPx from '@unocss/preset-rem-to-px';
 
@@ -126,7 +127,7 @@ export default defineConfig({
       },
     }),
   ],
-  transformers: [transformerDirectives(), transformerVariantGroup()],
+  transformers: [transformerAttributifyJsx(), transformerDirectives(), transformerVariantGroup()],
   rules: [
     // [
     //   'p-safe',
