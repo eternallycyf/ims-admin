@@ -1,12 +1,10 @@
-import path from 'path';
-import { vitePluginFakeServer } from 'vite-plugin-fake-server';
-import react from '@vitejs/plugin-react';
-import { visualizer } from 'rollup-plugin-visualizer';
-import { defineConfig } from 'vite';
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
-import tsconfigPaths from 'vite-tsconfig-paths';
-import svgr from 'vite-plugin-svgr';
-import UnoCSS from 'unocss/vite';
+import { vitePluginFakeServer } from 'vite-plugin-fake-server'
+import react from '@vitejs/plugin-react'
+import { visualizer } from 'rollup-plugin-visualizer'
+import { defineConfig } from 'vite'
+import tsconfigPaths from 'vite-tsconfig-paths'
+import svgr from 'vite-plugin-svgr'
+import UnoCSS from 'unocss/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -36,12 +34,12 @@ export default defineConfig({
       enableDev: true,
       enableProd: true,
     }),
-    createSvgIconsPlugin({
-      // 指定需要缓存的图标文件夹
-      iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
-      // 指定symbolId格式
-      symbolId: 'icon-[dir]-[name]',
-    }),
+    // createSvgIconsPlugin({
+    // 指定需要缓存的图标文件夹
+    // iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
+    // 指定symbolId格式
+    // symbolId: 'icon-[dir]-[name]',
+    // }),
     visualizer({
       open: false,
     }),
@@ -55,18 +53,18 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:8000',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        rewrite: path => path.replace(/^\/api/, ''),
       },
       '/file': {
         target: 'http://localhost:9000',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/file/, ''),
+        rewrite: path => path.replace(/^\/file/, ''),
       },
       '/ws': {
         target: 'ws://localhost:7000',
         changeOrigin: true,
         ws: true,
-        rewrite: (path) => path.replace(/^\/ws/, ''),
+        rewrite: path => path.replace(/^\/ws/, ''),
       },
     },
   },
@@ -92,4 +90,4 @@ export default defineConfig({
       },
     },
   },
-});
+})

@@ -1,0 +1,252 @@
+{
+  // 使用 IntelliSense 了解相关属性。
+  // 悬停以查看现有属性的描述。
+  // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "umi-canary",
+      "type": "chrome",
+      "request": "attach",
+      "port": 9222,
+      "userDataDir": false,
+      "runtimeExecutable": "canary",
+      "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "meteor://💻app/*": "${workspaceFolder}/*",
+        "webpack:///./~/*": "${workspaceFolder}/node_modules/*",
+        "webpack://?:*/*": "${workspaceFolder}/*"
+      },
+      "runtimeArgs": [
+        // 无痕模式
+        // "--incognito",
+        // 自动打开开发者工具
+        "--auto-open-devtools-for-tabs",
+        "--user-data-dir=${workspaceFolder}/.vscode/chrome"
+      ],
+      "skipFiles": [
+        "${workspaceFolder}/node_modules/**/*.js",
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "name": "jest",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
+      "console": "integratedTerminal",
+      "args": [
+        "-i"
+      ]
+    },
+    {
+      "name": "jest-只调试某个测试用例",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
+      "console": "integratedTerminal",
+      "args": [
+        // 不再用 worker 进程并行跑测试用例，而是在当前进程串行跑：
+        "-i",
+        "packages/ims-view-pc/tests/index.test.tsx",
+        "-t",
+        "CommonDemo"
+      ]
+    },
+    {
+      "name": "jest-调试当前打开的文件",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
+      "console": "integratedTerminal",
+      "args": [
+        "-i",
+        "${file}"
+      ]
+    },
+    {
+      "name": "jest-手动输入名称调试支持正则 例如输入 CommonDemo\\d",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
+      "console": "integratedTerminal",
+      "args": [
+        // 不再用 worker 进程并行跑测试用例，而是在当前进程串行跑：
+        "-i",
+        "${file}",
+        "-t",
+        "${input:case}"
+      ]
+    },
+    {
+      "name": "nestjs",
+      "request": "launch",
+      "runtimeArgs": [
+        "start",
+        "dev"
+      ],
+      // 首行断点
+      // "stopOnEntry": true,
+      "runtimeExecutable": "npm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node",
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "nestjs-static",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceRoot}/src/public"
+    },
+    {
+      "name": "nestjs-static",
+      "type": "chrome",
+      "request": "attach",
+      "port": 9222,
+      "userDataDir": false,
+      "runtimeExecutable": "canary",
+      "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "meteor://💻app/*": "${workspaceFolder}/*",
+        "webpack:///./~/*": "${workspaceFolder}/node_modules/*",
+        "webpack://?:*/*": "${workspaceFolder}/*"
+      },
+      "runtimeArgs": [
+        // 无痕模式
+        // "--incognito",
+        // 自动打开开发者工具
+        "--auto-open-devtools-for-tabs",
+        "--user-data-dir=${workspaceFolder}/.vscode/chrome"
+      ],
+      "skipFiles": [
+        "${workspaceFolder}/node_modules/**/*.js",
+        "<node_internals>/**/*.js"
+      ],
+      "webRoot": "${workspaceRoot}/src/public"
+    },
+    {
+      "name": "nextjs-terminal",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run dev"
+    },
+    {
+      "name": "nextjs-canary",
+      "type": "chrome",
+      "request": "attach",
+      "port": 9222,
+      "userDataDir": false,
+      "runtimeExecutable": "canary",
+      "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "meteor://💻app/*": "${workspaceFolder}/*",
+        "webpack:///./~/*": "${workspaceFolder}/node_modules/*",
+        "webpack://?:*/*": "${workspaceFolder}/*"
+      },
+      "runtimeArgs": [
+        // 无痕模式
+        // "--incognito",
+        // 自动打开开发者工具
+        "--auto-open-devtools-for-tabs",
+        "--user-data-dir=${workspaceFolder}/.vscode/chrome"
+      ],
+      "skipFiles": [
+        "${workspaceFolder}/node_modules/**/*.js",
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "name": "node",
+      "type": "node",
+      "request": "launch",
+      // 首行断点
+      // "stopOnEntry": true,
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/index.js"
+    },
+    {
+      "name": "ts-node",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "--nolazy",
+        "-r",
+        "ts-node/register/transpile-only"
+      ],
+      "args": [
+        "scripts/generateBizConfig.ts"
+      ],
+      "cwd": "${workspaceRoot}",
+      "internalConsoleOptions": "openOnSessionStart",
+      "skipFiles": [
+        "<node_internals>/**",
+        "node_modules/**"
+      ]
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "umi-chrome",
+      "url": "http://localhost:8000",
+      "webRoot": "${workspaceFolder}",
+      "skipFiles": [
+        "${workspaceFolder}/<node_internals>/**",
+        "${workspaceFolder}/node_modules/**",
+        "${workspaceFolder}/webpack/**",
+        "${workspaceFolder}/.umi/**",
+        "${workspaceFolder}/umi\\.js$",
+        "${workspaceFolder}/@@/devScripts.js$",
+        "${workspaceFolder}/^webpack://.*/react refresh$",
+        "${workspaceFolder}/react_devtools_backend.js\\.js$"
+      ],
+      "smartStep": true,
+      "sourceMaps": true
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "vue2.x",
+      "url": "http://localhost:8080",
+      "runtimeArgs": [
+        "--auto-open-devtools-for-tabs" // 自动打开开发者工具
+      ],
+      "webRoot": "${workspaceFolder}",
+      "sourceMapPathOverrides": {
+        "webpack://项目名字/src/*": "${workspaceFolder}/src/*"
+      }
+      // vue.config.js
+      //       const { defineConfig
+      //       } = require('@vue/cli-service');
+      // module.exports = defineConfig({
+      //   transpileDependencies: true,
+      //   configureWebpack(config) {
+      //     config.devtool = 'source-map';
+      //         },
+      //       });
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "vue3",
+      "runtimeArgs": [
+        "--auto-open-devtools-for-tabs"
+      ],
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}"
+    }
+  ],
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "case",
+      "description": "CommonDemo",
+      "default": ""
+    }
+  ]
+}

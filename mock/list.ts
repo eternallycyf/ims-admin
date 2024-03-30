@@ -1,5 +1,5 @@
-import { defineFakeRoute } from 'vite-plugin-fake-server/client';
-import { faker } from '@faker-js/faker';
+import { defineFakeRoute } from 'vite-plugin-fake-server/client'
+import { faker } from '@faker-js/faker'
 
 export default defineFakeRoute([
   {
@@ -14,7 +14,7 @@ export default defineFakeRoute([
         lastName: faker.person.lastName(),
         sex: faker.person.sexType(),
         role: 'admin',
-      };
+      }
     },
   },
-]);
+])

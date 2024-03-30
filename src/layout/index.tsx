@@ -1,21 +1,24 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
-import './index.less';
+import './index.less'
 
 interface LayoutProps {}
 
-export default function (props: LayoutProps) {
-  const [theme, setTheme] = useState<'dark' | 'light'>('light');
+function Layout(_props: LayoutProps) {
+  const [theme, setTheme] = useState<'dark' | 'light'>('light')
   return (
     <>
       <div ims-w="200" className="customTheme flex justify-between">
-        <button onClick={() => setTheme((theme) => (theme === 'dark' ? 'light' : 'dark'))}>
+        <button onClick={() => setTheme(theme => (theme === 'dark' ? 'light' : 'dark'))}>
           toggle
         </button>
-        <span ims-font="moneItalic">current theme is {theme}</span>
+        <span ims-font="moneItalic">
+          current theme is
+          {theme}
+        </span>
       </div>
       <div className={theme}>
-        <div ims-color="red" ims-dark-color="blue">
+        <div color="red" ims-color="red" ims-dark-color="blue">
           layout
         </div>
       </div>
@@ -51,5 +54,7 @@ export default function (props: LayoutProps) {
         cumque reprehenderit, ea nisi perferendis quis.
       </p>
     </>
-  );
+  )
 }
+
+export default Layout

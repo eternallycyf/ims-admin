@@ -1,0 +1,443 @@
+{
+  "border代码段": {
+    "prefix": "border",
+    "body": ["border:1px solid #ccc;"],
+    "description": "border代码段"
+  },
+  "for循环代码段": {
+    "prefix": "for",
+    "body": ["for(let i=0;i<.length;i++){", "${1:}", "", "}"],
+    "description": "for循环代码段"
+  },
+  "function代码段": {
+    "prefix": "function",
+    "body": ["function ${1:}(${2:}){", "${3:}", "", "", "}"],
+    "description": "function代码段"
+  },
+  "console.log代码段": {
+    "prefix": "console",
+    "body": ["console.log(${1:})"],
+    "description": "console代码段"
+  },
+  "console.log": {
+    "prefix": "log",
+    "body": ["console.log(${1:})"],
+    "description": "console代码段"
+  },
+  "setInterval代码段": {
+    "prefix": "setInterval",
+    "body": ["setInterval(function() {", "${1:}", "},1000);"],
+    "description": "setInterval代码段"
+  },
+  "setTimeout代码段": {
+    "prefix": "setTimeout",
+    "body": ["setTimeout(function () {", "${1:}", "},1000);"],
+    "description": "setInterval代码段"
+  },
+  "clearInterval代码段": {
+    "prefix": "clearInterval",
+    "body": ["clearInterval(timeId);"],
+    "description": "clearInterval代码段"
+  },
+  "clearTimeout代码段": {
+    "prefix": "clearTimeout",
+    "body": ["clearTimeout(timeId);"],
+    "description": "clearTimeout代码段"
+  },
+  "list-style代码段": {
+    "prefix": "list",
+    "body": ["list-style: none;"],
+    "description": "list-style代码段"
+  },
+  "sort代码段": {
+    //如果倒序，b-a
+    "prefix": "sort",
+    "body": [
+      "sort((a, b) => a-b);",
+      "//对象属性排序",
+      "arr.sort((a, b) => a.age - b.age);"
+    ],
+    "description": "sort代码段"
+  },
+  "删除注释正则代码段": {
+    "prefix": "zhushi",
+    "body": ["/\\*(.|\\r\\n|\\n)*?\\*/|//.*"],
+    "description": "删除注释正则代码段"
+  },
+  // "Vue-html初始化": {
+  //   "prefix": "Vue",
+  //   "body": [
+  //     "<!DOCTYPE html>",
+  //     "<html>",
+  //     "<head>",
+  //     "\t<meta charset=\"UTF-8\">",
+  //     "\t<meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">",
+  //     "\t<title></title>",
+  //     "\t<style>",
+  //     "\t</style>",
+  //     "<script src='https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js'></script>",
+  //     " <!-- <script src='https://cdn.bootcdn.net/ajax/libs/vue-router/4.0.6/vue-router.cjs.js'></script>-->",
+  //     "</head>",
+  //     "<body>",
+  //     "<div id='app'>",
+  //     "",
+  //     "</div>",
+  //     "<script type='text/javascript'>",
+  //     "const vm = new Vue({",
+  //     "\t el:'#app',",
+  //     "\t data:{},",
+  //     "\t methods:{},",
+  //     "\t computed:{},",
+  //     "\t watch:{},",
+  //     "\t directives:{},",
+  //     "\t filters:{},",
+  //     "\t components:{},",
+  //     "\t })",
+  //     "</script>",
+  //     "</body>",
+  //     "</html>",
+  //   ],
+  // },
+  // "vue当前文件名": {
+  //   "prefix": "vue",
+  //   "body": [
+  //     "<template>",
+  //     "<div class=\"\">",
+  //     "${1:$TM_FILENAME_BASE}",
+  //     "</div>",
+  //     "</template>",
+  //     "<script>",
+  //     "export default {",
+  //     "name: \"${1:$TM_FILENAME_BASE}\",",
+  //     "components: {},",
+  //     "props:{},",
+  //     "data() {",
+  //     "return {}",
+  //     "},",
+  //     "computed: {},",
+  //     "watch: {},",
+  //     "created() {},",
+  //     "mounted() {},",
+  //     "methods: {},",
+  //     "}",
+  //     "</script>",
+  //     "<style scoped lang=\"less\">",
+  //     "</style>",
+  //   ],
+  //   "description": "vue单文件页面"
+  // },
+  "vue当前文件名": {
+    "prefix": "vue",
+    "body": [
+      "<template>",
+      "<div class=\"${1:$TM_FILENAME_BASE}-container\">",
+      "<div class=\"app-container\">",
+      "<h2>",
+      "${1:$TM_FILENAME_BASE}",
+      "</h2>",
+      "</div>",
+      "</div>",
+      "</template>",
+      "<script>",
+      "export default {",
+      "name: \"${1:$TM_FILENAME_BASE}\",",
+      "components: {},",
+      "props:{},",
+      "data() {",
+      "return {}",
+      "},",
+      "computed: {},",
+      "watch: {},",
+      "created() {},",
+      "mounted() {},",
+      "methods: {},",
+      "}",
+      "</script>",
+      "<style scoped lang=\"less\">",
+      "</style>"
+    ],
+    "description": "vue单文件页面-当前文件名"
+  },
+  "vue上级文件名": {
+    "prefix": "vue",
+    "body": [
+      "<template>",
+      "<div class=\"${1:${TM_DIRECTORY/.*\\/(.*)$/$1/g}}-container\">",
+      "<div class=\"app-container\">",
+      "<h2>",
+      "${1:${TM_DIRECTORY/.*\\/(.*)$/$1/g}}",
+      "</h2>",
+      "</div>",
+      "</div>",
+      "</template>",
+      "<script>",
+      "export default {",
+      "name: \"${1:${TM_DIRECTORY/.*\\/(.*)$/$1/g}}\",",
+      "components: {},",
+      "props:{},",
+      "data() {",
+      "return {}",
+      "},",
+      "computed: {},",
+      "watch: {},",
+      "created() {},",
+      "mounted() {},",
+      "methods: {},",
+      "}",
+      "</script>",
+      "<style scoped lang=\"less\">",
+      "</style>"
+    ],
+    "description": "vue单文件页面-上级文件夹"
+  },
+  "react-html初始化": {
+    "prefix": "react",
+    "body": [
+      "<!DOCTYPE html>",
+      "<html lang='zh-CN'>",
+      "<head>",
+      "\t<meta charset=\"UTF-8\">",
+      "\t<title></title>",
+      "</head>",
+      "<body>",
+      "<div id=\"root\"></div>",
+      "",
+      "",
+      "<script crossorigin src=\"https://unpkg.com/react@17/umd/react.development.js\"></script>",
+      "<script crossorigin src=\"https://unpkg.com/react-dom@17/umd/react-dom.development.js\"></script>",
+      "<script src=\"https://cdn.bootcdn.net/ajax/libs/babel-standalone/7.0.0-beta.3/babel.min.js\"></script>",
+      "//<script src=\"https://cdn.bootcdn.net/ajax/libs/prop-types/15.7.2/prop-types.js\"></script>",
+      "<script type='text/babel'>",
+      "",
+      "",
+      "ReactDOM.render(\t\t, document.getElementById(\"root\"))",
+      "</script>",
+      "</body>",
+      "</html>"
+    ],
+    "description": "react初始化"
+  },
+  "html:5初始化": {
+    "prefix": "html5",
+    "body": [
+      "<!DOCTYPE html>",
+      "<html lang='zh-CN'>",
+      "<head>",
+      "\t<meta charset=\"UTF-8\">",
+      "\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0, user-scalable=no\">",
+      "\t<meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">",
+      "\t <link rel=\"stylesheet\" > ",
+      // "\t <link rel=\"stylesheet\" href=\"css/animate.css\"> ",
+      "\t<title></title>",
+      // "<script src='jquery.min.js'> </script>",
+      "\t<style>",
+      "\t\t*{margin:0;padding:0;}",
+      // li{list-style:none;}a{ text-decoration: none;}
+      "\t</style>",
+      "</head>",
+      "<body>",
+      "<script>",
+      "",
+      "</script>",
+      "</body>",
+      "</html>"
+    ],
+    "description": "HTML5"
+  },
+  "Canvas初始化": {
+    "prefix": "canvas",
+    "body": [
+      "<!DOCTYPE html>",
+      "<html>",
+      "<head>",
+      "<meta charset=\"UTF-8\">",
+      "<meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">",
+      "<title></title>",
+      "<style>",
+      "canvas {border: 1px solid #ccc;  }",
+      "</style>",
+      "<body>",
+      "<canvas width='1000' height='800'></canvas>",
+      "<script>",
+      "var myCanvas = document.querySelector('canvas');",
+      "var ctx = myCanvas.getContext('2d');",
+      "</script>",
+      "</body>",
+      "</html>"
+    ],
+    "description": "Canvasmuban"
+  },
+  "路由初始化": {
+    "prefix": "luyou",
+    "body": [
+      "import Layout from '@/layout'",
+      "export default {",
+      "path: '/${1:$TM_FILENAME_BASE}',",
+      "name: '${1:$TM_FILENAME_BASE}', ",
+      "component: Layout,",
+      "children: [{",
+      "path: '', ",
+      "component: () => import('@/views/${1:$TM_FILENAME_BASE}'),",
+      "meta:{",
+      "title: '${2:$TM_FILENAME_BASE}',",
+      "icon:'${3:$TM_FILENAME_BASE}'",
+      "}",
+      "}]",
+      "}"
+    ]
+  },
+  "constructor代码段": {
+    "prefix": "constructor",
+    "body": [
+      "constructor(props) {",
+      "super(props)",
+      "this.state = {",
+      "${1:}",
+      "\t\t\t\t",
+      "\t\t}",
+      "}"
+    ],
+    "description": "constructor代码段"
+  },
+  "componentDidMount-react": {
+    "prefix": "componentDidMount",
+    "body": ["componentDidMount(){", "${1:}", "}"]
+  },
+  "export default代码段": {
+    "prefix": "ed",
+    "body": ["export default ${1:}"]
+  },
+  "react-类组件-上层文件名": {
+    "prefix": "crc",
+    "body": [
+      "import React from 'react'",
+      "export default class ${1:${TM_DIRECTORY/.*\\/(.*)$/$1/g}} extends React.Component {",
+      "\tstate = {",
+      "\t\t}",
+      "\trender() {",
+      "\t\t\treturn (",
+      "\t\t\t\t\t<>",
+      "\t\t\t\t\t\t\t${1:${TM_DIRECTORY/.*\\/(.*)$/$1/g}}",
+      "\t\t\t\t\t</>",
+      "\t\t\t)",
+      "\t\t}",
+      "}"
+    ]
+  },
+  "react-类组件-文件名": {
+    "prefix": "crcc",
+    "body": [
+      "import React from 'react'",
+      "export default class ${1:$TM_FILENAME_BASE} extends React.Component {",
+      "\tstate = {",
+      "\t\t}",
+      "\trender() {",
+      "\t\t\treturn (",
+      "\t\t\t\t\t<>",
+      "\t\t\t\t\t\t\t${1:$TM_FILENAME_BASE}",
+      "\t\t\t\t\t</>",
+      "\t\t\t)",
+      "\t\t}",
+      "}"
+    ]
+  },
+  "edf-函数组件-上层文件名": {
+    "prefix": "edf..",
+    "body": [
+      "import React, { useEffect, useRef, useState, FC } from 'react'",
+      "import styles from './index.less'",
+      "interface I${1:${TM_DIRECTORY/.*\\/(.*)$/$1/g}}Props {",
+      "}",
+      "const ${1:${TM_DIRECTORY/.*\\/(.*)$/$1/g}}: FC<I${1:${TM_DIRECTORY/.*\\/(.*)$/$1/g}}Props> = (props) => {",
+      "const {} = props;",
+      "return (",
+      "\t<div className={styles.page}>",
+      "\t\t${1:${TM_DIRECTORY/.*\\/(.*)$/$1/g}}",
+      "\t</div>",
+      ")",
+      "}",
+      "export default ${1:${TM_DIRECTORY/.*\\/(.*)$/$1/g}}"
+    ]
+  },
+  "edf-函数组件-文件名": {
+    "prefix": "edf",
+    "body": [
+      "import React, { useEffect, useRef, useState, FC } from 'react'",
+      "import styles from './index.less'",
+      "interface I${1:$TM_FILENAME_BASE}Props {",
+      "}",
+      "const ${1:$TM_FILENAME_BASE}: FC<I${1:$TM_FILENAME_BASE}Props> = (props) => {",
+      "const {} = props;",
+      "return (",
+      "\t<div className={styles.page}>",
+      "\t\t${1:$TM_FILENAME_BASE}",
+      "\t</div>",
+      ")",
+      "}",
+      "export default ${1:$TM_FILENAME_BASE}"
+    ]
+  },
+  "edf-函数组件+Ref-上层文件名": {
+    "prefix": "edref..",
+    "body": [
+      "import React, { useEffect, useRef, useState, FC, ForwardRefRenderFunction, useImperativeHandle } from 'react'",
+      "import styles from './index.less'",
+      "interface I${1:${TM_DIRECTORY/.*\\/(.*)$/$1/g}}Props {",
+      "}",
+      "type I${1:${TM_DIRECTORY/.*\\/(.*)$/$1/g}}Handle = {",
+      "}",
+      "const ${1:${TM_DIRECTORY/.*\\/(.*)$/$1/g}}: ForwardRefRenderFunction<I${1:${TM_DIRECTORY/.*\\/(.*)$/$1/g}}Handle, I${1:${TM_DIRECTORY/.*\\/(.*)$/$1/g}}Props> = (props, ref) => {",
+      "const {} = props;",
+      "useImperativeHandle(ref, () => ({",
+      "}));",
+      "return (",
+      "\t<div className={styles.page}>",
+      "\t\t${1:${TM_DIRECTORY/.*\\/(.*)$/$1/g}}",
+      "\t</div>",
+      ")",
+      "}",
+      "export default ${1:${TM_DIRECTORY/.*\\/(.*)$/$1/g}}"
+    ]
+  },
+  "edf-函数组件+Ref-文件名": {
+    "prefix": "edref",
+    "body": [
+      "import React, { useEffect, useRef, useState, FC, ForwardRefRenderFunction, useImperativeHandle } from 'react'",
+      "import styles from './index.less'",
+      "interface I${1:$TM_FILENAME_BASE}Props {",
+      "}",
+      "type I${1:$TM_FILENAME_BASE}Handle = {",
+      "}",
+      "const ${1:$TM_FILENAME_BASE}: ForwardRefRenderFunction<I${1:$TM_FILENAME_BASE}Handle, I${1:$TM_FILENAME_BASE}Props> = (props, ref) => {",
+      "const {} = props;",
+      "useImperativeHandle(ref, () => ({",
+      "}));",
+      "return (",
+      "\t<div className={styles.page}>",
+      "\t\t${1:$TM_FILENAME_BASE}",
+      "\t</div>",
+      ")",
+      "}",
+      "export default ${1:$TM_FILENAME_BASE}"
+    ]
+  },
+  "import-react": {
+    "prefix": "ir",
+    "body": ["import React from 'react';"]
+  },
+  "useState-hook": {
+    "prefix": "useState",
+    "body": ["const [${1:state}, set${1:/upcase} ] = useState(${2:null})"]
+  },
+  "useEffect-hook": {
+    "prefix": "useEffect",
+    "body": [
+      "useEffect(() => {",
+      "${1:effect}",
+      "return () => {",
+      "${2:cleanup}",
+      "}",
+      "}, [${3:input}])"
+    ]
+  }
+}

@@ -2,15 +2,14 @@ import {
   defineConfig,
   presetAttributify,
   presetIcons,
+  presetTagify,
   presetTypography,
   presetUno,
   presetWebFonts,
+  transformerAttributifyJsx,
   transformerDirectives,
   transformerVariantGroup,
-  presetTagify,
-  transformerAttributifyJsx,
-} from 'unocss';
-import presetRemToPx from '@unocss/preset-rem-to-px';
+} from 'unocss'
 
 // function withOpacityValue(variable: string) {
 //   return `rgba(var(${variable}), %alpha)`;
@@ -19,9 +18,9 @@ import presetRemToPx from '@unocss/preset-rem-to-px';
 export default defineConfig({
   shortcuts: [
     {
-      center: 'flex justify-center items-center',
+      'center': 'flex justify-center items-center',
       'flex-col-center': 'flex flex-col justify-center items-center',
-      btn: 'p-2 font-semibold rounded-lg select-none cursor-pointer hover:bg-[#8882] dark:hover:bg-[#fff2]',
+      'btn': 'p-2 font-semibold rounded-lg select-none cursor-pointer hover:bg-[#8882] dark:hover:bg-[#fff2]',
     },
   ],
   theme: {
@@ -97,10 +96,10 @@ export default defineConfig({
     }),
     presetIcons({
       extraProperties: {
-        scale: '1.2',
-        display: 'inline-block',
-        height: '1.2em',
-        width: '1.2em',
+        'scale': '1.2',
+        'display': 'inline-block',
+        'height': '1.2em',
+        'width': '1.2em',
         'vertical-align': 'middle',
       },
       warn: true,
@@ -142,4 +141,4 @@ export default defineConfig({
     [/^p-([\\.\d]+)$/, ([_, num]) => ({ padding: `${num}px` })],
     [/^bg-?([0123456789abcdef]+)$/i, ([_, rgb]) => ({ background: `#${rgb}` })],
   ],
-});
+})
