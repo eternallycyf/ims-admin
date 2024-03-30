@@ -1,0 +1,47 @@
+:root {
+  --c-bg: #fff;
+  --c-scrollbar: #eee;
+  --c-scrollbar-hover: #bbb;
+  --c-text-color: #333;
+}
+
+html {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  background-color: var(--c-bg);
+  color: var(--c-text-color);
+}
+
+html.dark {
+  --c-bg: #333;
+  --c-scrollbar: #111;
+  --c-scrollbar-hover: #222;
+  --c-text-color: #fff;
+}
+
+* {
+  scrollbar-color: var(--c-scrollbar) var(--c-bg);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar:horizontal {
+  height: 6px;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+  border-radius: 10px;
+  background: var(--c-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: var(--c-scrollbar);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--c-scrollbar-hover);
+}

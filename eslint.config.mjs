@@ -7,6 +7,7 @@ export default antfu({
       'ts/no-unused-vars': 'warn',
       'unused-imports/no-unused-vars': 'warn',
       'unused-imports/no-unused-imports-ts': 'warn',
+      'ts/ban-ts-comment': 'off',
     },
   },
   react: {

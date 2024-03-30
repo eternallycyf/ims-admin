@@ -1,0 +1,14 @@
+@font-face {
+  font-family: 'OperatorMonoItalic';
+  src: url('/fonts/OperatorMono-LightItalic.otf');
+}
+
+@font-face {
+  font-family: 'OperatorMono';
+  src: url('/fonts/OperatorMono-Bold.otf');
+}
+
+@font-face {
+  font-family: 'FiraCode';
+  src: url('/fonts/FiraCode-Medium.ttf');
+}

@@ -64,14 +64,14 @@ export default defineConfig({
     //   'gray-800': '#212B36',
     //   'gray-900': '#161C24',
     // },
-    // spacing: {
-    //   xss: '4px',
-    //   xs: '8px',
-    //   sm: '12px',
-    //   base: '16px',
-    //   lg: '24px',
-    //   xl: '32px',
-    // },
+    spacing: {
+      xss: '4px',
+      xs: '8px',
+      sm: '12px',
+      base: '16px',
+      lg: '24px',
+      xl: '32px',
+    },
     fontFamily: {
       code: 'FiraCode',
       mone: 'OperatorMono',
