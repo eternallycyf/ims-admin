@@ -1,12 +1,13 @@
 import type { AttributifyAttributes } from '@unocss/preset-attributify'
 
 type UppercaseKey<Obj extends object> = {
-  [Key in keyof Obj as `ims-${Key & string}`]: Obj[Key];
+  // [Key in keyof Obj as `ims-${Key & string}`]: Obj[Key];
+  [Key in keyof Obj as `${Key & string}`]: Obj[Key];
 }
 
 declare module 'react' {
   interface HTMLAttributes<T> extends UppercaseKey<AttributifyAttributes> {
-    'ims-font'?:
+    font?:
       | AttributifyAttributes['font']
       | 'code'
       | 'mone'
@@ -20,7 +21,10 @@ declare module 'react' {
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      'ims-bg-red': {
+      // 'ims-bg-red': {
+      //   children?: React.ReactNode;
+      // };
+      'bg-red': {
         children?: React.ReactNode
       }
       // 'my-custom-tag': {

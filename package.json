@@ -41,6 +41,7 @@
   "devDependencies": {
     "@ant-design/colors": "^7.0.2",
     "@antfu/eslint-config": "^2.11.5",
+    "@babel/preset-typescript": "^7.24.1",
     "@commitlint/cli": "^19.2.1",
     "@commitlint/config-conventional": "^19.1.0",
     "@faker-js/faker": "^8.4.1",
@@ -59,6 +60,7 @@
     "@unocss/postcss": "^0.58.6",
     "@unocss/preset-rem-to-px": "^0.58.7",
     "@unocss/reset": "^0.58.8",
+    "@unocss/transformer-attributify-jsx-babel": "^0.58.8",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.19",
     "commitlint": "^19.2.1",

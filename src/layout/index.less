@@ -1,11 +1,13 @@
-.customTheme {
-  @apply bg-red;
-}
-
 .btn-blue {
   background-color: theme('colors.blue.500');
 }
 
 .custom {
   color: @colorInfoBg;
+}
+
+@screen md {
+  .customTheme {
+    @apply bg-red;
+  }
 }
