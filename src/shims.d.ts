@@ -1,14 +1,11 @@
-import type { AttributifyAttributes } from '@unocss/preset-attributify'
+import type { AttributifyNames } from '@unocss/preset-attributify'
 
-type UppercaseKey<Obj extends object> = {
-  // [Key in keyof Obj as `ims-${Key & string}`]: Obj[Key];
-  [Key in keyof Obj as `${Key & string}`]: Obj[Key];
-}
+type Prefix = 'ims-'
 
 declare module 'react' {
-  interface HTMLAttributes<T> extends UppercaseKey<AttributifyAttributes> {
+  interface HTMLAttributes extends Partial<Record<AttributifyNames<Prefix>, string>> {
     font?:
-      | AttributifyAttributes['font']
+      | AttributifyNames<Prefix>['font']
       | 'code'
       | 'mone'
       | 'moneItalic'

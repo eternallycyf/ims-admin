@@ -14,9 +14,8 @@ import transformerAttributifyJsx from '@unocss/transformer-attributify-jsx-babel
 export default defineConfig({
   shortcuts: [
     {
-      'center': 'flex justify-center items-center',
-      'flex-col-center': 'flex flex-col justify-center items-center',
-      'btn': 'p-2 font-semibold rounded-lg select-none cursor-pointer hover:bg-[#8882] dark:hover:bg-[#fff2]',
+      'flex-center': 'flex justify-center items-center',
+      'flex-between': 'flex justify-between items-center',
     },
   ],
   theme: {
@@ -37,8 +36,12 @@ export default defineConfig({
       moneItalic: 'OperatorMonoItalic',
     },
     breakpoints: {
-      sm: '320px',
-      md: '640px',
+      xs: '480px',
+      sm: '576px',
+      md: '768px',
+      lg: '992px',
+      xl: '1200px',
+      xxl: '1600px',
     },
   },
   presets: [
@@ -67,27 +70,7 @@ export default defineConfig({
       },
       warn: true,
     }),
-    presetWebFonts({
-      provider: 'google', // 默认提供者
-      fonts: {
-        // 这些将扩展默认主题
-        sans: 'Roboto',
-        mono: ['Fira Code', 'Fira Mono:400,700'],
-        // 自定义的
-        lobster: 'Lobster',
-        lato: [
-          {
-            name: 'Lato',
-            weights: ['400', '700'],
-            italic: true,
-          },
-          {
-            name: 'sans-serif',
-            provider: 'none',
-          },
-        ],
-      },
-    }),
+    presetWebFonts(),
   ],
   transformers: [transformerAttributifyJsx(), transformerDirectives(), transformerVariantGroup()],
   rules: [
@@ -100,9 +83,8 @@ export default defineConfig({
     ],
     ['pt-safe', { 'padding-top': 'env(safe-area-inset-top)' }],
     ['pb-safe', { 'padding-bottom': 'env(safe-area-inset-bottom)' }],
-    [/^m-([\\.\d]+)$/, ([_, num]) => ({ margin: `${num}px` })],
-    [/^p-([\\.\d]+)$/, ([_, num]) => ({ padding: `${num}px` })],
-    [/^bg-?([0123456789abcdef]+)$/i, ([_, rgb]) => ({ background: `#${rgb}` })],
+    // [/^m-([\\.\d]+)$/, ([_, num]) => ({ margin: `${num}` })],
+    // [/^p-([\\.\d]+)$/, ([_, num]) => ({ padding: `${num}` })],
   ],
   safelist: 'p-1 p-2 p-3 p-4'.split(' '),
 })

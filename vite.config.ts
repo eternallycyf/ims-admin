@@ -1,5 +1,4 @@
 import { resolve } from 'node:path'
-import { vitePluginFakeServer } from 'vite-plugin-fake-server'
 import react from '@vitejs/plugin-react'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig } from 'vite'
@@ -7,11 +6,18 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 import svgr from 'vite-plugin-svgr'
 import UnoCSS from 'unocss/vite'
 import { generate } from '@ant-design/colors'
-import { theme } from 'antd'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import { type ThemeConfig, theme } from 'antd'
 
 export const DEFAULT_PRIMARY_COLOR = '#1677ff'
 
 const { getDesignToken } = theme
+
+const config: ThemeConfig = {
+  token: {
+    colorPrimary: DEFAULT_PRIMARY_COLOR,
+  },
+}
 
 const { defaultAlgorithm, defaultSeed } = theme
 
@@ -32,7 +38,7 @@ export function generateModifyVars(): any {
   const mapToken = defaultAlgorithm(defaultSeed)
 
   return {
-    ...getDesignToken(),
+    ...getDesignToken(config),
     ...mapToken,
     // reference:  Avoid repeated references
     'hack': `true; @import (reference) "${resolve('src/style/config.less')}";`,
@@ -40,12 +46,10 @@ export function generateModifyVars(): any {
     ...primaryColorObj,
     'info-color': primary,
     'processing-color': primary,
-    'success-color': '#55D187', //  Success color
-    'error-color': '#ED6F6F', //  False color
-    'warning-color': '#EFBD47', //   Warning color
-    'font-size-base': '14px', //  Main font size
-    'border-radius-base': '2px', //  Component/float fillet
-    'link-color': primary, //   Link color
+    'success-color': '#55D187',
+    'error-color': '#ED6F6F',
+    'warning-color': '#EFBD47',
+    'link-color': primary,
   }
 }
 
@@ -78,19 +82,18 @@ export default defineConfig({
     svgr(),
     // 同步tsconfig.json的path设置alias
     tsconfigPaths(),
-    vitePluginFakeServer({
-      logger: false,
-      include: 'mock',
-      infixName: false,
-      enableDev: true,
-      enableProd: true,
-    }),
     // createSvgIconsPlugin({
-    // 指定需要缓存的图标文件夹
-    // iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
-    // 指定symbolId格式
-    // symbolId: 'icon-[dir]-[name]',
+    //   // 指定需要缓存的图标文件夹
+    //   iconDirs: [resolve('src/assets/icons')],
+    //   // 指定symbolId格式
+    //   symbolId: 'icon-[dir]-[name]',
     // }),
+    createSvgIconsPlugin({
+      // 指定需要缓存的图标文件夹
+      iconDirs: [resolve('src/assets/icons')],
+      // 指定symbolId格式
+      symbolId: 'icon-[dir]-[name]',
+    }),
     visualizer({
       open: false,
     }),
@@ -133,12 +136,12 @@ export default defineConfig({
     //     },
     //   },
     // },
-    // terserOptions: {
-    //   compress: {
-    //     // 生产环境移除console
-    //     drop_console: true,
-    //     drop_debugger: true,
-    //   },
-    // },
+    terserOptions: {
+      compress: {
+        // 生产环境移除console
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
   },
 })

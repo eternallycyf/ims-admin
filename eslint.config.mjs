@@ -14,6 +14,7 @@ export default antfu({
     overrides: {
       'react/jsx-uses-vars': 'warn',
       'react/no-unknown-property': 'off',
+      'semi': 0,
     },
   },
   formatters: {

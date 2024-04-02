@@ -1,9 +1,16 @@
+@unocss all;
+@import '@unocss/reset/tailwind-compat.css';
+@import 'simplebar-react/dist/simplebar.min.css';
+
+@import 'base.css';
 @import 'color.less';
 @import 'transition/index.less';
 @import 'var/index.less';
 @import 'public.less';
+@import 'ant/index.less';
 @import 'theme.less';
 @import 'entry.css';
+@import 'font.css';
 
 input:-webkit-autofill {
   box-shadow: 0 0 0 1000px transparent inset;
@@ -47,6 +54,7 @@ span {
   outline: none;
 }
 
+// 保持 和 windi 一样的全局样式，减少升级带来的影响
 ul {
   margin: 0;
   padding: 0;

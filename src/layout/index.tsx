@@ -1,4 +1,4 @@
-import Switch from '@/theme/Switch'
+import Switch from '@/layout/Switch'
 
 import './index.less'
 
