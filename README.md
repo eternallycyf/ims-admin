@@ -40,7 +40,7 @@ html{
 }
 ```
 
-## 如何维护css变量
+## 如何维护全局的css变量
 
 ### 新增html动态的变量
 - ims-admin/src/theme/init/var.js
