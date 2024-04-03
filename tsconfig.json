@@ -2,22 +2,14 @@
   "compilerOptions": {
     "target": "ESNext",
     "jsx": "react-jsx",
-    "lib": [
-      "ESNext",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "useDefineForClassFields": true,
     "baseUrl": ".",
     "module": "ESNext",
     "moduleResolution": "bundler",
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "#/*": [
-        "src/types/*"
-      ]
+      "@/*": ["src/*"],
+      "#/*": ["types/*"]
     },
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
@@ -53,8 +45,5 @@
     "**.*js",
     "vite.config.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "exclude": ["node_modules", "dist"]
 }
