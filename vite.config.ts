@@ -6,7 +6,7 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 import svgr from 'vite-plugin-svgr'
 import UnoCSS from 'unocss/vite'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
-import { initGlobalLessVaribles } from './src/theme/init/var'
+import { initGlobalLessVaribles } from './src/theme/init/var.js'
 
 export function generateModifyVars(): any {
   return {
@@ -19,11 +19,6 @@ export function generateModifyVars(): any {
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './',
-  resolve: {
-    alias: {
-      '@var': resolve(__dirname, 'src/theme/init/var'),
-    },
-  },
   esbuild: {
     // drop: ['console', 'debugger'],
   },
@@ -48,12 +43,6 @@ export default defineConfig({
     svgr(),
     // 同步tsconfig.json的path设置alias
     tsconfigPaths(),
-    // createSvgIconsPlugin({
-    //   // 指定需要缓存的图标文件夹
-    //   iconDirs: [resolve('src/assets/icons')],
-    //   // 指定symbolId格式
-    //   symbolId: 'icon-[dir]-[name]',
-    // }),
     createSvgIconsPlugin({
       // 指定需要缓存的图标文件夹
       iconDirs: [resolve('src/assets/icons')],

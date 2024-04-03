@@ -67,7 +67,4 @@
     "toml",
     "astro",
   ],
-  "lessVars.locations": [
-    "../public/style/var.less"
-  ],
 }

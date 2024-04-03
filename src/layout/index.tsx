@@ -7,8 +7,10 @@ interface LayoutProps {}
 function Layout(_props: LayoutProps) {
   return (
     <>
+      <div className="html-var">html-variables</div>
+      <div className="less-var">less-variables</div>
+      <div color-primary-color>uno-theme-color</div>
       <Space>
-        <div className="asdasdad">sds</div>
         <Button type="primary">123</Button>
         <Alert type="success" message="咋撒打算jasdas"></Alert>
         <Alert type="error" message="咋撒打算jasdas"></Alert>

@@ -1,83 +1,4 @@
-// html {
-//   --text-color: rgba(0 0 0 / 85%);
-
-//   --border-color: #eee;
-//   --component-background-color: #fff;
-
-//   &[data-theme='dark'] {
-//     // text
-//     --text-color: #c9d1d9;
-
-//     // border
-//     --border-color: #303030;
-
-//     // component
-//     --component-background-color: #151515;
-//   }
-// }
-
-@namespace: ims;
-@white: #fff;
-@content-bg: #f4f7f9;
-@component-background: var(--component-background-color);
-
-@font-size-base: 14px;
-@border-radius-base: 2px;
-
-//text
-@text-color-base: var(--text-color);
-@text-color-secondary: #8b949e;
-
-// dark
-@border-color-base: var(--border-color);
-@border-color-dark: #b6b7b9;
-@border-color-shallow-dark: #cececd;
-@border-color-light: @border-color-base;
-
-//bg
-// success-bg-color
-@success-background-color: #f1f9ec;
-// info-bg-color
-@info-background-color: #e8eff8;
-// warn-bg-color
-@warning-background-color: #fdf6ed;
-// danger-bg-color
-@danger-background-color: #fef0f0;
-
-// button
-@link-hover-color: @primary-color;
-@link-active-color: darken(@primary-color, 10%);
-
-@button-primary-color: @primary-color;
-@button-primary-hover-color: lighten(@primary-color, 5%);
-@button-primary-active-color: darken(@primary-color, 5%);
-
-@button-ghost-color: @white;
-@button-ghost-hover-color: lighten(@white, 10%);
-@button-ghost-hover-bg-color: #e1ebf6;
-@button-ghost-active-color: darken(@white, 10%);
-
-@button-success-color: @success-color;
-@button-success-hover-color: lighten(@success-color, 10%);
-@button-success-active-color: darken(@success-color, 10%);
-
-@button-warn-color: @warning-color;
-@button-warn-hover-color: lighten(@warning-color, 10%);
-@button-warn-active-color: darken(@warning-color, 10%);
-
-@button-error-color: @error-color;
-@button-error-hover-color: lighten(@error-color, 10%);
-@button-error-active-color: darken(@error-color, 10%);
-
-@button-cancel-color: @text-color-call-out;
-@button-cancel-bg-color: @white;
-@button-cancel-border-color: @border-color-shallow-dark;
-
-// Mouse over
-@button-cancel-hover-color: @primary-color;
-@button-cancel-hover-bg-color: @white;
-@button-cancel-hover-border-color: @primary-color;
-
+// 注入的全局Less变量
 @ease-base-out: cubic-bezier(0.7, 0.3, 0.1, 1);
 @ease-base-in: cubic-bezier(0.9, 0, 0.3, 0.7);
 @ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -93,21 +14,46 @@
 @ease-in-quint: cubic-bezier(0.755, 0.05, 0.855, 0.06);
 @ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
 
-// Colors
-@primary-color: #1677ff;
-@primary-1: #e6f4ff;
-@primary-2: #bae0ff;
-@primary-3: #91caff;
-@primary-4: #69b1ff;
-@primary-5: #4096ff;
-@primary-6: #1677ff;
-@primary-7: #0958d9;
-@primary-8: #003eb3;
-@primary-9: #002c8c;
-@primary-10: #001d66;
-@info-color: #1677ff;
-@processing-color: #1677ff;
-@success-color: #55D187;
-@error-color: #ED6F6F;
-@warning-color: #EFBD47;
-@link-color: #1677ff;
+// html 可以用的
+// --primary-color: #fff;
+// --primary-hover-color:  #fff;
+// --primary-active-color:  #fff;
+// --processing-color:  #fff;
+// --link-color:  #fff;
+// --text-color:  #fff;
+// --border-color:  #fff;
+// --component-background-color:  #fff;
+// --layout-body-background:  #fff;
+// --white-hover:  #fff;
+// --white-active:  #fff;
+// --ims-bg:  #fff;
+// --ims-scrollbar:  #fff;
+// --ims-scrollbar-hover:  #fff;
+
+// 自己加的
+@namespace: ims;
+@white: #fff;
+@content-bg: #f4f7f9;
+@success-color: #11bb43;
+@warning-color: #fa6a0a;
+@error-color: #e62c3b;
+@info-color: #00b8d9;
+@success-background-color: #f5fff5;
+@warning-background-color: #fff5e8;
+@error-background-color: #fff6f5;
+@info-background-color: #f5f8ff;
+
+@primary-color: var(--primary-color);
+@primary-hover-color: var(--primary-hover-color);
+@primary-active-color: var(--primary-active-color);
+@processing-color: var(--processing-color);
+@link-color: var(--link-color);
+@text-color: var(--text-color);
+@border-color: var(--border-color);
+@component-background: var(--component-background-color);
+@layout-body-background: var(--layout-body-background);
+@white-hover: var(--white-hover);
+@white-active: var(--white-active);
+@ims-bg: var(--ims-bg);
+@ims-scrollbar: var(--ims-scrollbar);
+@ims-scrollbar-hover: var(--ims-scrollbar-hover);
