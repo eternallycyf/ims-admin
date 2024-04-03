@@ -1,130 +1,26 @@
 html {
-  --text-color: rgba(0 0 0 / 85%);
-
-  --border-color: #eee;
-  --component-background-color: #fff;
-  --layout-body-background: #f0f2f5;
-
   &[data-theme='dark'] {
-    // text
-    --text-color: #c9d1d9;
-
-    // border
-    --border-color: #303030;
-
-    // component
-    --component-background-color: #151515;
-    --layout-body-background: #000;
   }
 }
 
-:root {
-  --c-bg: #fff;
-  --c-scrollbar: #eee;
-  --c-scrollbar-hover: #bbb;
-  --c-text-color: #333;
-}
-
 html {
-  overflow-x: hidden;
-  overflow-y: scroll;
-  background-color: var(--c-bg);
-  color: var(--c-text-color);
 }
 
-html.dark {
-  --c-bg: #333;
-  --c-scrollbar: #111;
-  --c-scrollbar-hover: #222;
-  --c-text-color: #fff;
-}
+@primary-color: var(--primary-color);
+@primary-hover-color: var(--primary-hover-color);
+@primary-active-color: var(--primary-active-color);
+@processing-color: var(--processing-color);
+@link-color: var(--link-color);
 
-* {
-  scrollbar-color: var(--c-scrollbar) var(--c-bg);
-}
+@text-color: var(--text-color);
+@border-color: var(--border-color);
 
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar:horizontal {
-  height: 6px;
-}
-
-::-webkit-scrollbar-track,
-::-webkit-scrollbar-corner {
-  border-radius: 10px;
-  background: var(--c-bg);
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background: var(--c-scrollbar);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--c-scrollbar-hover);
-}
-
-@white: #fff;
-@content-bg: #f4f7f9;
 @component-background: var(--component-background-color);
-@layout-body-background: var(----layout-body-background);
+@layout-body-background: var(--layout-body-background);
 
-@font-size-base: 14px;
-@border-radius-base: 2px;
+@white-hover: var(--white-hover);
+@white-active: var(--white-active);
 
-//text
-@text-color-base: var(--text-color);
-@text-color-secondary: #8b949e;
-@text-color-call-out: #606266;
-
-// dark
-@border-color-base: var(--border-color);
-@border-color-dark: #b6b7b9;
-@border-color-shallow-dark: #cececd;
-@border-color-light: @border-color-base;
-
-//bg
-// success-bg-color
-@success-background-color: #f1f9ec;
-// info-bg-color
-@info-background-color: #e8eff8;
-// warn-bg-color
-@warning-background-color: #fdf6ed;
-// danger-bg-color
-@danger-background-color: #fef0f0;
-
-// button
-@link-hover-color: @primary-color;
-@link-active-color: darken(@primary-color, 10%);
-
-@button-primary-color: @primary-color;
-@button-primary-hover-color: lighten(@primary-color, 5%);
-@button-primary-active-color: darken(@primary-color, 5%);
-
-@button-ghost-color: @white;
-@button-ghost-hover-color: lighten(@white, 10%);
-@button-ghost-hover-bg-color: #e1ebf6;
-@button-ghost-active-color: darken(@white, 10%);
-
-@button-success-color: @success-color;
-@button-success-hover-color: lighten(@success-color, 10%);
-@button-success-active-color: darken(@success-color, 10%);
-
-@button-warn-color: @warning-color;
-@button-warn-hover-color: lighten(@warning-color, 10%);
-@button-warn-active-color: darken(@warning-color, 10%);
-
-@button-error-color: @error-color;
-@button-error-hover-color: lighten(@error-color, 10%);
-@button-error-active-color: darken(@error-color, 10%);
-
-@button-cancel-color: @text-color-call-out;
-@button-cancel-bg-color: @white;
-@button-cancel-border-color: @border-color-shallow-dark;
-
-// Mouse over
-@button-cancel-hover-color: @primary-color;
-@button-cancel-hover-bg-color: @white;
-@button-cancel-hover-border-color: @primary-color;
+@ims-bg: var(--ims-bg);
+@ims-scrollbar: var(--ims-scrollbar);
+@ims-scrollbar-hover: var(--ims-scrollbar-hover);

@@ -2,7 +2,7 @@ import { create } from 'zustand'
 
 import { getItem, removeItem, setItem } from '@/utils/storage'
 
-import { StorageEnum, ThemeColorPresets, ThemeLayout, ThemeMode } from '#/enum'
+import { type ComponentSize, StorageEnum, ThemeColorPresets, ThemeLayout, ThemeMode } from '#/enum'
 
 interface SettingsType {
   themeColorPresets: ThemeColorPresets
@@ -11,6 +11,7 @@ interface SettingsType {
   themeStretch: boolean
   breadCrumb: boolean
   multiTab: boolean
+  componentSize: `${ComponentSize}`
 }
 interface SettingStore {
   settings: SettingsType
@@ -29,6 +30,7 @@ const useSettingStore = create<SettingStore>(set => ({
     themeStretch: false,
     breadCrumb: true,
     multiTab: true,
+    componentSize: 'middle',
   },
   actions: {
     setSettings: (settings) => {

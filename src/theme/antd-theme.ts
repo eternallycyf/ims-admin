@@ -9,7 +9,8 @@ const customThemeTokenConfig: ThemeConfig['token'] = {
   colorWarning: '#fa6a0a',
   colorError: '#e62c3b',
   colorInfo: '#00b8d9',
-
+  colorLinkHover: '#4d7fe3',
+  colorLinkActive: '#1b45b8',
   // 线性化
   wireframe: false,
 
@@ -33,12 +34,12 @@ const customComponentConfig: ThemeConfig['components'] = {
 const colorPrimarys: {
   [k in ThemeColorPresets]: string;
 } = {
-  default: '#2b5fdc',
+  default: '#00a76f',
   cyan: '#078DEE',
-  purple: '#b974ff',
-  blue: '#2b5fdc',
-  orange: '#fa6a0a',
-  red: '#e62c3b',
+  purple: '#7635DC',
+  blue: '#2065D1',
+  orange: '#FDA92D',
+  red: '#FF3030',
 }
 
 const themeModeToken: Record<'dark' | 'light', ThemeConfig> = {

@@ -5,57 +5,25 @@ import { defineConfig } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import svgr from 'vite-plugin-svgr'
 import UnoCSS from 'unocss/vite'
-import { generate } from '@ant-design/colors'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
-import { type ThemeConfig, theme } from 'antd'
-
-export const DEFAULT_PRIMARY_COLOR = '#1677ff'
-
-const { getDesignToken } = theme
-
-const config: ThemeConfig = {
-  token: {
-    colorPrimary: DEFAULT_PRIMARY_COLOR,
-  },
-}
-
-const { defaultAlgorithm, defaultSeed } = theme
-
-function generateAntColors(color: string, theme: 'default' | 'dark' = 'default') {
-  return generate(color, {
-    theme,
-  })
-}
+import { initGlobalLessVaribles } from './src/theme/init/var'
 
 export function generateModifyVars(): any {
-  const palettes = generateAntColors(DEFAULT_PRIMARY_COLOR)
-  const primary = palettes[5]
-  const primaryColorObj: Record<string, string> = {}
-
-  for (let index = 0; index < 10; index++)
-    primaryColorObj[`primary-${index + 1}`] = palettes[index]
-
-  const mapToken = defaultAlgorithm(defaultSeed)
-
   return {
-    ...getDesignToken(config),
-    ...mapToken,
+    ...initGlobalLessVaribles,
     // reference:  Avoid repeated references
-    'hack': `true; @import (reference) "${resolve('src/style/config.less')}";`,
-    'primary-color': primary,
-    ...primaryColorObj,
-    'info-color': primary,
-    'processing-color': primary,
-    'success-color': '#55D187',
-    'error-color': '#ED6F6F',
-    'warning-color': '#EFBD47',
-    'link-color': primary,
+    hack: `true; @import (reference) "${resolve('src/style/config.less')}";`,
   }
 }
 
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './',
+  resolve: {
+    alias: {
+      '@var': resolve(__dirname, 'src/theme/init/var'),
+    },
+  },
   esbuild: {
     // drop: ['console', 'debugger'],
   },
@@ -73,9 +41,7 @@ export default defineConfig({
     namedExports: true,
     stringify: true,
   },
-  define: {
-    DEFAULT_PRIMARY_COLOR: JSON.stringify(DEFAULT_PRIMARY_COLOR),
-  },
+  define: {},
   plugins: [
     UnoCSS(),
     react(),

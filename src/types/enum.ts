@@ -13,12 +13,18 @@ export enum StorageEnum {
   User = 'user',
   Token = 'token',
   Settings = 'settings',
-  I18N = 'i18nextLng',
+  I18N = 'language',
 }
 
 export enum ThemeMode {
   Light = 'light',
   Dark = 'dark',
+}
+
+export enum ComponentSize {
+  Small = 'small',
+  Middle = 'middle',
+  Large = 'large',
 }
 
 export enum ThemeLayout {

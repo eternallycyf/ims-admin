@@ -4,9 +4,8 @@ import {
   QuestionCircleOutlined,
   RightOutlined,
 } from '@ant-design/icons'
-import { Button, Card, Drawer, Switch, Tooltip } from 'antd'
+import { Card, Drawer, Radio, type RadioChangeEvent, Switch, Tooltip } from 'antd'
 import { type CSSProperties, useState } from 'react'
-import screenfull from 'screenfull'
 import { m } from 'framer-motion'
 import Color from 'color'
 import { MdCircle } from 'react-icons/md'
@@ -14,28 +13,33 @@ import { IconButton, SvgIcon } from '@/components/icon'
 import { varHover } from '@/components/animate/variants/action'
 import RedBlur from '@/assets/images/background/red-blur.png'
 import CyanBlur from '@/assets/images/background/cyan-blur.png'
-import { type ThemeColorPresets, ThemeLayout, ThemeMode } from '#/enum'
+import { ComponentSize, type ThemeColorPresets, ThemeLayout } from '#/enum'
 import { useDesign } from '@/hooks/web/use-design'
 import { useSettingActions, useSettings } from '@/store/settingStore'
 import { useThemeToken } from '@/hooks/theme/use-theme-token'
 import { colorPrimarys } from '@/theme/antd-theme'
-import ToggleTheme2 from '@/theme/ToggleTheme2'
+import LocalePicker from '@/layout/components/locale-picker'
+import ThemeModeBtn from '@/layout/components/theme-mode-btn'
+import FullScreen from '@/layout/components/full-screen'
+import { t } from '@/locales/i18n'
+import useLocale from '@/locales/useLocale'
 
 function App() {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false)
   const { prefixCls: _prefixCls } = useDesign('dark-switch')
   const { colorPrimary, colorBgBase, colorTextSecondary, colorTextTertiary, colorBgContainer }
     = useThemeToken()
+  const { locale } = useLocale()
 
   const settings = useSettings()
-  const { themeMode, themeColorPresets, themeLayout, themeStretch, breadCrumb, multiTab }
+  const { themeColorPresets, componentSize, themeLayout, themeStretch, breadCrumb, multiTab }
     = settings
   const { setSettings } = useSettingActions()
 
-  const setThemeMode = (themeMode: ThemeMode) => {
+  const setComponentSize = (componentSize: `${ComponentSize}`) => {
     setSettings({
       ...settings,
-      themeMode,
+      componentSize,
     })
   }
 
@@ -72,14 +76,6 @@ function App() {
       ...settings,
       multiTab: checked,
     })
-  }
-
-  const [isFullscreen, setIsFullscreen] = useState(screenfull.isFullscreen)
-  const toggleFullScreen = () => {
-    if (screenfull.isEnabled) {
-      screenfull.toggle()
-      setIsFullscreen(!isFullscreen)
-    }
   }
 
   const style: CSSProperties = {
@@ -123,8 +119,9 @@ function App() {
         </m.div>
       </div>
       <Drawer
+        forceRender
         placement="right"
-        title="Settings"
+        title={t('sys.setting.setting')}
         onClose={() => setDrawerOpen(false)}
         open={drawerOpen}
         closable={false}
@@ -139,48 +136,53 @@ function App() {
             <CloseOutlined className="text-gray-400" />
           </IconButton>
         )}
-        footer={(
-          <Button block={true} type="dashed" size="large" onClick={toggleFullScreen}>
-            <div className="flex items-center justify-center">
-              {isFullscreen
-                ? (
-                  <>
-                    <SvgIcon
-                      icon="ic-settings-exit-fullscreen"
-                      color={colorPrimary}
-                      className="!m-0"
-                    />
-                    <span className="ml-2">Exit FullScreen</span>
-                  </>
-                  )
-                : (
-                  <>
-                    <SvgIcon icon="ic-settings-fullscreen" className="!m-0" />
-                    <span className="ml-2 text-gray">FullScreen</span>
-                  </>
-                  )}
-            </div>
-          </Button>
-        )}
+        footer={<FullScreen />}
       >
         <div className="flex flex-col gap-6 p-6">
-          {/* theme mode */}
+          {/* theme Theme */}
           <div flex-between>
             <div className="mb-3 text-base font-semibold" style={{ color: colorTextSecondary }}>
-              Mode
+              {t('sys.setting.theme')}
             </div>
-            <div className="flex flex-row gap-4" style={{ zoom: 0.25 }}>
-              <ToggleTheme2
-                active={themeMode === ThemeMode.Light}
-                onClick={active => setThemeMode(active ? ThemeMode.Dark : ThemeMode.Light)}
-              />
+            <div className="flex flex-row gap-4">
+              <ThemeModeBtn />
+            </div>
+          </div>
+
+          {/* language */}
+          <div flex-between>
+            <div className="mb-3 text-base font-semibold" style={{ color: colorTextSecondary }}>
+              {t('sys.setting.language')}
+            </div>
+            <div className="flex flex-row gap-4">
+              <LocalePicker />
+            </div>
+          </div>
+
+          <div flex-between>
+            <div className="mb-3 text-base font-semibold" style={{ color: colorTextSecondary }}>
+              {t('sys.setting.size')}
+            </div>
+            <div className="flex flex-row gap-4">
+              <Radio.Group
+                size={ComponentSize.Small}
+                buttonStyle="solid"
+                value={componentSize}
+                onChange={(e: RadioChangeEvent) => setComponentSize(e.target.value)}
+              >
+                {Object.values(ComponentSize).map(key => (
+                  <Radio.Button key={key} value={key}>
+                    {key}
+                  </Radio.Button>
+                ))}
+              </Radio.Group>
             </div>
           </div>
 
           {/* theme layout */}
           <div>
             <div className="mb-3 text-base font-semibold" style={{ color: colorTextSecondary }}>
-              Layout
+              {t('sys.setting.layout')}
             </div>
             <div className="grid grid-cols-3 gap-4">
               <Card
@@ -293,10 +295,13 @@ function App() {
           </div>
 
           {/* theme stretch */}
-          <div>
+          <div key={locale}>
             <div className="mb-3 text-base font-semibold" style={{ color: colorTextSecondary }}>
-              <span className="mr-2">Stretch</span>
-              <Tooltip title="Only available at large resolutions > 1600px (xl)">
+              <span className="mr-2">
+                {' '}
+                {t('sys.setting.stretch')}
+              </span>
+              <Tooltip title={t('sys.setting.stretchTooltip')}>
                 <QuestionCircleOutlined />
               </Tooltip>
             </div>
@@ -346,7 +351,7 @@ function App() {
           {/* theme presets */}
           <div>
             <div className="mb-3 text-base font-semibold" style={{ color: colorTextSecondary }}>
-              Presets
+              {t('sys.setting.presets')}
             </div>
             <div className="grid grid-cols-3 gap-x-4 gap-y-3">
               {Object.entries(colorPrimarys).map(([preset, color]) => (
@@ -366,15 +371,18 @@ function App() {
 
           {/* Page config */}
           <div>
-            <div className="mb-3 text-base font-semibold" style={{ color: colorTextSecondary }}>
-              Page
+            <div className="mb-5 text-base font-semibold" style={{ color: colorTextSecondary }}>
+              {t('sys.setting.page')}
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-5">
               <div
                 className="flex items-center justify-between"
                 style={{ color: colorTextTertiary }}
               >
-                <div>BreadCrumb</div>
+                <div>
+                  {' '}
+                  {t('sys.setting.breadcrumb')}
+                </div>
                 <Switch
                   size="small"
                   checked={breadCrumb}
@@ -385,7 +393,10 @@ function App() {
                 className="flex items-center justify-between"
                 style={{ color: colorTextTertiary }}
               >
-                <div>Multi Tab</div>
+                <div>
+                  {' '}
+                  {t('sys.setting.multi-tab')}
+                </div>
                 <Switch
                   size="small"
                   checked={multiTab}

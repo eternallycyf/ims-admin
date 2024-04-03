@@ -1,25 +1,25 @@
 .bg-white {
-  background-color: var(--component-background-color) !important;
+  background-color: @component-background !important;
 }
 
 html[data-theme='light'] {
   .text-secondary {
-    color: rgb(0 0 0 / 45%);
+    color: @colorTextSecondary;
   }
 
   .ant-alert-success {
-    border: 1px solid #b7eb8f;
-    background-color: #f6ffed;
+    border: 1px solid @success-color;
+    background-color: @success-background-color;
   }
 
   .ant-alert-error {
-    border: 1px solid #ffccc7;
-    background-color: #fff2f0;
+    border: 1px solid @error-color;
+    background-color: @error-background-color;
   }
 
   .ant-alert-warning {
-    border: 1px solid #ffe58f;
-    background-color: #fffbe6;
+    border: 1px solid @warning-color;
+    background-color: @warning-background-color;
   }
 
   :not(:root):fullscreen::backdrop {
@@ -30,7 +30,7 @@ html[data-theme='light'] {
 [data-theme='dark'] {
   body {
     background-color: #000;
-    color: @text-color-base;
+    color: @text-color;
   }
 
   .ant-btn {
@@ -63,10 +63,10 @@ html[data-theme='light'] {
         .ant-btn-dangerous
       ) {
       background: transparent;
-      color: @text-color-base;
+      color: @text-color;
 
       &:hover {
-        color: @button-primary-hover-color;
+        color: @primary-hover-color;
       }
     }
 
@@ -83,8 +83,8 @@ html[data-theme='light'] {
 
       &:hover,
       &:focus {
-        border-color: @button-error-hover-color !important;
-        color: @button-error-hover-color !important;
+        border-color: @colorErrorHover !important;
+        color: @colorErrorHover !important;
       }
     }
 
@@ -93,8 +93,8 @@ html[data-theme='light'] {
 
       &:hover,
       &:focus {
-        border-color: @button-cancel-hover-color;
-        color: @button-cancel-hover-color;
+        border-color: @primary-color;
+        color: @primary-color;
       }
     }
 
@@ -110,8 +110,8 @@ html[data-theme='light'] {
       &:hover,
       &:focus,
       &:active {
-        border-color: @button-success-active-color !important;
-        background-color: @button-success-active-color !important;
+        border-color: @primary-active-color !important;
+        background-color: @primary-active-color !important;
         color: @white !important;
       }
     }
@@ -120,8 +120,8 @@ html[data-theme='light'] {
       &:hover,
       &:focus,
       &:active {
-        border-color: @button-warn-active-color !important;
-        background-color: @button-warn-active-color !important;
+        border-color: @colorWarningActive !important;
+        background-color: @colorWarningActive !important;
         color: @white !important;
       }
     }
@@ -130,8 +130,8 @@ html[data-theme='light'] {
       &:hover,
       &:focus,
       &:active {
-        border-color: @button-error-active-color !important;
-        background-color: @button-error-active-color !important;
+        border-color: @colorErrorActive !important;
+        background-color: @colorErrorActive !important;
         color: @white !important;
       }
     }

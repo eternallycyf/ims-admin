@@ -50,9 +50,8 @@
     "types/**/*.ts",
     "**.ts",
     "*.json",
-    "mock",
-    "vite.config.ts",
-    "*.d.ts"
+    "**.*js",
+    "vite.config.ts"
   ],
   "exclude": [
     "node_modules",

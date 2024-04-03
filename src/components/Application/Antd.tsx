@@ -17,7 +17,7 @@ interface Props {
   children?: React.ReactNode
 }
 export default function AntdConfig({ children }: Props) {
-  const { themeMode, themeColorPresets } = useSettings()
+  const { themeMode, themeColorPresets, componentSize } = useSettings()
 
   const { language } = useLocale()
 
@@ -26,6 +26,7 @@ export default function AntdConfig({ children }: Props) {
 
   return (
     <ConfigProvider
+      componentSize={componentSize}
       locale={language.antdLocal}
       theme={{
         token: { colorPrimary, ...customThemeTokenConfig, ...themeModeToken[themeMode].token },

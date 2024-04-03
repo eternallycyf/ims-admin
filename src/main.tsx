@@ -4,7 +4,7 @@ import 'virtual:uno.css'
 import 'dayjs/locale/zh-cn'
 import 'virtual:svg-icons-register'
 
-import React, { Suspense } from 'react'
+import { Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 
 import { HelmetProvider } from 'react-helmet-async'
@@ -48,19 +48,17 @@ const queryClient = new QueryClient({
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
 root.render(
-  <React.StrictMode>
-    <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <Suspense>
-          <AppProvider prefixCls="ims">
-            <Analytics />
-            <App />
-          </AppProvider>
-        </Suspense>
-      </QueryClientProvider>
-    </HelmetProvider>
-  </React.StrictMode>,
+  <HelmetProvider>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <Suspense>
+        <AppProvider prefixCls="ims">
+          <Analytics />
+          <App />
+        </AppProvider>
+      </Suspense>
+    </QueryClientProvider>
+  </HelmetProvider>,
 )
 
 // 🥵 start service worker mock in development mode

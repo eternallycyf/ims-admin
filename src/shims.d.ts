@@ -1,6 +1,6 @@
 import type { AttributifyNames } from '@unocss/preset-attributify'
 
-type Prefix = 'ims-'
+type Prefix = ''
 
 declare module 'react' {
   interface HTMLAttributes extends Partial<Record<AttributifyNames<Prefix>, string>> {
@@ -21,9 +21,9 @@ declare global {
       // 'ims-bg-red': {
       //   children?: React.ReactNode;
       // };
-      'bg-red': {
-        children?: React.ReactNode
-      }
+      // 'bg-red': {
+      //   children?: React.ReactNode
+      // }
       // 'my-custom-tag': {
       //   'my-custom-attribute'?: string;
       // };

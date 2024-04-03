@@ -1,7 +1,6 @@
 import { App as AntdApp } from 'antd'
-import { MotionLazy } from './components/animate/motion-lazy'
-
 import Layout from './layout'
+import { MotionLazy } from '@/components/animate/motion-lazy'
 import AntdConfig from '@/components/Application/Antd'
 
 function App() {
