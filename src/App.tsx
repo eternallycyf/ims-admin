@@ -1,14 +1,14 @@
 import { App as AntdApp } from 'antd'
-import Layout from './layout'
 import { MotionLazy } from '@/components/animate/motion-lazy'
-import AntdConfig from '@/components/Application/Antd'
+import { AntdConfig } from '@/Application'
+import Router from '@/router'
 
 function App() {
   return (
     <AntdConfig>
       <AntdApp>
         <MotionLazy>
-          <Layout />
+          <Router />
         </MotionLazy>
       </AntdApp>
     </AntdConfig>

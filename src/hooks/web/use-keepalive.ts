@@ -7,7 +7,8 @@ import type { RouteMeta } from '#/router'
 export type KeepAliveTab = RouteMeta & {
   children: any
 }
-export default function useKeepAlive() {
+
+export function useKeepAlive() {
   const { VITE_APP_HOMEPAGE: HOMEPAGE } = import.meta.env
   const { push } = useRouter()
   // tabs

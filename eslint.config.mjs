@@ -71,6 +71,6 @@ export default antfu({
     '**/tsconfig.node.json/**',
     'shims.d.ts',
     '**/shims.d.ts/**',
-    'src/theme/init/var.js',
+    'src/theme/init/initLessVar.js',
   ],
 })

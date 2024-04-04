@@ -6,7 +6,7 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 import svgr from 'vite-plugin-svgr'
 import UnoCSS from 'unocss/vite'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
-import { initGlobalLessVaribles } from './src/theme/init/var.js'
+import { initGlobalLessVaribles } from './src/theme/initLessVar.js'
 
 export function generateModifyVars(): any {
   return {

@@ -5,5 +5,7 @@
     "module": "commonjs",
     "allowSyntheticDefaultImports": true
   },
-  "include": ["vite.config.ts", "src/theme/init/var.js"]
+  "include": ["vite.config.ts",
+    "src/theme/initLessVar.js"
+  ]
 }

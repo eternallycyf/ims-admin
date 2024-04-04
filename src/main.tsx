@@ -13,12 +13,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import { Analytics } from '@vercel/analytics/react'
-import { AppProvider } from './components/Application/AppProvider'
 
 import App from './App'
 
 import { worker } from './_mock'
-
 import './locales/i18n'
 
 const charAt = `
@@ -52,10 +50,8 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <Suspense>
-        <AppProvider prefixCls="ims">
-          <Analytics />
-          <App />
-        </AppProvider>
+        <Analytics />
+        <App />
       </Suspense>
     </QueryClientProvider>
   </HelmetProvider>,

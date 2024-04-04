@@ -43,11 +43,17 @@ html{
 ## 如何维护全局的css变量
 
 ### 新增html动态的变量
-- ims-admin/src/theme/init/var.js
-- ims-admin/src/layout/components/theme-mode-btn/index.tsx
+- ims-admin/src/theme/init/initLessVar.js
+- ims-admin/src/layout/components/theme-mode-btn/full-screen.tsx
 - ims-admin/public/style/global-var.less
 - uno.config.ts => theme.color
 
 ### 其他
 - 其他变量自行添加即可 但已全局注入antd所有的主题变量为less变量 使用antd的就行
 - ims-admin/public/style/antd.less
+
+## 编辑
+components
+layouts
+pages
+router

@@ -5,19 +5,27 @@ import { Navigate, Outlet } from 'react-router-dom'
 import { Iconify } from '@/components/icon'
 import { CircleLoading } from '@/components/loading'
 import { useUserPermission } from '@/store/userStore'
-import ProTag from '@/theme/antd/tag'
 import { flattenTrees } from '@/utils/tree'
 
 import type { Permission } from '#/entity'
 import { BasicStatus, PermissionType } from '#/enum'
 import type { AppRouteObject } from '#/router'
+import ProTag from '@/theme/antd/tag'
 
 // 使用 import.meta.glob 获取所有路由组件
+const entryPath = '/src/pages'
 const pages = import.meta.glob('/src/pages/**/*.tsx')
+export const pagesSelect = Object.entries(pages).map(([path]) => {
+  const pagePath = path.replace(entryPath, '')
+  return {
+    label: pagePath,
+    value: pagePath,
+  }
+})
 
 // 构建绝对路径的函数
 function resolveComponent(path: string) {
-  return pages[`/src/pages${path}`]
+  return pages[`${entryPath}${path}`] || (() => import('@/pages/sys/error/Page404'))
 }
 
 /**
@@ -108,7 +116,8 @@ function transformPermissionToMenuRoutes(
       const Element = lazy(resolveComponent(component!) as any)
       if (frameSrc)
         appRoute.element = <Element src={frameSrc} />
-      else appRoute.element = <Element />
+      else
+        appRoute.element = <Element />
     }
 
     return appRoute
