@@ -42,6 +42,18 @@ export interface RouteMeta {
    * external link and iframe need
    */
   frameSrc?: string
+  /**
+   * multiple dynamic routing params
+   */
+  params?: any
+  /**
+   * route search
+   */
+  search?: any
+  /**
+   * route state
+   */
+  state?: any
 }
 export type AppRouteObject = {
   order?: number

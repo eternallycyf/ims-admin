@@ -74,4 +74,5 @@ export enum LoginStateEnum {
 
 export enum SpecialRouterEnum {
   HOME = '/dashboard/workbench',
+  TAB_TITLE = 'tabTitle',
 }

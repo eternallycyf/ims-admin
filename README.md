@@ -1,6 +1,6 @@
 ## 暗黑 && 主题色切换
 
-- 所有less变量在 public/style/\* 通过插件即可获取提示
+- 所有使用的全局less变量在 public/style/\* 下定义了下静态文件 通过插件即可获取提示
 - html下的var变量 (也可以@xxx使用, 在最外层注入了)
 
 ```css
@@ -65,7 +65,7 @@ router
 
 - layout 重构
 - header tabs content 位置重构 滚动条
-- tabs重构
+- tabs部分功能Bug修复
   - menu 上边图标放在容器外
   - 收齐menu按钮位置改造
   - 设置固定的首页

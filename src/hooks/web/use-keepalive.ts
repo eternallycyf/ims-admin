@@ -118,16 +118,49 @@ export function useKeepAlive() {
     const existed = tabsList.find(item => item.key === currentRouteMeta.key)
 
     if (!existed) {
-      const { outlet = '', ...info } = currentRouteMeta
-      setRouteInfo({
-        tabsList: [
-          ...tabsList,
-          {
-            ...info,
-            timeStamp: getKey(),
-          },
-        ],
-      })
+      const { outlet = '', params = undefined, search = '', state = undefined, key, ...info } = currentRouteMeta
+
+      const item: KeepAliveTab = {
+        params,
+        key,
+        ...info,
+        timeStamp: getKey(),
+      } as KeepAliveTab
+      if (params)
+        item.params = params
+      if (search)
+        item.search = search
+      if (state)
+        item.state = state
+
+      setRouteInfo({ tabsList: [...tabsList, item] })
+    }
+    else {
+      const newTabList = [...tabsList]
+      const index = newTabList.findIndex(item => item.key === currentRouteMeta.key)
+
+      if (currentRouteMeta.params) {
+        newTabList[index] = {
+          ...newTabList[index],
+          params: currentRouteMeta?.params,
+        }
+      }
+
+      if (currentRouteMeta.search) {
+        newTabList[index] = {
+          ...newTabList[index],
+          search: currentRouteMeta?.search,
+        }
+      }
+
+      if (currentRouteMeta.state) {
+        newTabList[index] = {
+          ...newTabList[index],
+          state: currentRouteMeta?.state,
+        }
+      }
+
+      setRouteInfo({ tabsList: newTabList })
     }
 
     setActiveTabRoutePath(currentRouteMeta?.key)

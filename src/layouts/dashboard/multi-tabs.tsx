@@ -18,13 +18,15 @@ import {
   restrictToHorizontalAxis,
 } from '@dnd-kit/modifiers'
 
+import { useNavigate } from 'react-router-dom'
 import { Iconify } from '@/components/icon'
 import { type KeepAliveTab, useKeepAlive } from '@/hooks/web'
 
 import { MultiTabOperation, SpecialRouterEnum } from '#/enum'
 import { useThemeToken } from '@/hooks/theme'
-import { useMatchRouteMeta, useRouter } from '@/hooks/router'
+import { useMatchRouteMeta } from '@/hooks/router'
 import { useMenuInfo, useMenuInfoActions } from '@/store/useMenuInfo'
+import { replaceDynamicParams } from '@/hooks/router/use-match-route-meta'
 
 interface Props {
   offsetTop?: boolean
@@ -97,11 +99,11 @@ function DraggableTabNode(props: DraggableTabPaneProps) {
 
 export default function MultiTabs(_props: Props) {
   const { t } = useTranslation()
-  const { push } = useRouter()
   const scrollContainer = useRef<HTMLDivElement>(null!)
   const [hoveringTabKey, setHoveringTabKey] = useState('')
   const [openDropdownTabKey, setopenDropdownTabKey] = useState('')
   const themeToken = useThemeToken()
+  const navigate = useNavigate()
 
   const tabContentRef = useRef<HTMLDivElement>(null!)
 
@@ -275,7 +277,18 @@ export default function MultiTabs(_props: Props) {
         >
           <div
             id={`tab-${tab?.key}`}
-            onClick={() => push(tab.key)}
+            onClick={() => {
+              let newKey = ''
+              if (tab?.key?.includes(':') && tab?.params)
+                newKey = replaceDynamicParams(tab.key, tab.params)
+
+              navigate({
+                pathname: newKey || tab?.key,
+                search: tab?.search,
+              }, {
+                state: tab?.state,
+              })
+            }}
             className="relative mx-px flex select-none items-center px-4 py-1"
             style={calcTabStyle(tab)}
             onMouseEnter={() => {
@@ -285,7 +298,10 @@ export default function MultiTabs(_props: Props) {
             }}
             onMouseLeave={() => setHoveringTabKey('')}
           >
-            <div>{t(tab.label)}</div>
+            <div>
+              {tab?.state?.[SpecialRouterEnum.TAB_TITLE] ? `${tab?.state?.[SpecialRouterEnum.TAB_TITLE]}-` : ''}
+              {t(tab.label)}
+            </div>
             {tab?.key !== SpecialRouterEnum.HOME && (
               <Iconify
                 icon="ion:close-outline"

@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import type { Params } from 'react-router-dom'
-import { useMatches, useOutlet } from 'react-router-dom'
+import { useLocation, useMatches, useOutlet } from 'react-router-dom'
 
 import { useFlattenedRoutes } from './use-flattened-routes'
 import { useRouter } from './use-router'
 
 import type { RouteMeta } from '#/router'
+import { useMenuInfo } from '@/store/useMenuInfo'
 
 /**
  * 返回当前路由Meta信息
@@ -13,12 +14,14 @@ import type { RouteMeta } from '#/router'
 export function useMatchRouteMeta() {
   const { VITE_APP_HOMEPAGE: HOMEPAGE } = import.meta.env
   const [matchRouteMeta, setMatchRouteMeta] = useState<RouteMeta>()
+  const { tabsList } = useMenuInfo()
 
   // 获取路由组件实例
   const children = useOutlet()
 
   // 获取所有匹配的路由
   const matchs = useMatches()
+  const location = useLocation()
 
   // 获取拍平后的路由菜单
   const flattenedRoutes = useFlattenedRoutes()
@@ -37,15 +40,30 @@ export function useMatchRouteMeta() {
       const replacedKey = replaceDynamicParams(item.key, params)
       return replacedKey === pathname || `${replacedKey}/` === pathname
     })
+    const hasItem = tabsList?.some(item => item?.key === currentRouteMeta?.key)
+    const isMultiple = currentRouteMeta?.key?.includes(':')
+
     if (currentRouteMeta) {
       currentRouteMeta.outlet = children
+      if (isMultiple && !hasItem)
+        currentRouteMeta.params = params
+
+      if (isMultiple && hasItem)
+        currentRouteMeta.params = params
+
+      if (location?.search)
+        currentRouteMeta.search = location?.search
+
+      if (location?.state)
+        currentRouteMeta.state = location?.state
+
       setMatchRouteMeta(currentRouteMeta)
     }
     else {
       push(HOMEPAGE)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [matchs])
+  }, [matchs, tabsList])
 
   return matchRouteMeta
 }
@@ -53,7 +71,7 @@ export function useMatchRouteMeta() {
 /**
  * replace `user/:id`  to `/user/1234512345`
  */
-function replaceDynamicParams(menuKey: string, params: Params<string>) {
+export function replaceDynamicParams(menuKey: string, params: Params<string>) {
   let replacedPathName = menuKey
 
   // 解析路由路径中的参数名称

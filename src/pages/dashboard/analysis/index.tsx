@@ -8,6 +8,9 @@ function WorkBench() {
       pathname: `/management/system/user/123123`,
       search: createSearchParams({ query: 'someQuery' }).toString(),
     }, {
+      state: {
+        tabTitle: '123123',
+      },
     })
   }
   return (
