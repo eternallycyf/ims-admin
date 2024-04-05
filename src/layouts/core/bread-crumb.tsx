@@ -1,6 +1,6 @@
 import { Breadcrumb } from 'antd'
 import type { ItemType } from 'antd/es/breadcrumb/Breadcrumb'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useMatches } from 'react-router-dom'
 
@@ -8,6 +8,7 @@ import { menuFilter } from '@/router/utils'
 
 import type { AppRouteObject } from '#/router'
 import { useFlattenedRoutes, usePermissionRoutes } from '@/hooks/router'
+import { useMenuInfo, useMenuInfoActions } from '@/store/useMenuInfo'
 
 /**
  * 动态面包屑解决方案：https://github.com/MinjieChang/myblog/issues/29
@@ -15,7 +16,10 @@ import { useFlattenedRoutes, usePermissionRoutes } from '@/hooks/router'
 export default function BreadCrumb() {
   const { t } = useTranslation()
   const matches = useMatches()
-  const [breadCrumbs, setBreadCrumbs] = useState<ItemType[]>([])
+
+  const menuUserInfo = useMenuInfo()
+  const { setRouteInfo } = useMenuInfoActions()
+  const { breadCrumbList } = menuUserInfo
 
   const flattenedRoutes = useFlattenedRoutes()
   const permissionRoutes = usePermissionRoutes()
@@ -27,7 +31,7 @@ export default function BreadCrumb() {
     const pathRouteMetas = flattenedRoutes.filter(item => paths.includes(item.key))
 
     let items: AppRouteObject[] | undefined = [...menuRoutes]
-    const breadCrumbs = pathRouteMetas.map((routeMeta) => {
+    const breadCrumbList = pathRouteMetas.map((routeMeta) => {
       const { key, label } = routeMeta
       items = items!
         .find(item => item.meta?.key === key)
@@ -46,8 +50,9 @@ export default function BreadCrumb() {
       }
       return result
     })
-    setBreadCrumbs(breadCrumbs)
+
+    setRouteInfo({ breadCrumbList })
   }, [matches, flattenedRoutes, t, permissionRoutes])
 
-  return <Breadcrumb items={breadCrumbs} className="!text-sm" />
+  return <Breadcrumb items={breadCrumbList} className="!text-sm" />
 }

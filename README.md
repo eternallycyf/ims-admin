@@ -68,8 +68,6 @@ router
 - tabs重构
   - menu 上边图标放在容器外
   - 收齐menu按钮位置改造
-  - 收齐menu方法缓存到localstorage
-  - tabs缓存到localstorege
   - 设置固定的首页
   - 右侧设置单独的刷新按钮
 - 整理路由使用方法

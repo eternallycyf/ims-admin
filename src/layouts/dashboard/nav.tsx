@@ -1,4 +1,3 @@
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import { Menu } from 'antd'
 import type { ItemType } from 'antd/es/menu/hooks/useItems'
@@ -25,11 +24,13 @@ export default function Nav(props: Props) {
   const matches = useMatches()
   const { pathname } = useLocation()
 
-  const { colorTextBase, colorBgElevated, colorBorder } = useThemeToken()
+  const { colorBgElevated, colorBorder } = useThemeToken()
 
   const settings = useSettings()
   const { themeLayout } = settings
   const { setSettings } = useSettingActions()
+
+  const { collapsed } = settings
 
   const menuStyle: CSSProperties = {
     background: colorBgElevated,
@@ -43,7 +44,6 @@ export default function Nav(props: Props) {
   /**
    * state
    */
-  const [collapsed, setCollapsed] = useState(false)
   const [openKeys, setOpenKeys] = useState<string[]>([])
   const [selectedKeys, setSelectedKeys] = useState<string[]>([''])
   const [menuList, setMenuList] = useState<ItemType[]>([])
@@ -67,11 +67,11 @@ export default function Nav(props: Props) {
 
   useEffect(() => {
     if (themeLayout === ThemeLayout.Vertical) {
-      setCollapsed(false)
+      setSettings({ collapsed: false })
       setMenuMode('inline')
     }
     if (themeLayout === ThemeLayout.Mini) {
-      setCollapsed(true)
+      setSettings({ collapsed: true })
       setMenuMode('inline')
     }
   }, [themeLayout])
@@ -86,6 +86,7 @@ export default function Nav(props: Props) {
     else
       setOpenKeys([])
   }
+
   const onClick: MenuProps['onClick'] = ({ key }) => {
     // 从扁平化的路由信息里面匹配当前点击的那个
     const nextLink = flattenedRoutes?.find(el => el.key === key)
@@ -99,22 +100,6 @@ export default function Nav(props: Props) {
 
     navigate(key)
     props?.closeSideBarDrawer?.()
-  }
-
-  const setThemeLayout = (themeLayout: ThemeLayout) => {
-    setSettings({
-      ...settings,
-      themeLayout,
-    })
-  }
-
-  const toggleCollapsed = () => {
-    if (!collapsed)
-      setThemeLayout(ThemeLayout.Mini)
-    else
-      setThemeLayout(ThemeLayout.Vertical)
-
-    setCollapsed(!collapsed)
   }
 
   return (
@@ -133,13 +118,7 @@ export default function Nav(props: Props) {
           : (
             <Logo className="text-4xl" />
             )}
-        <button
-          onClick={toggleCollapsed}
-          className="absolute right-0 top-7 z-50 hidden h-6 w-6 translate-x-1/2 cursor-pointer select-none rounded-full text-center md:block !text-gray"
-          style={{ color: colorTextBase, borderColor: colorTextBase, fontSize: 16 }}
-        >
-          {collapsed ? <MenuUnfoldOutlined size={20} /> : <MenuFoldOutlined size={20} />}
-        </button>
+
       </div>
 
       <Scrollbar

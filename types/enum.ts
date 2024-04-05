@@ -14,6 +14,7 @@ export enum StorageEnum {
   Token = 'token',
   Settings = 'settings',
   I18N = 'language',
+  MenuRouteInfo = 'menuRouteInfo',
 }
 
 export enum ThemeMode {
@@ -69,4 +70,8 @@ export enum LoginStateEnum {
   RESET_PASSWORD,
   MOBILE,
   QR_CODE,
+}
+
+export enum SpecialRouterEnum {
+  HOME = '/dashboard/workbench',
 }

@@ -1,10 +1,11 @@
-import { Drawer } from 'antd'
+import { Drawer, Space } from 'antd'
 import Color from 'color'
 import type { CSSProperties } from 'react'
 import { useState } from 'react'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { HEADER_HEIGHT, NAV_COLLAPSED_WIDTH, NAV_WIDTH, Nav, OFFSET_HEADER_HEIGHT } from './'
 import { LocalePicker, Logo } from '@/layouts/components'
-import { useSettings } from '@/store/settingStore'
+import { useSettingActions, useSettings } from '@/store/settingStore'
 import { IconButton, Iconify, SvgIcon } from '@/components/icon'
 import { ThemeLayout } from '#/enum'
 import { useResponsive, useThemeToken } from '@/hooks/theme'
@@ -18,8 +19,19 @@ interface Props {
 export default function Header({ className = '', offsetTop = false }: Props) {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const { themeLayout, breadCrumb } = useSettings()
-  const { colorBgElevated, colorBorder } = useThemeToken()
+  const { colorTextBase, colorBgElevated, colorBorder } = useThemeToken()
   const { screenMap } = useResponsive()
+  const { collapsed } = useSettings()
+  const { setSettings } = useSettingActions()
+
+  const toggleCollapsed = () => {
+    if (!collapsed)
+      setSettings({ themeLayout: ThemeLayout.Mini })
+    else
+      setSettings({ themeLayout: ThemeLayout.Vertical })
+
+    setSettings({ collapsed: !collapsed })
+  }
 
   const headerStyle: CSSProperties = {
     position: themeLayout === ThemeLayout.Horizontal ? 'relative' : 'fixed',
@@ -64,7 +76,17 @@ export default function Header({ className = '', offsetTop = false }: Props) {
               : (
                 <Logo className="mr-2 text-xl" />
                 )}
-            <div className="hidden md:block">{breadCrumb ? <BreadCrumb /> : null}</div>
+
+            <Space className="hidden md:block">
+              <button
+                onClick={toggleCollapsed}
+                className="inline cursor-pointer select-none rounded-full text-center !text-gray"
+                style={{ color: colorTextBase, borderColor: colorTextBase, fontSize: 16 }}
+              >
+                {collapsed ? <MenuUnfoldOutlined size={20} /> : <MenuFoldOutlined size={20} />}
+              </button>
+              {breadCrumb ? <BreadCrumb /> : null}
+            </Space>
           </div>
 
           <div className="flex">

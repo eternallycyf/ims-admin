@@ -3,17 +3,17 @@ import { useCallback, useEffect, useState } from 'react'
 import { useMatchRouteMeta, useRouter } from '@/hooks/router'
 
 import type { RouteMeta } from '#/router'
+import { useMenuInfo, useMenuInfoActions } from '@/store/useMenuInfo'
+import { SpecialRouterEnum } from '#/enum'
 
-export type KeepAliveTab = RouteMeta & {
-  children: any
-}
+export type KeepAliveTab = (Omit<RouteMeta, 'outlet'>)
 
 export function useKeepAlive() {
   const { VITE_APP_HOMEPAGE: HOMEPAGE } = import.meta.env
   const { push } = useRouter()
-  // tabs
-  const [tabs, setTabs] = useState<KeepAliveTab[]>([])
-
+  const { tabsList = [] } = useMenuInfo()
+  const { setRouteInfo } = useMenuInfoActions()
+  // tabsList
   // active tab
   const [activeTabRoutePath, setActiveTabRoutePath] = useState<string>('')
 
@@ -24,66 +24,74 @@ export function useKeepAlive() {
    * Close specified tab
    */
   const closeTab = useCallback(
-    (path = activeTabRoutePath) => {
-      if (tabs.length === 1)
+    (path = activeTabRoutePath, _tabsList: KeepAliveTab[]) => {
+      const tabsList = [..._tabsList]
+      if (tabsList.length === 1)
         return
-      const deleteTabIndex = tabs.findIndex(item => item.key === path)
+      const deleteTabIndex = tabsList.findIndex(item => item.key === path)
       if (deleteTabIndex > 0)
-        push(tabs[deleteTabIndex - 1].key)
-      else push(tabs[deleteTabIndex + 1].key)
+        push(tabsList[deleteTabIndex - 1].key)
+      else push(tabsList[deleteTabIndex + 1].key)
 
-      tabs.splice(deleteTabIndex, 1)
-      setTabs([...tabs])
+      tabsList.splice(deleteTabIndex, 1)
+      setRouteInfo({ tabsList })
     },
 
-    [activeTabRoutePath],
+    [activeTabRoutePath, tabsList],
   )
 
   /**
-   * Close other tabs besides the specified tab
+   * Close other tabsList besides the specified tab
    */
   const closeOthersTab = useCallback(
     (path = activeTabRoutePath) => {
-      setTabs(prev => prev.filter(item => item.key === path))
+      setRouteInfo({
+        tabsList: tabsList.filter(item => item?.key === path || item?.key === SpecialRouterEnum.HOME),
+      })
+
       if (path !== activeTabRoutePath)
         push(path)
     },
-    [activeTabRoutePath, push],
+    [activeTabRoutePath, push, tabsList],
   )
 
   /**
-   * Close all tabs then navigate to the home page
+   * Close all tabsList then navigate to the home page
    */
   const closeAll = useCallback(() => {
     // setTabs([tabHomePage]);
-    setTabs([])
+    setRouteInfo({
+      tabsList: tabsList.filter(item => item?.key === SpecialRouterEnum.HOME),
+    })
     push(HOMEPAGE)
-  }, [push])
+  }, [push, tabsList])
 
   /**
-   * Close all tabs in the left of specified tab
+   * Close all tabsList in the left of specified tab
    */
   const closeLeft = useCallback(
     (path: string) => {
-      const currentTabIndex = tabs.findIndex(item => item.key === path)
-      const newTabs = tabs.slice(currentTabIndex)
-      setTabs(newTabs)
+      const currentTabIndex = tabsList.findIndex(item => item?.key === path)
+      setRouteInfo({
+        tabsList: tabsList.filter((item, index) => index >= currentTabIndex || item?.key === SpecialRouterEnum.HOME),
+      })
       push(path)
     },
-    [push, tabs],
+    [push, tabsList, tabsList],
   )
 
   /**
-   * Close all tabs in the right of specified tab
+   * Close all tabsList in the right of specified tab
    */
   const closeRight = useCallback(
     (path: string) => {
-      const currentTabIndex = tabs.findIndex(item => item.key === path)
-      const newTabs = tabs.slice(0, currentTabIndex + 1)
-      setTabs(newTabs)
+      const currentTabIndex = tabsList.findIndex(item => item?.key === path)
+      setRouteInfo({
+        tabsList: tabsList.filter((item, index) => index <= currentTabIndex || item?.key === SpecialRouterEnum.HOME),
+      })
       push(path)
     },
-    [push, tabs],
+    [push, tabsList, tabsList],
   )
 
   /**
@@ -91,37 +99,44 @@ export function useKeepAlive() {
    */
   const refreshTab = useCallback(
     (path = activeTabRoutePath) => {
-      setTabs((prev) => {
-        const index = prev.findIndex(item => item.key === path)
+      const prev = [...tabsList]
+      const index = prev.findIndex(item => item?.key === path)
 
-        if (index >= 0)
-          prev[index].timeStamp = getKey()
+      if (index >= 0)
+        prev[index].timeStamp = getKey()
 
-        return [...prev]
+      setRouteInfo({
+        tabsList: [...prev],
       })
     },
-    [activeTabRoutePath],
+    [activeTabRoutePath, tabsList],
   )
 
   useEffect(() => {
     if (!currentRouteMeta)
       return
-    const existed = tabs.find(item => item.key === currentRouteMeta.key)
+    const existed = tabsList.find(item => item.key === currentRouteMeta.key)
+
     if (!existed) {
-      setTabs(prev => [
-        ...prev,
-        { ...currentRouteMeta, children: currentRouteMeta.outlet, timeStamp: getKey() },
-      ])
+      const { outlet = '', ...info } = currentRouteMeta
+      setRouteInfo({
+        tabsList: [
+          ...tabsList,
+          {
+            ...info,
+            timeStamp: getKey(),
+          },
+        ],
+      })
     }
 
-    setActiveTabRoutePath(currentRouteMeta.key)
+    setActiveTabRoutePath(currentRouteMeta?.key)
   }, [currentRouteMeta])
 
   return {
-    tabs,
+    tabsList,
     activeTabRoutePath,
-    setTabs,
-    closeTab,
+    closeTab: (path: string) => closeTab(path, tabsList),
     closeOthersTab,
     refreshTab,
     closeAll,

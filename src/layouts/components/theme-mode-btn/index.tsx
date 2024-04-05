@@ -16,13 +16,6 @@ function ThemeModeBtn() {
   const { setSettings } = useSettingActions()
   const isDark = themeMode === ThemeMode.Dark
 
-  const setThemeMode = (themeMode: ThemeMode) => {
-    setSettings({
-      ...settings,
-      themeMode,
-    })
-  }
-
   useEffect(() => {
     const colors = generate(colorPrimary, {
       theme: isDark ? 'dark' : 'default',
@@ -60,7 +53,9 @@ function ThemeModeBtn() {
       <div style={{ zoom: 0.45 }}>
         <ToggleTheme1
           active={isDark}
-          onClick={active => setThemeMode(active ? ThemeMode.Dark : ThemeMode.Light)}
+          onClick={active => setSettings({
+            themeMode: active ? ThemeMode.Dark : ThemeMode.Light,
+          })}
         />
       </div>
     )
@@ -70,7 +65,9 @@ function ThemeModeBtn() {
     <div style={{ zoom: 0.25 }}>
       <ToggleTheme2
         active={isDark}
-        onClick={active => setThemeMode(active ? ThemeMode.Dark : ThemeMode.Light)}
+        onClick={active => setSettings({
+          themeMode: active ? ThemeMode.Dark : ThemeMode.Light,
+        })}
       />
     </div>
   )

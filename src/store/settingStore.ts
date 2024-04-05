@@ -1,5 +1,4 @@
 import { create } from 'zustand'
-
 import { getItem, removeItem, setItem } from '@/utils/storage'
 
 import { type ComponentSize, StorageEnum, ThemeColorPresets, ThemeLayout, ThemeMode } from '#/enum'
@@ -11,18 +10,19 @@ interface SettingsType {
   themeStretch: boolean
   breadCrumb: boolean
   multiTab: boolean
+  collapsed: boolean
   componentSize: `${ComponentSize}`
 }
 interface SettingStore {
   settings: SettingsType
   // 使用 actions 命名空间来存放所有的 action
   actions: {
-    setSettings: (settings: SettingsType) => void
+    setSettings: (settings: Partial<SettingsType>) => void
     clearSettings: () => void
   }
 }
 
-const useSettingStore = create<SettingStore>(set => ({
+const useSettingStore = create<SettingStore>((set, get) => ({
   settings: getItem<SettingsType>(StorageEnum.Settings) || {
     themeColorPresets: ThemeColorPresets.Default,
     themeMode: ThemeMode.Light,
@@ -30,12 +30,15 @@ const useSettingStore = create<SettingStore>(set => ({
     themeStretch: false,
     breadCrumb: true,
     multiTab: true,
+    collapsed: false,
     componentSize: 'middle',
   },
   actions: {
     setSettings: (settings) => {
-      set({ settings })
-      setItem(StorageEnum.Settings, settings)
+      const { settings: defaultSettings } = get()
+      const newSettings = { ...defaultSettings, ...settings }
+      set({ settings: newSettings })
+      setItem(StorageEnum.Settings, newSettings)
     },
     clearSettings() {
       removeItem(StorageEnum.Settings)

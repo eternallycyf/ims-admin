@@ -33,48 +33,6 @@ function SettingButton() {
     = settings
   const { setSettings } = useSettingActions()
 
-  const setComponentSize = (componentSize: `${ComponentSize}`) => {
-    setSettings({
-      ...settings,
-      componentSize,
-    })
-  }
-
-  const setThemeColorPresets = (themeColorPresets: ThemeColorPresets) => {
-    setSettings({
-      ...settings,
-      themeColorPresets,
-    })
-  }
-
-  const setThemeLayout = (themeLayout: ThemeLayout) => {
-    setSettings({
-      ...settings,
-      themeLayout,
-    })
-  }
-
-  const setThemeStretch = (themeStretch: boolean) => {
-    setSettings({
-      ...settings,
-      themeStretch,
-    })
-  }
-
-  const setBreadCrumn = (checked: boolean) => {
-    setSettings({
-      ...settings,
-      breadCrumb: checked,
-    })
-  }
-
-  const setMultiTab = (checked: boolean) => {
-    setSettings({
-      ...settings,
-      multiTab: checked,
-    })
-  }
-
   const style: CSSProperties = {
     backdropFilter: 'blur(20px)',
     backgroundImage: `url("${CyanBlur}"), url("${RedBlur}")`,
@@ -165,7 +123,7 @@ function SettingButton() {
                 size={ComponentSize.Small}
                 buttonStyle="solid"
                 value={componentSize}
-                onChange={(e: RadioChangeEvent) => setComponentSize(e.target.value)}
+                onChange={(e: RadioChangeEvent) => setSettings({ componentSize: e.target.value })}
               >
                 {Object.values(ComponentSize).map(key => (
                   <Radio.Button key={key} value={key}>
@@ -183,7 +141,7 @@ function SettingButton() {
             </div>
             <div className="grid grid-cols-3 gap-4">
               <Card
-                onClick={() => setThemeLayout(ThemeLayout.Vertical)}
+                onClick={() => setSettings({ themeLayout: ThemeLayout.Vertical })}
                 className="h-14 cursor-pointer"
                 style={{ flexGrow: 1, flexShrink: 0 }}
                 styles={{
@@ -218,7 +176,7 @@ function SettingButton() {
                 </div>
               </Card>
               <Card
-                onClick={() => setThemeLayout(ThemeLayout.Horizontal)}
+                onClick={() => setSettings({ themeLayout: ThemeLayout.Horizontal })}
                 className="h-14 cursor-pointer"
                 style={{ flexGrow: 1, flexShrink: 0 }}
                 styles={{
@@ -254,7 +212,7 @@ function SettingButton() {
                 </div>
               </Card>
               <Card
-                onClick={() => setThemeLayout(ThemeLayout.Mini)}
+                onClick={() => setSettings({ themeLayout: ThemeLayout.Mini })}
                 className="h-14 cursor-pointer"
                 style={{ flexGrow: 1, flexShrink: 0 }}
                 styles={{
@@ -304,7 +262,7 @@ function SettingButton() {
             </div>
 
             <Card
-              onClick={() => setThemeStretch(!themeStretch)}
+              onClick={() => setSettings({ themeStretch: !themeStretch })}
               className="h-20 w-full flex cursor-pointer items-center justify-center"
               styles={{
                 body: {
@@ -356,7 +314,7 @@ function SettingButton() {
                   key={preset}
                   className="h-14 w-full flex cursor-pointer items-center justify-center"
                   style={{ backgroundColor: themeColorPresets === preset ? `${color}14` : '' }}
-                  onClick={() => setThemeColorPresets(preset as ThemeColorPresets)}
+                  onClick={() => setSettings({ themeColorPresets: preset as ThemeColorPresets })}
                 >
                   <div style={{ color }}>
                     <i className="i-material-symbols-light:circle" style={{ fontSize: themeColorPresets === preset ? 18 : 12 }} />
@@ -383,7 +341,7 @@ function SettingButton() {
                 <Switch
                   size="small"
                   checked={breadCrumb}
-                  onChange={checked => setBreadCrumn(checked)}
+                  onChange={checked => setSettings({ breadCrumb: checked })}
                 />
               </div>
               <div
@@ -397,7 +355,7 @@ function SettingButton() {
                 <Switch
                   size="small"
                   checked={multiTab}
-                  onChange={checked => setMultiTab(checked)}
+                  onChange={checked => setSettings({ multiTab: checked })}
                 />
               </div>
             </div>

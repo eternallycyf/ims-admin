@@ -21,9 +21,10 @@ import {
 import { Iconify } from '@/components/icon'
 import { type KeepAliveTab, useKeepAlive } from '@/hooks/web'
 
-import { MultiTabOperation } from '#/enum'
+import { MultiTabOperation, SpecialRouterEnum } from '#/enum'
 import { useThemeToken } from '@/hooks/theme'
-import { useRouter } from '@/hooks/router'
+import { useMatchRouteMeta, useRouter } from '@/hooks/router'
+import { useMenuInfo, useMenuInfoActions } from '@/store/useMenuInfo'
 
 interface Props {
   offsetTop?: boolean
@@ -106,10 +107,11 @@ export default function MultiTabs(_props: Props) {
 
   const [_, { toggleFullscreen: toggleFullScreen }] = useFullscreen(tabContentRef)
 
+  const { tabsList } = useMenuInfo()
+  const currentRouteMeta = useMatchRouteMeta()
+  const { setRouteInfo } = useMenuInfoActions()
   const {
-    tabs,
     activeTabRoutePath,
-    setTabs,
     closeTab,
     refreshTab,
     closeOthersTab,
@@ -137,7 +139,7 @@ export default function MultiTabs(_props: Props) {
         label: t(`sys.tab.${MultiTabOperation.CLOSE}`),
         key: MultiTabOperation.CLOSE,
         icon: <Iconify icon="material-symbols:close" size={18} />,
-        disabled: tabs.length === 1,
+        disabled: tabsList.length === 1 || openDropdownTabKey === SpecialRouterEnum.HOME,
       },
       {
         type: 'divider',
@@ -152,13 +154,13 @@ export default function MultiTabs(_props: Props) {
             className="rotate-180"
           />
         ),
-        disabled: tabs.findIndex(tab => tab.key === openDropdownTabKey) === 0,
+        disabled: tabsList.findIndex(tab => tab.key === openDropdownTabKey) === 0,
       },
       {
         label: t(`sys.tab.${MultiTabOperation.CLOSERIGHT}`),
         key: MultiTabOperation.CLOSERIGHT,
         icon: <Iconify icon="material-symbols:tab-close-right-outline" size={18} />,
-        disabled: tabs.findIndex(tab => tab.key === openDropdownTabKey) === tabs.length - 1,
+        disabled: tabsList.findIndex(tab => tab.key === openDropdownTabKey) === tabsList.length - 1,
       },
       {
         type: 'divider',
@@ -167,15 +169,16 @@ export default function MultiTabs(_props: Props) {
         label: t(`sys.tab.${MultiTabOperation.CLOSEOTHERS}`),
         key: MultiTabOperation.CLOSEOTHERS,
         icon: <Iconify icon="material-symbols:tab-close-outline" size={18} />,
-        disabled: tabs.length === 1,
+        disabled: tabsList.length === 1,
       },
       {
         label: t(`sys.tab.${MultiTabOperation.CLOSEALL}`),
         key: MultiTabOperation.CLOSEALL,
         icon: <Iconify icon="mdi:collapse-all-outline" size={18} />,
+        disabled: tabsList.length === 1,
       },
     ],
-    [openDropdownTabKey, t, tabs],
+    [openDropdownTabKey, t, tabsList, currentRouteMeta],
   )
 
   /**
@@ -253,7 +256,9 @@ export default function MultiTabs(_props: Props) {
    * 渲染单个tab
    */
   const renderTabLabel = useCallback(
-    (tab: KeepAliveTab) => {
+    (tab: KeepAliveTab & {
+      outlet: any
+    }) => {
       if (tab.hideTab)
         return null
       return (
@@ -275,22 +280,24 @@ export default function MultiTabs(_props: Props) {
             onMouseLeave={() => setHoveringTabKey('')}
           >
             <div>{t(tab.label)}</div>
-            <Iconify
-              icon="ion:close-outline"
-              size={18}
-              className="cursor-pointer opacity-50"
-              onClick={(e) => {
-                e.stopPropagation()
-                closeTab(tab.key)
-              }}
-              style={{
-                visibility:
+            {tab?.key !== SpecialRouterEnum.HOME && (
+              <Iconify
+                icon="ion:close-outline"
+                size={18}
+                className="cursor-pointer opacity-50"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  closeTab(tab.key)
+                }}
+                style={{
+                  visibility:
                   (tab.key !== activeTabRoutePath && tab.key !== hoveringTabKey)
-                  || tabs.length === 1
+                  || tabsList.length === 1
                     ? 'hidden'
                     : 'visible',
-              }}
-            />
+                }}
+              />
+            )}
           </div>
         </Dropdown>
       )
@@ -300,7 +307,7 @@ export default function MultiTabs(_props: Props) {
       menuItems,
       activeTabRoutePath,
       hoveringTabKey,
-      tabs.length,
+      tabsList.length,
       menuClick,
       closeTab,
       calcTabStyle,
@@ -312,27 +319,43 @@ export default function MultiTabs(_props: Props) {
    */
 
   const tabItems = useMemo(() => {
-    return tabs?.map(tab => ({
-      label: renderTabLabel(tab),
-      key: tab.key,
-      closable: tabs.length > 1, // 保留一个
-      children: (
-        <div ref={tabContentRef} key={tab.timeStamp}>
-          {tab.children}
-        </div>
-      ),
-    }))
-  }, [tabs, renderTabLabel])
+    return tabsList.map((item) => {
+      if (item?.key === currentRouteMeta?.key) {
+        const tab = { ...item, outlet: currentRouteMeta.outlet }
+        return {
+          label: renderTabLabel(tab),
+          key: tab.key,
+          closable: tabsList.length > 1, // 保留一个
+          children: (
+            <div ref={tabContentRef} key={tab.timeStamp}>
+              {tab.outlet}
+            </div>
+          ),
+        }
+      }
+      else {
+        return {
+          ...item,
+          label: renderTabLabel({ ...item, outlet: null }),
+          key: item.key,
+          closable: tabsList.length > 1, // 保留一个
+          children: null,
+        }
+      }
+    })
+  }, [tabsList, currentRouteMeta, tabsList, renderTabLabel])
 
   const sensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
 
   const onDragEnd = ({ active, over }: DragEndEvent) => {
+    if (active?.id === SpecialRouterEnum.HOME || over?.id === SpecialRouterEnum.HOME)
+      return
     if (active.id !== over?.id) {
-      setTabs((prev) => {
-        const activeIndex = prev.findIndex(i => i.key === active.id)
-        const overIndex = prev.findIndex(i => i.key === over?.id)
-        return arrayMove(prev, activeIndex, overIndex)
-      })
+      const newList = [...tabsList]
+      const activeIndex = newList.findIndex(tab => tab.key === active.id)
+      const overIndex = newList.findIndex(tab => tab.key === over?.id)
+      const list = arrayMove(newList, activeIndex, overIndex)
+      setRouteInfo({ tabsList: list })
     }
   }
 
@@ -343,7 +366,7 @@ export default function MultiTabs(_props: Props) {
     if (!scrollContainer || !scrollContainer.current)
       return
 
-    const index = tabs.findIndex(tab => tab.key === activeTabRoutePath)
+    const index = tabsList.findIndex(tab => tab.key === activeTabRoutePath)
     const currentTabElement = scrollContainer.current.querySelector(`#tab-${index}`)
     if (currentTabElement) {
       currentTabElement.scrollIntoView({
@@ -351,7 +374,7 @@ export default function MultiTabs(_props: Props) {
         behavior: 'smooth',
       })
     }
-  }, [activeTabRoutePath, tabs])
+  }, [activeTabRoutePath, tabsList])
 
   /**
    * scrollContainer 监听wheel事件
@@ -380,13 +403,21 @@ export default function MultiTabs(_props: Props) {
         renderTabBar={(tabBarProps, DefaultTabBar) => (
           <div ref={scrollContainer}>
             <DndContext sensors={[sensor]} onDragEnd={onDragEnd} modifiers={[restrictToHorizontalAxis]}>
-              <SortableContext items={tabs.map(i => i.key)} strategy={horizontalListSortingStrategy}>
+              <SortableContext items={tabsList.map(i => i.key)} strategy={horizontalListSortingStrategy}>
                 <DefaultTabBar {...tabBarProps}>
-                  {node => (
-                    <DraggableTabNode {...node.props} key={node.key}>
-                      {node}
-                    </DraggableTabNode>
-                  )}
+                  {(node) => {
+                    if (node.key === SpecialRouterEnum.HOME)
+                      return node
+                    return (
+                      <DraggableTabNode
+                        {...node.props}
+                        key={node.key}
+                        isDragDisabled={node.key === SpecialRouterEnum.HOME}
+                      >
+                        {node}
+                      </DraggableTabNode>
+                    )
+                  }}
                 </DefaultTabBar>
               </SortableContext>
             </DndContext>
