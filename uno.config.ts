@@ -42,8 +42,6 @@ export default defineConfig({
       'white-hover': 'var(--white-hover)',
       'white-active': 'var(--white-active)',
       'ims-bg': 'var(--ims-bg)',
-      'ims-scrollbar': 'var(--ims-scrollbar)',
-      'ims-scrollbar-hover': 'var(--ims-scrollbar-hover)',
     },
     spacing: {
       xss: '4px',

@@ -8,7 +8,6 @@ import { Card, Drawer, Radio, type RadioChangeEvent, Switch, Tooltip } from 'ant
 import { type CSSProperties, useState } from 'react'
 import { m } from 'framer-motion'
 import Color from 'color'
-import { MdCircle } from 'react-icons/md'
 import { IconButton, SvgIcon } from '@/components/icon'
 import { varHover } from '@/components/animate/variants/action'
 import RedBlur from '@/assets/images/background/red-blur.png'
@@ -360,7 +359,7 @@ function SettingButton() {
                   onClick={() => setThemeColorPresets(preset as ThemeColorPresets)}
                 >
                   <div style={{ color }}>
-                    <MdCircle style={{ fontSize: themeColorPresets === preset ? 24 : 12 }} />
+                    <i className="i-material-symbols-light:circle" style={{ fontSize: themeColorPresets === preset ? 18 : 12 }} />
                   </div>
                 </Card>
               ))}

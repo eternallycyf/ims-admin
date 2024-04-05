@@ -1,4 +1,4 @@
-import { isEmpty } from 'ramda'
+import { isEmpty } from 'lodash'
 import { Suspense, lazy, useMemo } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 

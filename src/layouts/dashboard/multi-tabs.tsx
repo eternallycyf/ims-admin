@@ -1,28 +1,28 @@
-import type { MenuProps, TabsProps } from 'antd'
+import type { MenuProps } from 'antd'
 import { Dropdown, Tabs } from 'antd'
-import Color from 'color'
 import type { CSSProperties } from 'react'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import type { OnDragEndResponder } from 'react-beautiful-dnd'
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useFullscreen, useToggle } from 'react-use'
+import { useFullscreen } from 'ahooks'
 import styled from 'styled-components'
-
+import type { DragEndEvent } from '@dnd-kit/core'
+import { DndContext, PointerSensor, useSensor } from '@dnd-kit/core'
 import {
-  HEADER_HEIGHT,
-  MULTI_TABS_HEIGHT,
-  NAV_COLLAPSED_WIDTH,
-  NAV_HORIZONTAL_HEIGHT,
-  NAV_WIDTH,
-  OFFSET_HEADER_HEIGHT,
-} from './'
+  SortableContext,
+  arrayMove,
+  horizontalListSortingStrategy,
+  useSortable,
+} from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+import {
+  restrictToHorizontalAxis,
+} from '@dnd-kit/modifiers'
+
 import { Iconify } from '@/components/icon'
 import { type KeepAliveTab, useKeepAlive } from '@/hooks/web'
-import { useSettings } from '@/store/settingStore'
 
-import { MultiTabOperation, ThemeLayout } from '#/enum'
-import { useResponsive, useThemeToken } from '@/hooks/theme'
+import { MultiTabOperation } from '#/enum'
+import { useThemeToken } from '@/hooks/theme'
 import { useRouter } from '@/hooks/router'
 
 interface Props {
@@ -46,6 +46,16 @@ const StyledMultiTabs = styled.div`
         height: 100%;
       }
     }
+    
+    .ant-tabs-tab{
+      padding: 0;
+      margin-bottom: 2px;
+      margin-left: 2px !important;
+    }
+    
+    .ant-tabs-nav-operations{
+      display: none;
+    }
   }
 
   /* 隐藏滚动条 */
@@ -61,17 +71,40 @@ const StyledMultiTabs = styled.div`
   }
 `
 
-export default function MultiTabs({ offsetTop = false }: Props) {
+interface DraggableTabPaneProps extends React.HTMLAttributes<HTMLDivElement> {
+  'data-node-key': string
+}
+
+function DraggableTabNode(props: DraggableTabPaneProps) {
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
+    id: props['data-node-key'],
+  })
+
+  const style: React.CSSProperties = {
+    ...props.style,
+    transform: CSS.Transform.toString(transform && { ...transform, scaleX: 1 }),
+    transition,
+  }
+
+  return React.cloneElement(props.children as React.ReactElement, {
+    ref: setNodeRef,
+    style,
+    ...attributes,
+    ...listeners,
+  })
+}
+
+export default function MultiTabs(_props: Props) {
   const { t } = useTranslation()
   const { push } = useRouter()
-  const scrollContainer = useRef<HTMLDivElement>(null)
+  const scrollContainer = useRef<HTMLDivElement>(null!)
   const [hoveringTabKey, setHoveringTabKey] = useState('')
   const [openDropdownTabKey, setopenDropdownTabKey] = useState('')
   const themeToken = useThemeToken()
 
-  const tabContentRef = useRef(null)
-  const [fullScreen, toggleFullScreen] = useToggle(false)
-  useFullscreen(tabContentRef, fullScreen, { onClose: () => toggleFullScreen(false) })
+  const tabContentRef = useRef<HTMLDivElement>(null!)
+
+  const [_, { toggleFullscreen: toggleFullScreen }] = useFullscreen(tabContentRef)
 
   const {
     tabs,
@@ -230,6 +263,8 @@ export default function MultiTabs({ offsetTop = false }: Props) {
           onOpenChange={open => onOpenChange(open, tab)}
         >
           <div
+            id={`tab-${tab?.key}`}
+            onClick={() => push(tab.key)}
             className="relative mx-px flex select-none items-center px-4 py-1"
             style={calcTabStyle(tab)}
             onMouseEnter={() => {
@@ -289,91 +324,16 @@ export default function MultiTabs({ offsetTop = false }: Props) {
     }))
   }, [tabs, renderTabLabel])
 
-  /**
-   * 拖拽结束事件
-   */
-  const onDragEnd: OnDragEndResponder = ({ destination, source }) => {
-    // 拖拽到非法非 droppable区域
-    if (!destination)
-      return
+  const sensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
 
-    // 原地放下
-    if (destination.droppableId === source.droppableId && destination.index === source.index)
-      return
-
-    const newTabs = Array.from(tabs)
-    const [movedTab] = newTabs.splice(source.index, 1)
-    newTabs.splice(destination.index, 0, movedTab)
-    setTabs(newTabs)
-  }
-
-  /**
-   * 渲染 tabbar
-   */
-  const { themeLayout } = useSettings()
-  const { colorBorder, colorBgElevated } = useThemeToken()
-  const { screenMap } = useResponsive()
-
-  const multiTabsStyle: CSSProperties = {
-    position: 'fixed',
-    top: offsetTop ? OFFSET_HEADER_HEIGHT - 2 : HEADER_HEIGHT,
-    left: 0,
-    height: MULTI_TABS_HEIGHT,
-    backgroundColor: Color(colorBgElevated).alpha(1).toString(),
-    borderBottom: `1px dashed ${Color(colorBorder).alpha(0.6).toString()}`,
-    transition: 'top 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-  }
-
-  if (themeLayout === ThemeLayout.Horizontal) {
-    multiTabsStyle.top = HEADER_HEIGHT + NAV_HORIZONTAL_HEIGHT - 2
-  }
-  else if (screenMap.md) {
-    multiTabsStyle.right = '0px'
-    multiTabsStyle.left = 'auto'
-    multiTabsStyle.width = `calc(100% - ${
-      themeLayout === ThemeLayout.Vertical ? NAV_WIDTH : NAV_COLLAPSED_WIDTH
-    }px`
-  }
-  else {
-    multiTabsStyle.width = '100vw'
-  }
-  const renderTabBar: TabsProps['renderTabBar'] = () => {
-    return (
-      <div style={multiTabsStyle} className="z-20 w-full">
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="tabsDroppable" direction="horizontal">
-            {provided => (
-              <div ref={provided.innerRef} {...provided.droppableProps} className="w-full flex">
-                <div ref={scrollContainer} className="hide-scrollbar w-full flex px-2">
-                  {tabs.map((tab, index) => (
-                    <div
-                      id={`tab-${index}`}
-                      className="flex-shrink-0"
-                      key={tab.key}
-                      onClick={() => push(tab.key)}
-                    >
-                      <Draggable key={tab.key} draggableId={tab.key} index={index}>
-                        {provided => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            className="w-auto"
-                          >
-                            {renderTabLabel(tab)}
-                          </div>
-                        )}
-                      </Draggable>
-                    </div>
-                  ))}
-                </div>
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
-      </div>
-    )
+  const onDragEnd = ({ active, over }: DragEndEvent) => {
+    if (active.id !== over?.id) {
+      setTabs((prev) => {
+        const activeIndex = prev.findIndex(i => i.key === active.id)
+        const overIndex = prev.findIndex(i => i.key === over?.id)
+        return arrayMove(prev, activeIndex, overIndex)
+      })
+    }
   }
 
   /**
@@ -414,11 +374,24 @@ export default function MultiTabs({ offsetTop = false }: Props) {
     <StyledMultiTabs>
       <Tabs
         size="small"
-        type="card"
         tabBarGutter={4}
         activeKey={activeTabRoutePath}
         items={tabItems}
-        renderTabBar={renderTabBar}
+        renderTabBar={(tabBarProps, DefaultTabBar) => (
+          <div ref={scrollContainer}>
+            <DndContext sensors={[sensor]} onDragEnd={onDragEnd} modifiers={[restrictToHorizontalAxis]}>
+              <SortableContext items={tabs.map(i => i.key)} strategy={horizontalListSortingStrategy}>
+                <DefaultTabBar {...tabBarProps}>
+                  {node => (
+                    <DraggableTabNode {...node.props} key={node.key}>
+                      {node}
+                    </DraggableTabNode>
+                  )}
+                </DefaultTabBar>
+              </SortableContext>
+            </DndContext>
+          </div>
+        )}
       />
     </StyledMultiTabs>
   )

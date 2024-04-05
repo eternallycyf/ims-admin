@@ -1,7 +1,6 @@
 import { Alert, Button, Checkbox, Col, Divider, Form, Input, Row } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AiFillGithub, AiFillGoogleCircle, AiFillWechat } from 'react-icons/ai'
 
 import { useLoginStateContext } from '@/Application'
 import { DEFAULT_USER, TEST_USER } from '@/_mock/assets'
@@ -141,9 +140,9 @@ function LoginForm() {
         <Divider className="!text-xs">{t('sys.login.otherSignIn')}</Divider>
 
         <div className="flex cursor-pointer justify-around text-2xl">
-          <AiFillGithub />
-          <AiFillWechat />
-          <AiFillGoogleCircle />
+          <i className="i-simple-icons:github h-12px w-12px" />
+          <i className="i-ant-design:wechat-filled h-12px w-12px" />
+          <i className="i-ri:yuque-fill h-12px w-12px" />
         </div>
       </Form>
     </>

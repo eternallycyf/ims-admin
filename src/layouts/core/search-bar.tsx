@@ -6,7 +6,7 @@ import Color from 'color'
 import type { CSSProperties } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useBoolean, useEvent, useKeyPressEvent } from 'react-use'
+import { useBoolean, useEventListener, useKeyPress } from 'ahooks'
 import styled from 'styled-components'
 
 import { IconButton, SvgIcon } from '@/components/icon'
@@ -32,7 +32,8 @@ export default function SearchBar() {
   const inputRef = useRef<InputRef>(null)
   const listRef = useRef<HTMLDivElement>(null)
 
-  const [search, toggle] = useBoolean(false)
+  const [search, { setTrue, setFalse }] = useBoolean(false)
+
   const themeToken = useThemeToken()
 
   const flattenedRoutes = useFlattenedRoutes()
@@ -67,12 +68,12 @@ export default function SearchBar() {
   }
 
   const handleOpen = () => {
-    toggle(true)
+    setTrue()
     setSearchQuery('')
     setSelectedItemIndex(0)
   }
 
-  const handleCancel = () => toggle(false)
+  const handleCancel = () => setFalse()
 
   const handleSelect = (key: string) => {
     replace(key)
@@ -85,9 +86,9 @@ export default function SearchBar() {
       handleOpen()
     }
   }
-  useEvent('keydown', handleMetaK)
+  useEventListener('keydown', handleMetaK)
 
-  useKeyPressEvent('ArrowUp', (event) => {
+  useKeyPress('uparrow', (event) => {
     if (!search)
       return
     event.preventDefault()
@@ -99,7 +100,7 @@ export default function SearchBar() {
     scrollSelectedItemIntoView(nextIndex)
   })
 
-  useKeyPressEvent('ArrowDown', (event) => {
+  useKeyPress('downarrow', (event) => {
     if (!search)
       return
     event.preventDefault()
@@ -111,18 +112,18 @@ export default function SearchBar() {
     scrollSelectedItemIntoView(nextIndex)
   })
 
-  useKeyPressEvent('Enter', (event) => {
+  useKeyPress('Enter', (event) => {
     if (!search || searchResult.length === 0)
       return
     event.preventDefault()
     const selectItem = searchResult[selectedItemIndex].key
     if (selectItem) {
       handleSelect(selectItem)
-      toggle(false)
+      setFalse()
     }
   })
 
-  useKeyPressEvent('Escape', () => {
+  useKeyPress('Escape', () => {
     handleCancel()
   })
 

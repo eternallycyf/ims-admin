@@ -1,7 +1,7 @@
 import { message as Message } from 'antd'
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import axios from 'axios'
-import { isEmpty } from 'ramda'
+import { isEmpty } from 'lodash'
 
 import { t } from '@/locales/i18n'
 

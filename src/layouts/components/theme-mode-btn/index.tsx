@@ -39,12 +39,11 @@ function ThemeModeBtn() {
       'text-color': colorTextBase,
       'border-color': colorBorder,
       'component-background-color': isDark ? '#151515' : '#fff',
-      'layout-body-background': isDark ? '#f0f2f5' : '#000',
+      // 全屏样式
+      'layout-body-background': isDark ? '#000' : '#f0f2f5',
       'white-hover': isDark ? whiteColors[6] : whiteColors[4],
       'white-active': isDark ? whiteColors[4] : whiteColors[6],
       'ims-bg': isDark ? '#333' : '#fff',
-      'ims-scrollbar': isDark ? '#111' : '#eee',
-      'ims-scrollbar-hover': isDark ? '#222' : '#333',
     }
     Object.entries(themeVariables).forEach(([key, value]) => {
       document.documentElement.style.setProperty(`--${key}`, value as string)

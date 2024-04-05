@@ -1,4 +1,4 @@
-import { ascend } from 'ramda'
+import _ from 'lodash'
 
 import type { AppRouteObject, RouteMeta } from '#/router'
 
@@ -6,15 +6,16 @@ import type { AppRouteObject, RouteMeta } from '#/router'
  * return menu routes
  */
 export function menuFilter(items: AppRouteObject[]) {
-  return items
+  return _.chain(items)
     .filter((item) => {
       const show = item.meta?.key
       if (show && item.children)
         item.children = menuFilter(item.children)
 
-      return show
+      return !!show
     })
-    .sort(ascend(item => item.order || Number.POSITIVE_INFINITY))
+    .sortBy(item => item.order || Number.POSITIVE_INFINITY)
+    .value()
 }
 
 /**

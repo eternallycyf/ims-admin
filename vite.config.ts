@@ -3,7 +3,6 @@ import react from '@vitejs/plugin-react'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
-import svgr from 'vite-plugin-svgr'
 import UnoCSS from 'unocss/vite'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import { initGlobalLessVaribles } from './src/theme/initLessVar.js'
@@ -40,7 +39,6 @@ export default defineConfig({
   plugins: [
     UnoCSS(),
     react(),
-    svgr(),
     // 同步tsconfig.json的path设置alias
     tsconfigPaths(),
     createSvgIconsPlugin({
