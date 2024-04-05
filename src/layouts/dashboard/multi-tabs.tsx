@@ -124,60 +124,66 @@ export default function MultiTabs(_props: Props) {
    * tab dropdown下拉选
    */
   const menuItems = useMemo<MenuProps['items']>(
-    () => [
-      {
-        label: t(`sys.tab.${MultiTabOperation.FULLSCREEN}`),
-        key: MultiTabOperation.FULLSCREEN,
-        icon: <Iconify icon="material-symbols:fullscreen" size={18} />,
-      },
-      {
-        label: t(`sys.tab.${MultiTabOperation.REFRESH}`),
-        key: MultiTabOperation.REFRESH,
-        icon: <Iconify icon="mdi:reload" size={18} />,
-      },
-      {
-        label: t(`sys.tab.${MultiTabOperation.CLOSE}`),
-        key: MultiTabOperation.CLOSE,
-        icon: <Iconify icon="material-symbols:close" size={18} />,
-        disabled: tabsList.length === 1 || openDropdownTabKey === SpecialRouterEnum.HOME,
-      },
-      {
-        type: 'divider',
-      },
-      {
-        label: t(`sys.tab.${MultiTabOperation.CLOSELEFT}`),
-        key: MultiTabOperation.CLOSELEFT,
-        icon: (
-          <Iconify
-            icon="material-symbols:tab-close-right-outline"
-            size={18}
-            className="rotate-180"
-          />
-        ),
-        disabled: tabsList.findIndex(tab => tab.key === openDropdownTabKey) === 0,
-      },
-      {
-        label: t(`sys.tab.${MultiTabOperation.CLOSERIGHT}`),
-        key: MultiTabOperation.CLOSERIGHT,
-        icon: <Iconify icon="material-symbols:tab-close-right-outline" size={18} />,
-        disabled: tabsList.findIndex(tab => tab.key === openDropdownTabKey) === tabsList.length - 1,
-      },
-      {
-        type: 'divider',
-      },
-      {
-        label: t(`sys.tab.${MultiTabOperation.CLOSEOTHERS}`),
-        key: MultiTabOperation.CLOSEOTHERS,
-        icon: <Iconify icon="material-symbols:tab-close-outline" size={18} />,
-        disabled: tabsList.length === 1,
-      },
-      {
-        label: t(`sys.tab.${MultiTabOperation.CLOSEALL}`),
-        key: MultiTabOperation.CLOSEALL,
-        icon: <Iconify icon="mdi:collapse-all-outline" size={18} />,
-        disabled: tabsList.length === 1,
-      },
-    ],
+    () => {
+      const currentIndex = tabsList.findIndex(tab => tab.key === openDropdownTabKey)
+      const otherLength = tabsList.filter(item => item.key !== SpecialRouterEnum.HOME
+        && item.key !== openDropdownTabKey,
+      )
+      return [
+        {
+          label: t(`sys.tab.${MultiTabOperation.FULLSCREEN}`),
+          key: MultiTabOperation.FULLSCREEN,
+          icon: <Iconify icon="material-symbols:fullscreen" size={18} />,
+        },
+        {
+          label: t(`sys.tab.${MultiTabOperation.REFRESH}`),
+          key: MultiTabOperation.REFRESH,
+          icon: <Iconify icon="mdi:reload" size={18} />,
+        },
+        {
+          label: t(`sys.tab.${MultiTabOperation.CLOSE}`),
+          key: MultiTabOperation.CLOSE,
+          icon: <Iconify icon="material-symbols:close" size={18} />,
+          disabled: tabsList.length === 1 || openDropdownTabKey === SpecialRouterEnum.HOME,
+        },
+        {
+          type: 'divider',
+        },
+        {
+          label: t(`sys.tab.${MultiTabOperation.CLOSELEFT}`),
+          key: MultiTabOperation.CLOSELEFT,
+          icon: (
+            <Iconify
+              icon="material-symbols:tab-close-right-outline"
+              size={18}
+              className="rotate-180"
+            />
+          ),
+          disabled: currentIndex === 0 || currentIndex === 1,
+        },
+        {
+          label: t(`sys.tab.${MultiTabOperation.CLOSERIGHT}`),
+          key: MultiTabOperation.CLOSERIGHT,
+          icon: <Iconify icon="material-symbols:tab-close-right-outline" size={18} />,
+          disabled: currentIndex === tabsList.length - 1,
+        },
+        {
+          type: 'divider',
+        },
+        {
+          label: t(`sys.tab.${MultiTabOperation.CLOSEOTHERS}`),
+          key: MultiTabOperation.CLOSEOTHERS,
+          icon: <Iconify icon="material-symbols:tab-close-outline" size={18} />,
+          disabled: otherLength.length === 0,
+        },
+        {
+          label: t(`sys.tab.${MultiTabOperation.CLOSEALL}`),
+          key: MultiTabOperation.CLOSEALL,
+          icon: <Iconify icon="mdi:collapse-all-outline" size={18} />,
+          disabled: tabsList.length === 1,
+        },
+      ]
+    },
     [openDropdownTabKey, t, tabsList, currentRouteMeta],
   )
 
