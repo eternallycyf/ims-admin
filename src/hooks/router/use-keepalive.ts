@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { useMatchRouteMeta, useRouter } from '@/hooks/router'
+import { isEmpty } from 'lodash'
+import { replaceDynamicParams, useMatchRouteMeta, useRouter } from '@/hooks/router'
 
 import type { RouteMeta } from '#/router'
 import { useMenuInfo, useMenuInfoActions } from '@/store/useMenuInfo'
@@ -59,7 +60,6 @@ export function useKeepAlive() {
    * Close all tabsList then navigate to the home page
    */
   const closeAll = useCallback(() => {
-    // setTabs([tabHomePage]);
     setRouteInfo({
       tabsList: tabsList.filter(item => item?.key === SpecialRouterEnum.HOME),
     })
@@ -103,7 +103,7 @@ export function useKeepAlive() {
       const index = prev.findIndex(item => item?.key === path)
 
       if (index >= 0)
-        prev[index].timeStamp = getKey()
+        prev[index].timeStamp = getTimeStamp()
 
       setRouteInfo({
         tabsList: [...prev],
@@ -115,16 +115,21 @@ export function useKeepAlive() {
   useEffect(() => {
     if (!currentRouteMeta)
       return
-    const existed = tabsList.find(item => item.key === currentRouteMeta.key)
+    let { key } = currentRouteMeta
+    const { outlet: _outlet, params = {} } = currentRouteMeta
+
+    if (!isEmpty(params))
+      key = replaceDynamicParams(key, params)
+
+    const existed = tabsList.find(item => item.key === key)
 
     if (!existed) {
-      const { outlet = '', params = undefined, search = '', state = undefined, key, ...info } = currentRouteMeta
+      const { outlet = '', params = undefined, search = '', state = undefined, ...info } = currentRouteMeta
 
       const item: KeepAliveTab = {
-        params,
-        key,
         ...info,
-        timeStamp: getKey(),
+        key,
+        timeStamp: getTimeStamp(),
       } as KeepAliveTab
       if (params)
         item.params = params
@@ -137,12 +142,13 @@ export function useKeepAlive() {
     }
     else {
       const newTabList = [...tabsList]
-      const index = newTabList.findIndex(item => item.key === currentRouteMeta.key)
+      const index = newTabList.findIndex(item => item.key === key)
 
       if (currentRouteMeta.params) {
         newTabList[index] = {
           ...newTabList[index],
           params: currentRouteMeta?.params,
+          timeStamp: getTimeStamp(),
         }
       }
 
@@ -150,6 +156,7 @@ export function useKeepAlive() {
         newTabList[index] = {
           ...newTabList[index],
           search: currentRouteMeta?.search,
+          timeStamp: getTimeStamp(),
         }
       }
 
@@ -157,13 +164,14 @@ export function useKeepAlive() {
         newTabList[index] = {
           ...newTabList[index],
           state: currentRouteMeta?.state,
+          timeStamp: getTimeStamp(),
         }
       }
 
       setRouteInfo({ tabsList: newTabList })
     }
 
-    setActiveTabRoutePath(currentRouteMeta?.key)
+    setActiveTabRoutePath(key)
   }, [currentRouteMeta])
 
   return {
@@ -178,6 +186,6 @@ export function useKeepAlive() {
   }
 }
 
-function getKey() {
+function getTimeStamp() {
   return new Date().getTime().toString()
 }

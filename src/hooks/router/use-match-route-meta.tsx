@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react'
 import type { Params } from 'react-router-dom'
 import { useLocation, useMatches, useOutlet } from 'react-router-dom'
 
+import { isEmpty } from 'lodash'
 import { useFlattenedRoutes } from './use-flattened-routes'
 import { useRouter } from './use-router'
 
 import type { RouteMeta } from '#/router'
-import { useMenuInfo } from '@/store/useMenuInfo'
 
 /**
  * 返回当前路由Meta信息
@@ -14,7 +14,6 @@ import { useMenuInfo } from '@/store/useMenuInfo'
 export function useMatchRouteMeta() {
   const { VITE_APP_HOMEPAGE: HOMEPAGE } = import.meta.env
   const [matchRouteMeta, setMatchRouteMeta] = useState<RouteMeta>()
-  const { tabsList } = useMenuInfo()
 
   // 获取路由组件实例
   const children = useOutlet()
@@ -40,16 +39,13 @@ export function useMatchRouteMeta() {
       const replacedKey = replaceDynamicParams(item.key, params)
       return replacedKey === pathname || `${replacedKey}/` === pathname
     })
-    const hasItem = tabsList?.some(item => item?.key === currentRouteMeta?.key)
-    const isMultiple = currentRouteMeta?.key?.includes(':')
 
     if (currentRouteMeta) {
       currentRouteMeta.outlet = children
-      if (isMultiple && !hasItem)
+      if (!isEmpty(params)) {
         currentRouteMeta.params = params
-
-      if (isMultiple && hasItem)
-        currentRouteMeta.params = params
+        currentRouteMeta.multiple = true
+      }
 
       if (location?.search)
         currentRouteMeta.search = location?.search
@@ -57,13 +53,13 @@ export function useMatchRouteMeta() {
       if (location?.state)
         currentRouteMeta.state = location?.state
 
-      setMatchRouteMeta(currentRouteMeta)
+      setMatchRouteMeta({ ...currentRouteMeta })
     }
     else {
       push(HOMEPAGE)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [matchs, tabsList])
+  }, [matchs])
 
   return matchRouteMeta
 }

@@ -13,10 +13,27 @@ function WorkBench() {
       },
     })
   }
+
+  const go2 = () => {
+    navigate({
+      pathname: `/management/system/user/123123`,
+      search: createSearchParams({ query: 'replace state' }).toString(),
+    }, {
+      state: {
+        tabTitle: 'replace state',
+      },
+    })
+  }
+
   return (
-    <a onClick={go}>
-      router-123123
-    </a>
+    <div>
+      <a block="" onClick={go}>
+        router-123123
+      </a>
+      <a block="" onClick={go2}>
+        replace state
+      </a>
+    </div>
   )
 }
 

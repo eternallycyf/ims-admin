@@ -277,12 +277,10 @@ export default function MultiTabs(_props: Props) {
           <div
             id={`tab-${tab?.key}`}
             onClick={() => {
-              let newKey = ''
-              if (tab?.key?.includes(':') && tab?.params)
-                newKey = replaceDynamicParams(tab.key, tab.params)
+              const tabKey = replaceDynamicParams(tab?.key, tab?.params)
 
               navigate({
-                pathname: newKey || tab?.key,
+                pathname: tabKey,
                 search: tab?.search,
               }, {
                 state: tab?.state,
@@ -341,8 +339,8 @@ export default function MultiTabs(_props: Props) {
 
   const tabItems = useMemo(() => {
     return tabsList.map(({ icon = '', ...item }) => {
-      if (item?.key === currentRouteMeta?.key) {
-        const tab = { ...item, outlet: currentRouteMeta.outlet }
+      if (item?.key === currentRouteMeta?.key || item?.multiple) {
+        const tab = { ...item, outlet: currentRouteMeta?.outlet }
         return {
           label: renderTabLabel(tab),
           key: tab.key,

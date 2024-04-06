@@ -81,11 +81,7 @@ export default function Menu(props: Props) {
    * events
    */
   const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
-    const latestOpenKey = keys.find(key => !openKeys.includes(key))
-    if (latestOpenKey)
-      setOpenKeys(keys)
-    else
-      setOpenKeys([])
+    setOpenKeys(keys)
   }
 
   const onClick: MenuProps['onClick'] = ({ key }) => {

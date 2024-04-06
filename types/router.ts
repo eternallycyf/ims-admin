@@ -43,6 +43,10 @@ export interface RouteMeta {
    */
   frameSrc?: string
   /**
+   * is dynamic route
+   */
+  multiple?: boolean
+  /**
    * dynamic route params
    *
    * @example /user/:id
