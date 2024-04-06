@@ -43,14 +43,6 @@ export default defineConfig({
       'white-active': 'var(--white-active)',
       'ims-bg': 'var(--ims-bg)',
     },
-    spacing: {
-      xss: '4px',
-      xs: '8px',
-      sm: '12px',
-      base: '16px',
-      lg: '24px',
-      xl: '32px',
-    },
     fontFamily: {
       code: 'FiraCode',
       mone: 'OperatorMono',

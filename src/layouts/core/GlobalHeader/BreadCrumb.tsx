@@ -54,5 +54,5 @@ export default function BreadCrumb() {
     setRouteInfo({ breadCrumbList })
   }, [matches, flattenedRoutes, t, permissionRoutes])
 
-  return <Breadcrumb items={breadCrumbList} className="!text-sm" />
+  return <Breadcrumb items={breadCrumbList} />
 }

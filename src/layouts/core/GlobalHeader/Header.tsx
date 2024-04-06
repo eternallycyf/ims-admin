@@ -67,7 +67,7 @@ export default function Header({ className = '', offsetTop = false }: Props) {
             transition: 'height 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
           }}
         >
-          <div className="flex items-baseline">
+          <div className="flex items-center">
             {themeLayout !== ThemeLayout.Horizontal
               ? (
                 <IconButton onClick={() => setDrawerOpen(true)} className="h-10 w-10 md:hidden">
@@ -77,17 +77,24 @@ export default function Header({ className = '', offsetTop = false }: Props) {
               : (
                 <Logo className="mr-2 text-xl" />
                 )}
-
-            <Space className="hidden md:block">
-              <button
-                onClick={toggleCollapsed}
-                className="inline cursor-pointer select-none rounded-full text-center !text-gray"
-                style={{ color: colorTextBase, borderColor: colorTextBase, fontSize: 16 }}
-              >
-                {collapsed ? <MenuUnfoldOutlined size={20} /> : <MenuFoldOutlined size={20} />}
-              </button>
-              {breadCrumb ? <BreadCrumb /> : null}
-            </Space>
+            {themeLayout !== ThemeLayout?.Horizontal
+              ? (
+                <Space className="hidden sm:block">
+                  <button
+                    onClick={toggleCollapsed}
+                    className="hidden cursor-pointer select-none rounded-full text-center sm:inline !text-gray"
+                    style={{ color: colorTextBase, borderColor: colorTextBase, fontSize: 16 }}
+                  >
+                    {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                  </button>
+                  {breadCrumb ? <BreadCrumb /> : null}
+                </Space>
+                )
+              : (
+                <>
+                  {breadCrumb ? <BreadCrumb /> : null}
+                </>
+                )}
           </div>
 
           <div className="flex">
