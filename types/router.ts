@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import type { RouteObject } from 'react-router-dom'
+import type { Params, RouteObject } from 'react-router-dom'
 
 export interface RouteMeta {
   /**
@@ -43,13 +43,15 @@ export interface RouteMeta {
    */
   frameSrc?: string
   /**
-   * multiple dynamic routing params
+   * dynamic route params
+   *
+   * @example /user/:id
    */
-  params?: any
+  params?: Params<string>
   /**
    * route search
    */
-  search?: any
+  search?: string
   /**
    * route state
    */

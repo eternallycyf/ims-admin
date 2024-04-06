@@ -1,6 +1,6 @@
 export * from './Content'
 export * from './CustomMenu'
-// export * from './Error'
+export * from './Error'
 export * from './GlobalHeader'
 export * from './Login'
 export * from './MultiTabs'

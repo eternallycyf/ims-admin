@@ -1,6 +1,7 @@
 import type React from 'react'
 import { useCallback, useEffect } from 'react'
-
+import { ErrorBoundary } from 'react-error-boundary'
+import { PageError } from '@/layouts/core'
 import { useRouter } from '@/hooks/router'
 import { useUserToken } from '@/store/userStore'
 
@@ -21,5 +22,5 @@ export function Authorized({ children }: Props) {
     check()
   }, [check])
 
-  return children
+  return <ErrorBoundary FallbackComponent={PageError}>{children}</ErrorBoundary>
 }

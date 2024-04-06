@@ -520,8 +520,8 @@ export const DEFAULT_USER = {
   permissions: ADMIN_ROLE.permission,
 }
 export const TEST_USER = {
-  id: faker.string.uuid(),
-  username: 'test@gmail.com',
+  id: 'efaa20ea-4dc5-47ee-a200-8a899be29494',
+  username: 'test',
   password: 'demo1234',
   email: faker.internet.email(),
   avatar: faker.image.avatarLegacy(),

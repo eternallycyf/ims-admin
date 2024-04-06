@@ -25,7 +25,7 @@ export const pagesSelect = Object.entries(pages).map(([path]) => {
 
 // 构建绝对路径的函数
 function resolveComponent(path: string) {
-  return pages[`${entryPath}${path}`] || (() => import('@/pages/sys/error/Page404'))
+  return pages[`${entryPath}${path}`]
 }
 
 /**
