@@ -3,8 +3,10 @@ import { Card, Col, Input, Row, Tooltip, Typography } from 'antd'
 import type { ChangeEvent } from 'react'
 import { useState } from 'react'
 
-import { IconButton, Iconify } from '@/components/icon'
-import { useCopyToClipboard } from '@/hooks/event/use-copy-to-clipboard'
+import Iconify from '@/components/icon/IconifyIcon'
+import IconButton from '@/components/icon/IconButton'
+
+import { useCopyToClipboard } from '@/hooks/event'
 
 export default function ClipboardPage() {
   const { copyFn } = useCopyToClipboard()

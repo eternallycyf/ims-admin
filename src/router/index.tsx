@@ -2,8 +2,8 @@ import { lazy } from 'react'
 import type { RouteObject } from 'react-router-dom'
 import { Navigate, RouterProvider, createHashRouter } from 'react-router-dom'
 
-import DashboardLayout from '@/layouts/dashboard/dashboard'
-import { Authorized } from '@/Application'
+import DashboardLayout from '@/layouts/layout/BasicLayout'
+import { Authorized } from '@/layouts/core'
 import { ErrorRoutes } from '@/router/error-routes'
 
 import type { AppRouteObject } from '#/router'

@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import type { ItemType } from 'antd/es/breadcrumb/Breadcrumb'
 import { getItem, removeItem, setItem } from '@/utils/storage'
 import { StorageEnum } from '#/enum'
-import type { KeepAliveTab } from '@/hooks/web'
+import type { KeepAliveTab } from '@/hooks/router'
 
 interface MenuRouteInfo {
   breadCrumbList: ItemType[]

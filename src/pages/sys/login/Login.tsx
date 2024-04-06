@@ -13,7 +13,7 @@ import { useUserToken } from '@/store/userStore'
 import Overlay2 from '@/assets/images/background/overlay_2.jpg'
 import DashboardImg from '@/assets/images/background/dashboard.png'
 import { useThemeToken } from '@/hooks/theme'
-import { LocalePicker } from '@/layouts/components'
+import { LocalePicker } from '@/layouts/core'
 
 const { VITE_APP_HOMEPAGE: HOMEPAGE } = import.meta.env
 

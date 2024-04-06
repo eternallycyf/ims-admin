@@ -1,4 +1,4 @@
-import { varBgColor, varBgKenburns, varBgPan } from './background'
+import { VarBgPan, varBgColor, varBgKenburns } from './background'
 import { varBounce } from './bounce'
 import { varFade } from './fade'
 import { varFlip } from './flip'
@@ -82,10 +82,10 @@ export function getVariant(variant = 'slideInUp') {
     kenburnsBottom: varBgKenburns().bottom,
     kenburnsLeft: varBgKenburns().left,
     kenburnsRight: varBgKenburns().right,
-    panTop: varBgPan().top,
-    panBottom: varBgPan().bottom,
-    panLeft: varBgPan().left,
-    panRight: varBgPan().right,
+    panTop: VarBgPan().top,
+    panBottom: VarBgPan().bottom,
+    panLeft: VarBgPan().left,
+    panRight: VarBgPan().right,
     color2x: varBgColor(),
     color3x: varBgColor({ colors: ['#19dcea', '#b22cff', '#ea2222'] }),
     color4x: varBgColor({

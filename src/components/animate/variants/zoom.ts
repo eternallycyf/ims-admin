@@ -1,4 +1,4 @@
-import type { VariantsType } from '../types'
+import type { VariantsType } from '../interface'
 
 //
 import { varTranEnter, varTranExit } from './transition'

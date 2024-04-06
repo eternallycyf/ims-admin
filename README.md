@@ -45,7 +45,7 @@ html {
 ### 新增html动态的变量
 
 - ims-admin/src/theme/init/initLessVar.js
-- ims-admin/src/layout/components/theme-mode-btn/index.tsx
+- ims-admin/src/layouts/core/GlobalHeader/ThemeModeBtn/index.tsx
 - ims-admin/public/style/global-var.less
 - uno.config.ts => theme.color
 

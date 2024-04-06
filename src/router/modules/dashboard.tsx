@@ -1,8 +1,8 @@
 import { Suspense, lazy } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 
-import { SvgIcon } from '@/components/icon'
-import { CircleLoading } from '@/components/loading'
+import { CircleLoading } from '@/components/Loading'
+import SvgIcon from '@/components/icon/SvgIcon'
 
 import type { AppRouteObject } from '#/router'
 

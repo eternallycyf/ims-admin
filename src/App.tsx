@@ -1,5 +1,5 @@
 import { App as AntdApp } from 'antd'
-import { MotionLazy } from '@/components/animate/motion-lazy'
+import MotionLazy from '@/components/animate/motion-lazy'
 import { AntdConfig } from '@/Application'
 import Router from '@/router'
 

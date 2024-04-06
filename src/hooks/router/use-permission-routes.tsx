@@ -2,8 +2,8 @@ import { isEmpty } from 'lodash'
 import { Suspense, lazy, useMemo } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 
-import { Iconify } from '@/components/icon'
-import { CircleLoading } from '@/components/loading'
+import { CircleLoading } from '@/components/Loading'
+import Iconify from '@/components/icon/IconifyIcon'
 import { useUserPermission } from '@/store/userStore'
 import { flattenTrees } from '@/utils/tree'
 

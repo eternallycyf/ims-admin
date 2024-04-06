@@ -1,4 +1,4 @@
-import type { BackgroundType } from '../types'
+import type { BackgroundType } from '../interface'
 
 export function varBgColor(props?: BackgroundType) {
   const colors = props?.colors || ['#19dcea', '#b22cff']
@@ -59,7 +59,7 @@ export function varBgKenburns(props?: BackgroundType) {
 
 // ----------------------------------------------------------------------
 
-export function varBgPan(props?: BackgroundType) {
+export function VarBgPan(props?: BackgroundType) {
   const colors = props?.colors || ['#ee7752', '#e73c7e', '#23a6d5', '#23d5ab']
   const duration = props?.duration || 5
   const ease = props?.ease || 'linear'

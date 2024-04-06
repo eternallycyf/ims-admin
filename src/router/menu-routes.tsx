@@ -1,10 +1,10 @@
 import { Navigate } from 'react-router-dom'
 
-import { Authorized } from '@/Application/Authorized'
+import { Authorized } from '@/layouts/core'
 import { getMenuModules } from '@/router/utils'
 
 import type { AppRouteObject } from '#/router'
-import { DashboardLayout } from '@/layouts/dashboard'
+import { BasicLayout } from '@/layouts/layout'
 
 const menuModuleRoutes = getMenuModules()
 
@@ -17,7 +17,7 @@ export const menuRoutes: AppRouteObject = {
   path: '/',
   element: (
     <Authorized>
-      <DashboardLayout />
+      <BasicLayout />
     </Authorized>
   ),
   children: [{ index: true, element: <Navigate to={HOMEPAGE} replace /> }, ...menuModuleRoutes],

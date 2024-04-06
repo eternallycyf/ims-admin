@@ -4,9 +4,10 @@ import { Helmet } from 'react-helmet-async'
 import { NavLink } from 'react-router-dom'
 
 import Character8 from '@/assets/images/characters/character_8.png'
+
 import MotionContainer from '@/components/animate/motion-container'
-import { varBounce } from '@/components/animate/variants/bounce'
 import { useThemeToken } from '@/hooks/theme'
+import { varBounce } from '@/components/animate/variants'
 
 const { VITE_APP_HOMEPAGE: HOMEPAGE } = import.meta.env
 

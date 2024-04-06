@@ -18,10 +18,10 @@ interface Props extends MotionProps {
  *   hidden: { opacity: 0 },
  * }
  *
- * 需要指定 inital 和 animate 属性名
+ * 需要指定 inital 和 Animate 属性名
  * <motion.div
  *  initial="hidden"
- *  animate="visible"
+ *  Animate="visible"
  *  variants={variants}
  * />
  */

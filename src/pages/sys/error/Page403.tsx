@@ -5,8 +5,8 @@ import { NavLink } from 'react-router-dom'
 
 import Character4 from '@/assets/images/characters/character_4.png'
 import MotionContainer from '@/components/animate/motion-container'
-import { varBounce } from '@/components/animate/variants/bounce'
 import { useThemeToken } from '@/hooks/theme'
+import { varBounce } from '@/components/animate/variants'
 
 const { VITE_APP_HOMEPAGE: HOMEPAGE } = import.meta.env
 
