@@ -112,6 +112,8 @@ export default function MultiTabs(_props: Props) {
   const currentRouteMeta = useMatchRouteMeta()
   const { setRouteInfo } = useMenuInfoActions()
   const {
+    cacheTabs,
+    setCacheTabs,
     activeTabRoutePath,
     closeTab,
     refreshTab,
@@ -339,30 +341,21 @@ export default function MultiTabs(_props: Props) {
 
   const tabItems = useMemo(() => {
     return tabsList.map(({ icon = '', ...item }) => {
-      if (item?.key === currentRouteMeta?.key || item?.multiple) {
-        const tab = { ...item, outlet: currentRouteMeta?.outlet }
-        return {
-          label: renderTabLabel(tab),
-          key: tab.key,
-          closable: tabsList.length > 1, // 保留一个
-          children: (
-            <div ref={tabContentRef} key={tab.timeStamp}>
-              {tab.outlet}
-            </div>
-          ),
-        }
-      }
-      else {
-        return {
-          ...item,
-          label: renderTabLabel({ ...item, outlet: null }),
-          key: item.key,
-          closable: tabsList.length > 1, // 保留一个
-          children: null,
-        }
+      const outlet = cacheTabs?.find(ele => ele?.key === item?.key)?.outlet || null
+
+      const tab = { ...item, outlet }
+      return {
+        label: renderTabLabel(tab),
+        key: tab.key,
+        closable: tabsList.length > 1, // 保留一个
+        children: (
+          <div ref={tabContentRef} key={tab.timeStamp}>
+            {outlet }
+          </div>
+        ),
       }
     })
-  }, [tabsList, currentRouteMeta, tabsList, renderTabLabel])
+  }, [tabsList, cacheTabs, renderTabLabel])
 
   const sensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
 
@@ -370,11 +363,15 @@ export default function MultiTabs(_props: Props) {
     if (active?.id === SpecialRouterEnum.HOME || over?.id === SpecialRouterEnum.HOME)
       return
     if (active.id !== over?.id) {
-      const newList = [...tabsList]
-      const activeIndex = newList.findIndex(tab => tab.key === active.id)
-      const overIndex = newList.findIndex(tab => tab.key === over?.id)
-      const list = arrayMove(newList, activeIndex, overIndex)
-      setRouteInfo({ tabsList: list })
+      const _getNewList = (arr: KeepAliveTab[]) => {
+        const newList = [...arr]
+        const activeIndex = newList.findIndex(tab => tab.key === active.id)
+        const overIndex = newList.findIndex(tab => tab.key === over?.id)
+        return arrayMove(newList, activeIndex, overIndex)
+      }
+
+      setRouteInfo({ tabsList: _getNewList(tabsList) })
+      setCacheTabs(_getNewList(cacheTabs))
     }
   }
 

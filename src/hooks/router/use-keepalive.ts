@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { isEmpty } from 'lodash'
+import _ from 'lodash'
+import { useLatest } from 'ahooks'
 import { replaceDynamicParams, useMatchRouteMeta, useRouter } from '@/hooks/router'
 
 import type { RouteMeta } from '#/router'
@@ -12,6 +13,11 @@ export type KeepAliveTab = (Omit<RouteMeta, 'outlet'>)
 export function useKeepAlive() {
   const { VITE_APP_HOMEPAGE: HOMEPAGE } = import.meta.env
   const { push } = useRouter()
+
+  // chche tabsList
+  const [cacheTabs, setCacheTabs] = useState<(KeepAliveTab & { outlet?: any })[]>([])
+  const cacheTabsRef = useLatest<(KeepAliveTab & { outlet?: any })[]>(cacheTabs)
+
   const { tabsList = [] } = useMenuInfo()
   const { setRouteInfo } = useMenuInfoActions()
   // tabsList
@@ -35,10 +41,11 @@ export function useKeepAlive() {
       else push(tabsList[deleteTabIndex + 1].key)
 
       tabsList.splice(deleteTabIndex, 1)
+      setCacheTabs([...tabsList])
       setRouteInfo({ tabsList })
     },
 
-    [activeTabRoutePath, tabsList],
+    [activeTabRoutePath, tabsList, cacheTabs],
   )
 
   /**
@@ -46,25 +53,25 @@ export function useKeepAlive() {
    */
   const closeOthersTab = useCallback(
     (path = activeTabRoutePath) => {
-      setRouteInfo({
-        tabsList: tabsList.filter(item => item?.key === path || item?.key === SpecialRouterEnum.HOME),
-      })
+      const getNewList = (tabsList: KeepAliveTab[]) => tabsList.filter(item => item?.key === path || item?.key === SpecialRouterEnum.HOME)
+      setCacheTabs(getNewList)
+      setRouteInfo({ tabsList: getNewList(tabsList) })
 
       if (path !== activeTabRoutePath)
         push(path)
     },
-    [activeTabRoutePath, push, tabsList],
+    [activeTabRoutePath, push, tabsList, cacheTabs],
   )
 
   /**
    * Close all tabsList then navigate to the home page
    */
   const closeAll = useCallback(() => {
-    setRouteInfo({
-      tabsList: tabsList.filter(item => item?.key === SpecialRouterEnum.HOME),
-    })
+    const getNewList = (tabsList: KeepAliveTab[]) => tabsList.filter(item => item?.key === SpecialRouterEnum.HOME)
+    setCacheTabs(getNewList)
+    setRouteInfo({ tabsList: getNewList(tabsList) })
     push(HOMEPAGE)
-  }, [push, tabsList])
+  }, [push, tabsList, cacheTabs])
 
   /**
    * Close all tabsList in the left of specified tab
@@ -72,12 +79,12 @@ export function useKeepAlive() {
   const closeLeft = useCallback(
     (path: string) => {
       const currentTabIndex = tabsList.findIndex(item => item?.key === path)
-      setRouteInfo({
-        tabsList: tabsList.filter((item, index) => index >= currentTabIndex || item?.key === SpecialRouterEnum.HOME),
-      })
+      const getNewList = (tabsList: KeepAliveTab[]) => tabsList.filter((item, index) => index >= currentTabIndex || item?.key === SpecialRouterEnum.HOME)
+      setCacheTabs(getNewList)
+      setRouteInfo({ tabsList: getNewList(tabsList) })
       push(path)
     },
-    [push, tabsList, tabsList],
+    [push, tabsList, tabsList, cacheTabs],
   )
 
   /**
@@ -86,12 +93,12 @@ export function useKeepAlive() {
   const closeRight = useCallback(
     (path: string) => {
       const currentTabIndex = tabsList.findIndex(item => item?.key === path)
-      setRouteInfo({
-        tabsList: tabsList.filter((item, index) => index <= currentTabIndex || item?.key === SpecialRouterEnum.HOME),
-      })
+      const getNewList = (tabsList: KeepAliveTab[]) => tabsList.filter((item, index) => index <= currentTabIndex || item?.key === SpecialRouterEnum.HOME)
+      setCacheTabs(getNewList)
+      setRouteInfo({ tabsList: getNewList(tabsList) })
       push(path)
     },
-    [push, tabsList, tabsList],
+    [push, tabsList, tabsList, cacheTabs],
   )
 
   /**
@@ -99,17 +106,19 @@ export function useKeepAlive() {
    */
   const refreshTab = useCallback(
     (path = activeTabRoutePath) => {
-      const prev = [...tabsList]
-      const index = prev.findIndex(item => item?.key === path)
+      const getNewList = (tabsList: KeepAliveTab[]) => {
+        const prev = [...tabsList]
+        const index = prev.findIndex(item => item?.key === path)
 
-      if (index >= 0)
-        prev[index].timeStamp = getTimeStamp()
+        if (index >= 0)
+          prev[index].timeStamp = getTimeStamp()
+        return prev
+      }
 
-      setRouteInfo({
-        tabsList: [...prev],
-      })
+      setCacheTabs(getNewList)
+      setRouteInfo({ tabsList: getNewList(tabsList) })
     },
-    [activeTabRoutePath, tabsList],
+    [activeTabRoutePath, tabsList, cacheTabs],
   )
 
   useEffect(() => {
@@ -118,7 +127,7 @@ export function useKeepAlive() {
     let { key } = currentRouteMeta
     const { outlet: _outlet, params = {} } = currentRouteMeta
 
-    if (!isEmpty(params))
+    if (!_.isEmpty(params))
       key = replaceDynamicParams(key, params)
 
     const existed = tabsList.find(item => item.key === key)
@@ -138,43 +147,81 @@ export function useKeepAlive() {
       if (state)
         item.state = state
 
+      setCacheTabs([...tabsList, {
+        ...item,
+        outlet,
+      }])
       setRouteInfo({ tabsList: [...tabsList, item] })
     }
     else {
       const newTabList = [...tabsList]
+      const newCacheTabsList: (KeepAliveTab & { outlet?: any })[] = cacheTabsRef.current?.length > 0
+        ? [...cacheTabsRef.current]
+        : [...newTabList]
+
       const index = newTabList.findIndex(item => item.key === key)
+      const cacheItem: any = cacheTabsRef.current[index] || tabsList[index]
+
+      let isRefresh = false
 
       if (currentRouteMeta.params) {
         newTabList[index] = {
           ...newTabList[index],
           params: currentRouteMeta?.params,
-          timeStamp: getTimeStamp(),
         }
+        isRefresh = true
       }
 
       if (currentRouteMeta.search) {
         newTabList[index] = {
           ...newTabList[index],
           search: currentRouteMeta?.search,
-          timeStamp: getTimeStamp(),
         }
+        isRefresh = true
       }
 
       if (currentRouteMeta.state) {
         newTabList[index] = {
           ...newTabList[index],
           state: currentRouteMeta?.state,
-          timeStamp: getTimeStamp(),
         }
+        isRefresh = true
       }
 
-      setRouteInfo({ tabsList: newTabList })
+      if (!cacheItem?.outlet) {
+        newCacheTabsList[index] = {
+          ...newCacheTabsList[index],
+          outlet: _outlet,
+        }
+        isRefresh = true
+      }
+
+      if (isRefresh) {
+        newCacheTabsList[index] = {
+          ...newTabList[index],
+          ...newCacheTabsList[index],
+          timeStamp: getTimeStamp(),
+        }
+        setCacheTabs([...newCacheTabsList])
+      }
+
+      if (isRefresh && !_.isEqual(newTabList[index], tabsList[index])) {
+        newTabList[index] = {
+          ...newTabList[index],
+          timeStamp: getTimeStamp(),
+        }
+        setRouteInfo({ tabsList: newTabList })
+      }
+
+      isRefresh = false
     }
 
     setActiveTabRoutePath(key)
   }, [currentRouteMeta])
 
   return {
+    cacheTabs,
+    setCacheTabs,
     tabsList,
     activeTabRoutePath,
     closeTab: (path: string) => closeTab(path, tabsList),
