@@ -93,7 +93,7 @@ export default function Header({ className = '', offsetTop = false }: Props) {
           <div className="flex">
             <SearchBar />
             <LocalePicker />
-            <IconButton onClick={() => window.open('https://github.com/eternallycyf/ims-admin')}>
+            <IconButton onClick={() => window.open(`https://github.com/eternallycyf/${import.meta.env.VITE_GLOB_APP_TITLE}`)}>
               <Iconify icon="mdi:github" size={24} />
             </IconButton>
             <Notice />

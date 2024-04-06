@@ -22,7 +22,7 @@ import { useNavigate } from 'react-router-dom'
 import Iconify from '@/components/icon/IconifyIcon'
 import { type KeepAliveTab, useKeepAlive } from '@/hooks/router'
 
-import { MultiTabOperation, SpecialRouterEnum } from '#/enum'
+import { MultiTabOperation } from '#/enum'
 import { useThemeToken } from '@/hooks/theme'
 import { useMenuInfo, useMenuInfoActions } from '@/store/useMenuInfo'
 import { replaceDynamicParams, useMatchRouteMeta } from '@/hooks/router'
@@ -97,6 +97,7 @@ function DraggableTabNode(props: DraggableTabPaneProps) {
 }
 
 export default function MultiTabs(_props: Props) {
+  const { VITE_APP_HOMEPAGE: HOMEPAGE, VITE_GLOB_APP_TITLE: TAB_TITLE } = import.meta.env
   const { t } = useTranslation()
   const scrollContainer = useRef<HTMLDivElement>(null!)
   const [hoveringTabKey, setHoveringTabKey] = useState('')
@@ -129,7 +130,7 @@ export default function MultiTabs(_props: Props) {
   const menuItems = useMemo<MenuProps['items']>(
     () => {
       const currentIndex = tabsList.findIndex(tab => tab.key === openDropdownTabKey)
-      const otherLength = tabsList.filter(item => item.key !== SpecialRouterEnum.HOME
+      const otherLength = tabsList.filter(item => item.key !== HOMEPAGE
         && item.key !== openDropdownTabKey,
       )
       return [
@@ -147,7 +148,7 @@ export default function MultiTabs(_props: Props) {
           label: t(`sys.tab.${MultiTabOperation.CLOSE}`),
           key: MultiTabOperation.CLOSE,
           icon: <Iconify icon="material-symbols:close" size={18} />,
-          disabled: tabsList.length === 1 || openDropdownTabKey === SpecialRouterEnum.HOME,
+          disabled: tabsList.length === 1 || openDropdownTabKey === HOMEPAGE,
         },
         {
           type: 'divider',
@@ -298,10 +299,10 @@ export default function MultiTabs(_props: Props) {
             onMouseLeave={() => setHoveringTabKey('')}
           >
             <div>
-              {tab?.state?.[SpecialRouterEnum.TAB_TITLE] ? `${tab?.state?.[SpecialRouterEnum.TAB_TITLE]}-` : ''}
+              {tab?.state?.[TAB_TITLE] ? `${tab?.state?.[TAB_TITLE]}-` : ''}
               {t(tab.label)}
             </div>
-            {tab?.key !== SpecialRouterEnum.HOME && (
+            {tab?.key !== HOMEPAGE && (
               <Iconify
                 icon="ion:close-outline"
                 size={18}
@@ -360,7 +361,7 @@ export default function MultiTabs(_props: Props) {
   const sensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
 
   const onDragEnd = ({ active, over }: DragEndEvent) => {
-    if (active?.id === SpecialRouterEnum.HOME || over?.id === SpecialRouterEnum.HOME)
+    if (active?.id === HOMEPAGE || over?.id === HOMEPAGE)
       return
     if (active.id !== over?.id) {
       const _getNewList = (arr: KeepAliveTab[]) => {
@@ -422,13 +423,13 @@ export default function MultiTabs(_props: Props) {
               <SortableContext items={tabsList.map(i => i.key)} strategy={horizontalListSortingStrategy}>
                 <DefaultTabBar {...tabBarProps}>
                   {(node) => {
-                    if (node.key === SpecialRouterEnum.HOME)
+                    if (node.key === HOMEPAGE)
                       return node
                     return (
                       <DraggableTabNode
                         {...node.props}
                         key={node.key}
-                        isDragDisabled={node.key === SpecialRouterEnum.HOME}
+                        isDragDisabled={node.key === HOMEPAGE}
                       >
                         {node}
                       </DraggableTabNode>

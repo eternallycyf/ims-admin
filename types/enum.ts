@@ -71,8 +71,3 @@ export enum LoginStateEnum {
   MOBILE,
   QR_CODE,
 }
-
-export enum SpecialRouterEnum {
-  HOME = '/dashboard/workbench',
-  TAB_TITLE = 'tabTitle',
-}

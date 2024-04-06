@@ -1,7 +1,7 @@
 import { QRCode } from 'antd'
 import { useTranslation } from 'react-i18next'
 
-import { ReturnButton } from './components/ReturnButton'
+import { ReturnButton } from './ReturnButton'
 import { useLoginStateContext } from '@/Application'
 import { LoginStateEnum } from '#/enum'
 

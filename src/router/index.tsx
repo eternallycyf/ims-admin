@@ -12,7 +12,7 @@ import { usePermissionRoutes } from '@/hooks/router'
 const { VITE_APP_HOMEPAGE: HOMEPAGE } = import.meta.env
 const LoginRoute: AppRouteObject = {
   path: '/login',
-  Component: lazy(() => import('@/pages/sys/login/Login')),
+  Component: lazy(() => import('@/layouts/core/Login/Login')),
 }
 const PAGE_NOT_FOUND_ROUTE: AppRouteObject = {
   path: '*',

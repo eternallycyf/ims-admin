@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 import { Button, Form, Input } from 'antd'
 import { useTranslation } from 'react-i18next'
 
-import { ReturnButton } from './components/ReturnButton'
+import { ReturnButton } from './ReturnButton'
 import { useLoginStateContext } from '@/Application'
 import userService from '@/api/services/userService'
 import { LoginStateEnum } from '#/enum'

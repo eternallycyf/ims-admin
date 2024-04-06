@@ -1,15 +1,11 @@
-import { Suspense, lazy } from 'react'
+import { Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
 
 import { CircleLoading } from '@/components/Loading'
-import { Authorized } from '@/layouts/core'
+import { Authorized, Page403, Page404, Page500 } from '@/layouts/core'
 
 import type { AppRouteObject } from '#/router'
 import { SimpleLayout } from '@/layouts/layout'
-
-const Page403 = lazy(() => import('@/pages/sys/error/Page403'))
-const Page404 = lazy(() => import('@/pages/sys/error/Page404'))
-const Page500 = lazy(() => import('@/pages/sys/error/Page500'))
 
 /**
  * error routes

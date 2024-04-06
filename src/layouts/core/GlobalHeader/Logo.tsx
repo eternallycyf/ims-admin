@@ -10,7 +10,7 @@ function Logo({ className = '' }: { className?: string }) {
   return (
     <NavLink to="/" className="no-underline">
       <button className={`font-semibold ${className}`} style={{ color: colorPrimary }}>
-        {collapsed ? <img w-8 h-8 src={LogoPng} /> : 'ims-admin' }
+        {collapsed ? <img w-8 h-8 src={LogoPng} /> : import.meta.env.VITE_GLOB_APP_TITLE }
       </button>
     </NavLink>
   )

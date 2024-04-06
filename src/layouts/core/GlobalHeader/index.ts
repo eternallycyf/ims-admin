@@ -1,3 +1,4 @@
+export { default as AccountDropdown } from './AccountDropdown'
 export { default as ThemeModeBtn } from './ThemeModeBtn'
 export { default as BreadCrumb } from './BreadCrumb'
 export { default as Header } from './Header'

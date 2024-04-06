@@ -6,7 +6,6 @@ import { replaceDynamicParams, useMatchRouteMeta, useRouter } from '@/hooks/rout
 
 import type { RouteMeta } from '#/router'
 import { useMenuInfo, useMenuInfoActions } from '@/store/useMenuInfo'
-import { SpecialRouterEnum } from '#/enum'
 
 export type KeepAliveTab = (Omit<RouteMeta, 'outlet'>)
 
@@ -53,7 +52,7 @@ export function useKeepAlive() {
    */
   const closeOthersTab = useCallback(
     (path = activeTabRoutePath) => {
-      const getNewList = (tabsList: KeepAliveTab[]) => tabsList.filter(item => item?.key === path || item?.key === SpecialRouterEnum.HOME)
+      const getNewList = (tabsList: KeepAliveTab[]) => tabsList.filter(item => item?.key === path || item?.key === HOMEPAGE)
       setCacheTabs(getNewList)
       setRouteInfo({ tabsList: getNewList(tabsList) })
 
@@ -67,7 +66,7 @@ export function useKeepAlive() {
    * Close all tabsList then navigate to the home page
    */
   const closeAll = useCallback(() => {
-    const getNewList = (tabsList: KeepAliveTab[]) => tabsList.filter(item => item?.key === SpecialRouterEnum.HOME)
+    const getNewList = (tabsList: KeepAliveTab[]) => tabsList.filter(item => item?.key === HOMEPAGE)
     setCacheTabs(getNewList)
     setRouteInfo({ tabsList: getNewList(tabsList) })
     push(HOMEPAGE)
@@ -79,7 +78,7 @@ export function useKeepAlive() {
   const closeLeft = useCallback(
     (path: string) => {
       const currentTabIndex = tabsList.findIndex(item => item?.key === path)
-      const getNewList = (tabsList: KeepAliveTab[]) => tabsList.filter((item, index) => index >= currentTabIndex || item?.key === SpecialRouterEnum.HOME)
+      const getNewList = (tabsList: KeepAliveTab[]) => tabsList.filter((item, index) => index >= currentTabIndex || item?.key === HOMEPAGE)
       setCacheTabs(getNewList)
       setRouteInfo({ tabsList: getNewList(tabsList) })
       push(path)
@@ -93,7 +92,7 @@ export function useKeepAlive() {
   const closeRight = useCallback(
     (path: string) => {
       const currentTabIndex = tabsList.findIndex(item => item?.key === path)
-      const getNewList = (tabsList: KeepAliveTab[]) => tabsList.filter((item, index) => index <= currentTabIndex || item?.key === SpecialRouterEnum.HOME)
+      const getNewList = (tabsList: KeepAliveTab[]) => tabsList.filter((item, index) => index <= currentTabIndex || item?.key === HOMEPAGE)
       setCacheTabs(getNewList)
       setRouteInfo({ tabsList: getNewList(tabsList) })
       push(path)

@@ -1,7 +1,7 @@
 import { Button, Form, Input } from 'antd'
 import { useTranslation } from 'react-i18next'
 
-import { ReturnButton } from './components/ReturnButton'
+import { ReturnButton } from './ReturnButton'
 import SvgIcon from '@/components/icon/SvgIcon'
 
 import { useLoginStateContext } from '@/Application'
