@@ -1,3 +1,3 @@
 export default function BlankPage() {
-  return <div>analysis</div>
+  return <div>calendar</div>
 }
