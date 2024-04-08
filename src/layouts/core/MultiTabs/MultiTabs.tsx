@@ -4,7 +4,6 @@ import type { CSSProperties } from 'react'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useFullscreen } from 'ahooks'
-import styled from 'styled-components'
 import type { DragEndEvent } from '@dnd-kit/core'
 import { DndContext, PointerSensor, useSensor } from '@dnd-kit/core'
 import {
@@ -19,59 +18,21 @@ import {
 } from '@dnd-kit/modifiers'
 
 import { useNavigate } from 'react-router-dom'
+import Color from 'color'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import Iconify from '@/components/icon/IconifyIcon'
 import { type KeepAliveTab, useKeepAlive } from '@/hooks/router'
 
-import { MultiTabOperation } from '#/enum'
-import { useThemeToken } from '@/hooks/theme'
+import { MultiTabOperation, ThemeLayout } from '#/enum'
+import { useResponsive, useThemeToken } from '@/hooks/theme'
 import { useMenuInfo, useMenuInfoActions } from '@/store/useMenuInfo'
 import { replaceDynamicParams, useMatchRouteMeta } from '@/hooks/router'
+import { MULTI_TABS_HEIGHT } from '@/layouts/helpers/config'
+import { useSettingActions, useSettings } from '@/store/settingStore'
 
 interface Props {
-  offsetTop?: boolean
+
 }
-
-const StyledMultiTabs = styled.div`
-  height: 100%;
-  margin-top: 2px;
-  .anticon {
-    margin: 0px !important;
-  }
-  .ant-tabs {
-    height: 100%;
-    .ant-tabs-content {
-      height: 100%;
-    }
-    .ant-tabs-tabpane {
-      height: 100%;
-      & > div {
-        height: 100%;
-      }
-    }
-
-    .ant-tabs-tab{
-      padding: 0;
-      margin-bottom: 2px;
-      margin-left: 2px !important;
-    }
-
-    .ant-tabs-nav-operations{
-      display: none;
-    }
-  }
-
-  /* 隐藏滚动条 */
-  .hide-scrollbar {
-    overflow: scroll;
-    flex-shrink: 0;
-    scrollbar-width: none; /* 隐藏滚动条 Firefox */
-    -ms-overflow-style: none; /* 隐藏滚动条 IE/Edge */
-  }
-
-  .hide-scrollbar::-webkit-scrollbar {
-    display: none; /* 隐藏滚动条 Chrome/Safari/Opera */
-  }
-`
 
 interface DraggableTabPaneProps extends React.HTMLAttributes<HTMLDivElement> {
   'data-node-key': string
@@ -98,17 +59,21 @@ function DraggableTabNode(props: DraggableTabPaneProps) {
 
 export default function MultiTabs(_props: Props) {
   const { VITE_APP_HOMEPAGE: HOMEPAGE, VITE_GLOB_APP_TITLE: TAB_TITLE } = import.meta.env
-  const { t } = useTranslation()
+  const tabContentRef = useRef<HTMLDivElement>(null!)
   const scrollContainer = useRef<HTMLDivElement>(null!)
-  const [hoveringTabKey, setHoveringTabKey] = useState('')
-  const [openDropdownTabKey, setopenDropdownTabKey] = useState('')
-  const themeToken = useThemeToken()
   const navigate = useNavigate()
 
-  const tabContentRef = useRef<HTMLDivElement>(null!)
+  const themeToken = useThemeToken()
+  const { colorBorder, colorTextBase, colorBorderSecondary, colorBgLayout, colorBgContainer, colorPrimaryText } = themeToken
+  const { screenMap } = useResponsive()
+  const { t } = useTranslation()
 
   const [_, { toggleFullscreen: toggleFullScreen }] = useFullscreen(tabContentRef)
+  const [hoveringTabKey, setHoveringTabKey] = useState('')
+  const [openDropdownTabKey, setopenDropdownTabKey] = useState('')
 
+  const { collapsed, themeLayout, menuDrawOpen } = useSettings()
+  const { setSettings } = useSettingActions()
   const { tabsList } = useMenuInfo()
   const currentRouteMeta = useMatchRouteMeta()
   const { setRouteInfo } = useMenuInfoActions()
@@ -123,6 +88,25 @@ export default function MultiTabs(_props: Props) {
     closeLeft,
     closeRight,
   } = useKeepAlive()
+
+  const border = `1px dashed ${Color(colorBorder).alpha(0.6).toString()}`
+
+  const toggleCollapsed = () => {
+    if (!screenMap?.md) {
+      setSettings({
+        menuDrawOpen: !menuDrawOpen,
+        collapsed: themeLayout === ThemeLayout.Mini,
+      })
+    }
+    else {
+      if (!collapsed)
+        setSettings({ themeLayout: ThemeLayout.Mini })
+      else
+        setSettings({ themeLayout: ThemeLayout.Vertical })
+
+      setSettings({ collapsed: !collapsed })
+    }
+  }
 
   /**
    * tab dropdown下拉选
@@ -247,15 +231,16 @@ export default function MultiTabs(_props: Props) {
         borderRadius: '8px 8px 0 0',
         borderWidth: '1px',
         borderStyle: 'solid',
-        borderColor: themeToken.colorBorderSecondary,
-        backgroundColor: themeToken.colorBgLayout,
+        borderColor: colorBorderSecondary,
+        backgroundColor: colorBgLayout,
         transition:
           'color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, background 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+        borderBottom: 'none',
       }
 
       if (isActive) {
-        result.backgroundColor = themeToken.colorBgContainer
-        result.color = themeToken.colorPrimaryText
+        result.backgroundColor = colorBgContainer
+        result.color = colorPrimaryText
       }
       return result
     },
@@ -350,7 +335,7 @@ export default function MultiTabs(_props: Props) {
         key: tab.key,
         closable: tabsList.length > 1, // 保留一个
         children: (
-          <div ref={tabContentRef} key={tab.timeStamp}>
+          <div className="h-full w-full" ref={tabContentRef} key={tab.timeStamp}>
             {outlet }
           </div>
         ),
@@ -411,12 +396,36 @@ export default function MultiTabs(_props: Props) {
   }, [])
 
   return (
-    <StyledMultiTabs>
+    <>
       <Tabs
+        hideAdd
         size="small"
-        tabBarGutter={4}
+        className="newTabs"
+        tabBarGutter={3}
         activeKey={activeTabRoutePath}
         items={tabItems}
+        tabBarStyle={{
+          height: MULTI_TABS_HEIGHT,
+          paddingLeft: 10,
+          paddingRight: 10,
+          borderBottom: border,
+        }}
+        tabBarExtraContent={{
+          left: (
+            <button
+              onClick={toggleCollapsed}
+              className="m-r-[5px] cursor-pointer select-none rounded-full text-center !text-gray"
+              style={{
+                color: colorTextBase,
+                borderColor: colorTextBase,
+                fontSize: 16,
+                display: themeLayout !== ThemeLayout.Horizontal ? 'inline-block' : 'none',
+              }}
+            >
+              {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            </button>
+          ),
+        }}
         renderTabBar={(tabBarProps, DefaultTabBar) => (
           <div ref={scrollContainer}>
             <DndContext sensors={[sensor]} onDragEnd={onDragEnd} modifiers={[restrictToHorizontalAxis]}>
@@ -441,6 +450,6 @@ export default function MultiTabs(_props: Props) {
           </div>
         )}
       />
-    </StyledMultiTabs>
+    </>
   )
 }

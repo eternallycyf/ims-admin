@@ -11,6 +11,7 @@ interface SettingsType {
   breadCrumb: boolean
   multiTab: boolean
   collapsed: boolean
+  menuDrawOpen: boolean
   componentSize: `${ComponentSize}`
 }
 interface SettingStore {
@@ -31,6 +32,7 @@ const useSettingStore = create<SettingStore>((set, get) => ({
     breadCrumb: true,
     multiTab: true,
     collapsed: false,
+    menuDrawOpen: false,
     componentSize: 'middle',
   },
   actions: {

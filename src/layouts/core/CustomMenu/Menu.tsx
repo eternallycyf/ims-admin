@@ -6,7 +6,7 @@ import type { CSSProperties } from 'react'
 import { useEffect, useState } from 'react'
 import { useLocation, useMatches, useNavigate } from 'react-router-dom'
 
-import { NAV_COLLAPSED_WIDTH, NAV_WIDTH } from '@/layouts/helpers/config'
+import { MENU_COLLAPSED_WIDTH, MENU_WIDTH } from '@/layouts/helpers/config'
 import Scrollbar from '@/components/scrollbar'
 import { menuFilter } from '@/router/utils'
 import { useSettingActions, useSettings } from '@/store/settingStore'
@@ -14,7 +14,6 @@ import { useSettingActions, useSettings } from '@/store/settingStore'
 import { ThemeLayout } from '#/enum'
 import { useThemeToken } from '@/hooks/theme'
 import { useFlattenedRoutes, usePermissionRoutes, useRouteToMenuFn } from '@/hooks/router'
-import { Logo } from '@/layouts/core'
 
 interface Props {
   closeSideBarDrawer?: () => void
@@ -103,21 +102,10 @@ export default function Menu(props: Props) {
     <div
       className="h-full flex flex-col"
       style={{
-        width: collapsed ? NAV_COLLAPSED_WIDTH : NAV_WIDTH,
+        width: collapsed ? MENU_COLLAPSED_WIDTH : MENU_WIDTH,
         borderRight: `1px dashed ${Color(colorBorder).alpha(0.6).toString()}`,
       }}
     >
-      <div className="relative h-20 flex items-center justify-center py-4">
-        {themeLayout === ThemeLayout.Mini
-          ? (
-            <Logo className="text-lg" />
-            )
-          : (
-            <Logo className="text-4xl" />
-            )}
-
-      </div>
-
       <Scrollbar
         style={{
           height: 'calc(100vh - 70px)',

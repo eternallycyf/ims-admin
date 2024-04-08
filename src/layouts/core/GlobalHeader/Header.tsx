@@ -1,103 +1,63 @@
 import { Drawer, Space } from 'antd'
 import Color from 'color'
 import type { CSSProperties } from 'react'
-import { useState } from 'react'
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import Iconify from '@/components/icon/IconifyIcon'
-import SvgIcon from '@/components/icon/SvgIcon'
 import IconButton from '@/components/icon/IconButton'
-import { HEADER_HEIGHT, NAV_COLLAPSED_WIDTH, NAV_WIDTH, OFFSET_HEADER_HEIGHT } from '@/layouts/helpers/config'
 import { AccountDropdown, BreadCrumb, LocalePicker, Logo, Menu, Notice, SearchBar, SettingButton } from '@/layouts/core'
 import { useSettingActions, useSettings } from '@/store/settingStore'
 import { ThemeLayout } from '#/enum'
 import { useResponsive, useThemeToken } from '@/hooks/theme'
+import { HEADER_HEIGHT, MENU_COLLAPSED_WIDTH, MENU_WIDTH } from '@/layouts/helpers/config'
 
 interface Props {
   className?: string
-  offsetTop?: boolean
 }
 
-export default function Header({ className = '', offsetTop = false }: Props) {
-  const [drawerOpen, setDrawerOpen] = useState(false)
-  const { themeLayout, breadCrumb } = useSettings()
-  const { colorTextBase, colorBgElevated, colorBorder } = useThemeToken()
+export default function Header({ className = '' }: Props) {
+  const { themeLayout, breadCrumb, menuDrawOpen } = useSettings()
+  const { colorBgElevated, colorBorder } = useThemeToken()
   const { screenMap } = useResponsive()
   const { collapsed } = useSettings()
   const { setSettings } = useSettingActions()
 
-  const toggleCollapsed = () => {
-    if (!collapsed)
-      setSettings({ themeLayout: ThemeLayout.Mini })
-    else
-      setSettings({ themeLayout: ThemeLayout.Vertical })
-
-    setSettings({ collapsed: !collapsed })
-  }
+  const border = `1px dashed ${Color(colorBorder).alpha(0.6).toString()}`
 
   const headerStyle: CSSProperties = {
-    position: themeLayout === ThemeLayout.Horizontal ? 'relative' : 'fixed',
-    borderBottom:
-      themeLayout === ThemeLayout.Horizontal
-        ? `1px dashed ${Color(colorBorder).alpha(0.6).toString()}`
-        : '',
+    borderBottom: themeLayout === ThemeLayout.Horizontal ? border : 'none',
     backgroundColor: Color(colorBgElevated).alpha(1).toString(),
-  }
-
-  if (themeLayout === ThemeLayout.Horizontal) {
-    headerStyle.width = '100vw'
-  }
-  else if (screenMap.md) {
-    headerStyle.right = '0px'
-    headerStyle.left = 'auto'
-    headerStyle.width = `calc(100% - ${
-      themeLayout === ThemeLayout.Vertical ? NAV_WIDTH : NAV_COLLAPSED_WIDTH
-    }px)`
-  }
-  else {
-    headerStyle.width = '100vw'
   }
 
   return (
     <>
-      <header className={`z-20 w-full ${className}`} style={headerStyle}>
-        <div
-          className="2xl:px-10 flex flex-grow items-center justify-between px-4 text-gray backdrop-blur xl:px-6"
-          style={{
-            height: offsetTop ? OFFSET_HEADER_HEIGHT : HEADER_HEIGHT,
-            transition: 'height 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-          }}
+      <header
+        className={`h-[${HEADER_HEIGHT}px] overflow-hidden flex ${className}`}
+        style={{
+          ...headerStyle,
+          flex: 'unset',
+          transition: 'height 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+        }}
+      >
+        <div style={{
+          flex: 'unset',
+          width: collapsed ? MENU_COLLAPSED_WIDTH - 1 : MENU_WIDTH - 1,
+          display: 'flex',
+          justifyContent: collapsed || screenMap?.md ? 'center' : 'start',
+          alignItems: 'center',
+          paddingLeft: screenMap?.md ? 0 : 12,
+        }}
         >
-          <div className="flex items-center">
-            {themeLayout !== ThemeLayout.Horizontal
-              ? (
-                <IconButton onClick={() => setDrawerOpen(true)} className="h-10 w-10 md:hidden">
-                  <SvgIcon icon="ic-menu" size="24" />
-                </IconButton>
-                )
-              : (
-                <Logo className="mr-2 text-xl" />
-                )}
-            {themeLayout !== ThemeLayout?.Horizontal
-              ? (
-                <Space className="hidden sm:block">
-                  <button
-                    onClick={toggleCollapsed}
-                    className="hidden cursor-pointer select-none rounded-full text-center sm:inline !text-gray"
-                    style={{ color: colorTextBase, borderColor: colorTextBase, fontSize: 16 }}
-                  >
-                    {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                  </button>
-                  {breadCrumb ? <BreadCrumb /> : null}
-                </Space>
-                )
-              : (
-                <>
-                  {breadCrumb ? <BreadCrumb /> : null}
-                </>
-                )}
+          <Logo className={`text-${collapsed || !screenMap?.md ? 'xl' : '4xl'}`} />
+        </div>
+
+        <div style={{ borderLeft: screenMap?.md ? border : 'none' }} className="flex-between flex-1 p-l-[12px] p-r-[10px]">
+
+          <div className="flex-center">
+            <Space className="hidden sm:block">
+              {breadCrumb && screenMap?.md ? <BreadCrumb /> : null}
+            </Space>
           </div>
 
-          <div className="flex">
+          <div className="flex-end flex-1">
             <SearchBar />
             <LocalePicker />
             <IconButton onClick={() => window.open(`https://github.com/eternallycyf/${import.meta.env.VITE_GLOB_APP_TITLE}`)}>
@@ -108,11 +68,23 @@ export default function Header({ className = '', offsetTop = false }: Props) {
             <AccountDropdown />
           </div>
         </div>
+
       </header>
+      {breadCrumb && !screenMap?.md
+        ? (
+          <div
+            className="flex-left p-b-[5px] p-l-[10px] p-r-[10px] p-t-[5px]"
+            style={{ borderBottom: border }}
+          >
+            <BreadCrumb />
+
+          </div>
+          )
+        : null}
       <Drawer
         placement="left"
-        onClose={() => setDrawerOpen(false)}
-        open={drawerOpen}
+        onClose={() => setSettings({ menuDrawOpen: false })}
+        open={menuDrawOpen}
         closeIcon={false}
         styles={{
           header: { display: 'none' },
@@ -123,7 +95,7 @@ export default function Header({ className = '', offsetTop = false }: Props) {
         }}
         width="auto"
       >
-        <Menu closeSideBarDrawer={() => setDrawerOpen(false)} />
+        <Menu closeSideBarDrawer={() => setSettings({ menuDrawOpen: false })} />
       </Drawer>
     </>
   )

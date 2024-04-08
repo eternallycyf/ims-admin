@@ -1,0 +1,42 @@
+.newTabs {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+
+  > div:first-child {
+    flex: unset;
+  }
+
+  .ant-tabs-content-holder,
+  .ant-tabs-content,
+  .ant-tabs-content,
+  .ant-tabs-tabpane-active,
+  .ant-tabs-nav {
+    height: 100%;
+    width: 100%;
+  }
+
+  .ant-tabs-tab {
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  .ant-tabs-content-holder {
+    flex: 1 !important;
+    overflow-x: auto;
+  }
+
+  .ant-tabs-nav {
+    padding-top: 5px;
+    margin-bottom: 0 !important;
+  }
+
+  .ant-tabs-ink-bar {
+    display: none;
+  }
+
+  .ant-tabs-nav::before {
+    display: none;
+  }
+}

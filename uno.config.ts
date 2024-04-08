@@ -16,6 +16,7 @@ export default defineConfig({
     {
       'flex-center': 'flex justify-center items-center',
       'flex-between': 'flex justify-between items-center',
+      'flex-end': 'flex justify-end items-center',
     },
   ],
   theme: {

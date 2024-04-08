@@ -136,7 +136,7 @@ function SettingButton() {
           {/* theme layouts */}
           <div>
             <div className="mb-3 text-base font-semibold" style={{ color: colorTextSecondary }}>
-              {t('sys.setting.layouts')}
+              {t('sys.setting.layout')}
             </div>
             <div className="grid grid-cols-3 gap-4">
               <Card

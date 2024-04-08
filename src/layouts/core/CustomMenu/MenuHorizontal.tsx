@@ -5,7 +5,7 @@ import type { CSSProperties } from 'react'
 import { useEffect, useState } from 'react'
 import { useLocation, useMatches, useNavigate } from 'react-router-dom'
 
-import { NAV_HORIZONTAL_HEIGHT } from '@/layouts/helpers/config'
+import { MENU_HORIZONTAL_HEIGHT } from '@/layouts/helpers/config'
 import { menuFilter } from '@/router/utils'
 import { useThemeToken } from '@/hooks/theme'
 import { useFlattenedRoutes, usePermissionRoutes, useRouteToMenuFn } from '@/hooks/router'
@@ -62,7 +62,7 @@ export default function MenuHorizontal() {
     background: colorBgElevated,
   }
   return (
-    <div className="w-screen" style={{ height: NAV_HORIZONTAL_HEIGHT }}>
+    <div className="w-screen" style={{ height: MENU_HORIZONTAL_HEIGHT }}>
       <Menu
         mode="horizontal"
         items={menuList}

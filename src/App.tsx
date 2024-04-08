@@ -7,7 +7,7 @@ function App() {
   return (
     <AntdConfig>
       <AppProvider prefixCls={import.meta.env.VITE_PREFIXCLS}>
-        <AntdApp>
+        <AntdApp className="antd-app h-full w-full">
           <MotionLazy>
             <Router />
           </MotionLazy>

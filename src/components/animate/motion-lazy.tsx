@@ -9,7 +9,7 @@ interface Props {
 function MotionLazy({ children }: Props) {
   return (
     <LazyMotion strict features={domMax}>
-      <m.div style={{ height: '100%' }}>{children}</m.div>
+      <m.div h-full w-full>{children}</m.div>
     </LazyMotion>
   )
 }

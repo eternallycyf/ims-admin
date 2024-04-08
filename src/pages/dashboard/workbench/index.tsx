@@ -1,22 +1,37 @@
-import { createSearchParams, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { Button } from 'antd'
+import Page from '@/components/Page'
 
 function WorkBench() {
-  const navigate = useNavigate()
+  const [sticky, setSticky] = useState(false)
 
-  const go = () => {
-    navigate({
-      pathname: `/management/system/user/${444444444}`,
-      search: createSearchParams({ query: 'someQuery' }).toString(),
-    }, {
-      state: {
-        tabTitle: '444444444',
-      },
-    })
-  }
   return (
-    <a onClick={go}>
-      router-444444444
-    </a>
+    <div h-full w-full style={{ overflow: !sticky ? 'hidden' : 'auto' }}>
+      {sticky
+        ? (
+          <Page className="h-full w-full">
+            <div>
+              <div style={{ position: 'sticky', top: 0, zIndex: 9999, background: '#fff' }}>
+                sticky-header
+                <Button onClick={() => setSticky(sticky => !sticky)}>{sticky ? 'fixed' : 'sticky'}</Button>
+              </div>
+              {Array.from({ length: 100 }).map((_, index) => <div key={index} m-b-20>{index}</div>)}
+            </div>
+          </Page>
+          )
+        : (
+          <Page className="h-full w-full flex flex-col overflow-hidden">
+            <div style={{ flex: 'unset' }}>
+              fixed-header
+              <Button onClick={() => setSticky(sticky => !sticky)}>{sticky ? 'fixed' : 'sticky'}</Button>
+            </div>
+            <div overflow-y-scroll style={{ flex: 1 }}>
+              {Array.from({ length: 100 }).map((_, index) => <div key={index} m-b-20>{index}</div>)}
+            </div>
+          </Page>
+          )}
+    </div>
+
   )
 }
 

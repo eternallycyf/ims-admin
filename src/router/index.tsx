@@ -2,7 +2,7 @@ import { lazy } from 'react'
 import type { RouteObject } from 'react-router-dom'
 import { Navigate, RouterProvider, createHashRouter } from 'react-router-dom'
 
-import DashboardLayout from '@/layouts/layout/BasicLayout'
+import BasicLayout from '@/layouts/layout/BasicLayout'
 import { Authorized } from '@/layouts/core'
 import { ErrorRoutes } from '@/router/error-routes'
 
@@ -25,7 +25,7 @@ export default function Router() {
     path: '/',
     element: (
       <Authorized>
-        <DashboardLayout />
+        <BasicLayout />
       </Authorized>
     ),
     children: [{ index: true, element: <Navigate to={HOMEPAGE} replace /> }, ...permissionRoutes],

@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { createSearchParams, useNavigate } from 'react-router-dom'
 import { message } from 'antd'
 import { createPubSub } from '@/utils/publish'
+import Page from '@/components/Page'
 
 export interface Record {
   name: string
@@ -53,7 +54,7 @@ function WorkBench() {
   }
 
   return (
-    <div>
+    <Page>
       <a block="" onClick={go}>
         router-123123
       </a>
@@ -63,7 +64,7 @@ function WorkBench() {
       <a block="" onClick={go3}>
         跨tabs传参 切触发事件
       </a>
-    </div>
+    </Page>
   )
 }
 
