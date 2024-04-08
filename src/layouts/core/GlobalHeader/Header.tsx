@@ -1,6 +1,7 @@
 import { Drawer, Space } from 'antd'
 import Color from 'color'
 import type { CSSProperties } from 'react'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import Iconify from '@/components/icon/IconifyIcon'
 import IconButton from '@/components/icon/IconButton'
 import { AccountDropdown, BreadCrumb, LocalePicker, Logo, Menu, Notice, SearchBar, SettingButton } from '@/layouts/core'
@@ -14,10 +15,9 @@ interface Props {
 }
 
 export default function Header({ className = '' }: Props) {
-  const { themeLayout, breadCrumb, menuDrawOpen } = useSettings()
-  const { colorBgElevated, colorBorder } = useThemeToken()
+  const { themeLayout, menuDrawOpen, breadCrumb, multiTab, collapsed } = useSettings()
+  const { colorBgElevated, colorBorder, colorTextBase } = useThemeToken()
   const { screenMap } = useResponsive()
-  const { collapsed } = useSettings()
   const { setSettings } = useSettingActions()
 
   const border = `1px dashed ${Color(colorBorder).alpha(0.6).toString()}`
@@ -27,16 +27,50 @@ export default function Header({ className = '' }: Props) {
     backgroundColor: Color(colorBgElevated).alpha(1).toString(),
   }
 
+  const toggleCollapsed = () => {
+    if (!screenMap?.md) {
+      setSettings({
+        menuDrawOpen: !menuDrawOpen,
+        collapsed: themeLayout === ThemeLayout.Mini,
+      })
+    }
+    else {
+      if (!collapsed)
+        setSettings({ themeLayout: ThemeLayout.Mini })
+      else
+        setSettings({ themeLayout: ThemeLayout.Vertical })
+
+      setSettings({ collapsed: !collapsed })
+    }
+  }
+
   return (
     <>
       <header
         className={`h-[${HEADER_HEIGHT}px] overflow-hidden flex ${className}`}
         style={{
           ...headerStyle,
+          borderBottom: !multiTab ? border : 'none',
           flex: 'unset',
           transition: 'height 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
         }}
       >
+
+        {!screenMap.md && !multiTab && (
+          <button
+            onClick={toggleCollapsed}
+            className="m-l-[5px] cursor-pointer select-none rounded-full text-center !text-gray"
+            style={{
+              color: colorTextBase,
+              borderColor: colorTextBase,
+              fontSize: 16,
+              display: themeLayout !== ThemeLayout.Horizontal ? 'inline-block' : 'none',
+            }}
+          >
+            {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          </button>
+        )}
+
         <div style={{
           flex: 'unset',
           width: collapsed ? MENU_COLLAPSED_WIDTH - 1 : MENU_WIDTH - 1,
