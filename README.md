@@ -62,13 +62,5 @@ pages
 router
 
 ## TODO
-
-- layout 重构
-- header tabs content 位置重构 滚动条使用flex 不使用fixed
-- tabs部分功能Bug修复
-  - 每次点击tab都会重新触发useEffect => 根据params search 对比
-  - menu 上边图标放在容器外
-  - 收齐menu按钮位置改造
-  - 设置固定的首页
-  - 右侧设置单独的刷新按钮
 - 整理路由使用方法
+- 多余页面的demo
