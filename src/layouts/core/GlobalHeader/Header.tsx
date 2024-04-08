@@ -47,7 +47,7 @@ export default function Header({ className = '' }: Props) {
   return (
     <>
       <header
-        className={`h-[${HEADER_HEIGHT}px] overflow-hidden flex ${className}`}
+        className={`overflow-hidden flex ${className}`}
         style={{
           ...headerStyle,
           borderBottom: !multiTab ? border : 'none',
@@ -83,7 +83,7 @@ export default function Header({ className = '' }: Props) {
           <Logo className={`text-${collapsed || !screenMap?.md ? 'xl' : '4xl'}`} />
         </div>
 
-        <div style={{ borderLeft: screenMap?.md ? border : 'none' }} className="flex-between flex-1 p-l-[12px] p-r-[10px]">
+        <div style={{ borderLeft: screenMap?.md && themeLayout !== ThemeLayout.Horizontal ? border : 'none', height: HEADER_HEIGHT }} className="flex-between flex-1 p-l-[12px] p-r-[10px]">
 
           <div className="flex-center">
             <Space className="hidden sm:block">
