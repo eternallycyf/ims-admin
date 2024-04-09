@@ -298,10 +298,10 @@ export default function MultiTabs(_props: Props) {
                 }}
                 style={{
                   visibility:
-                  (tab.key !== activeTabRoutePath && tab.key !== hoveringTabKey)
-                  || tabsList.length === 1
-                    ? 'hidden'
-                    : 'visible',
+                    (tab.key !== activeTabRoutePath && tab.key !== hoveringTabKey)
+                    || tabsList.length === 1
+                      ? 'hidden'
+                      : 'visible',
                 }}
               />
             )}
@@ -334,9 +334,11 @@ export default function MultiTabs(_props: Props) {
         label: renderTabLabel(tab),
         key: tab.key,
         closable: tabsList.length > 1, // 保留一个
+        forceRender: true,
+        destroyInactiveTabPane: false,
         children: (
           <div className="h-full w-full" ref={tabContentRef} key={tab.timeStamp}>
-            {outlet }
+            {outlet}
           </div>
         ),
       }
