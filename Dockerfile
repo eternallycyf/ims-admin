@@ -1,15 +1,22 @@
-FROM node:14-alpine AS installer
-COPY package.json ./
-RUN npm i tyarn -g
-RUN tyarn
+# Stage 1: build stage
+FROM node:16-alpine as build-stage
+# make the 'app' folder the current working directory
+WORKDIR /app
+# copy project files and folders to the current working directory (i.e. 'app' folder)
+COPY . ./
+# config node options
+ENV NODE_OPTIONS=--max_old_space_size=8192
+# config pnpm, install dependencies and build
+RUN npm install pnpm -g && \
+    pnpm install && \
+    pnpm build
+RUN echo "build successful  🎉 🎉 🎉"
 
-FROM node:14-alpine AS builder
-COPY --from=installer /node_modules ./node_modules
-COPY . .
-RUN npm run build
 
-FROM  vixlet/nginx:alpine
-COPY --from=builder /dist /usr/share/nginx/html
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
-
+# Stage 2: production stage
+FROM nginx:latest as production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
 EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+RUN echo "deploy to nginx successful  🎉 🎉 🎉"
+

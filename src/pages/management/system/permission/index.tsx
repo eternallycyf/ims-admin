@@ -10,9 +10,7 @@ import { useUserPermission } from '@/store/userStore'
 
 import type { Permission } from '#/entity'
 import { BasicStatus, PermissionType } from '#/enum'
-import IconButton from '@/components/icon/IconButton'
-import Iconify from '@/components/icon/IconifyIcon'
-import SvgIcon from '@/components/icon/SvgIcon'
+import { IconButton, IconifyIcon, SvgIcon } from '@/components'
 import ProTag from '@/theme/antd/tag'
 
 const defaultPermissionValue: Permission = {
@@ -85,7 +83,7 @@ export default function PermissionPage() {
         if (icon.startsWith('ic'))
           return <SvgIcon icon={icon} size={18} className="ant-menu-item-icon" />
 
-        return <Iconify icon={icon} size={18} className="ant-menu-item-icon" />
+        return <IconifyIcon icon={icon} size={18} className="ant-menu-item-icon" />
       },
     },
     {
@@ -113,15 +111,15 @@ export default function PermissionPage() {
         <div className="w-full flex justify-end text-gray">
           {record?.type === PermissionType.CATALOGUE && (
             <IconButton onClick={() => onCreate(record.id)}>
-              <Iconify icon="gridicons:add-outline" size={18} />
+              <IconifyIcon icon="gridicons:add-outline" size={18} />
             </IconButton>
           )}
           <IconButton onClick={() => onEdit(record)}>
-            <Iconify icon="solar:pen-bold-duotone" size={18} />
+            <IconifyIcon icon="solar:pen-bold-duotone" size={18} />
           </IconButton>
           <Popconfirm title="Delete the Permission" okText="Yes" cancelText="No" placement="left">
             <IconButton>
-              <Iconify icon="mingcute:delete-2-fill" size={18} className="text-error" />
+              <IconifyIcon icon="mingcute:delete-2-fill" size={18} className="text-error" />
             </IconButton>
           </Popconfirm>
         </div>

@@ -1,4 +1,5 @@
 export * from './Loading'
+export * from './Icon'
 export { default as ProgressBar } from './ProgressBar'
 export { default as ScrollProgress } from './ScrollProgress'
-export { default as Scrollbar } from './scrollbar'
+export { default as ScrollBar } from './ScrollBar'

@@ -2,8 +2,7 @@ import { Drawer, Space } from 'antd'
 import Color from 'color'
 import type { CSSProperties } from 'react'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
-import Iconify from '@/components/icon/IconifyIcon'
-import IconButton from '@/components/icon/IconButton'
+import { IconButton, IconifyIcon } from '@/components'
 import { AccountDropdown, BreadCrumb, LocalePicker, Logo, Menu, Notice, SearchBar, SettingButton } from '@/layouts/core'
 import { useSettingActions, useSettings } from '@/store/settingStore'
 import { ThemeLayout } from '#/enum'
@@ -95,7 +94,7 @@ export default function Header({ className = '' }: Props) {
             <SearchBar />
             <LocalePicker />
             <IconButton onClick={() => window.open(`https://github.com/eternallycyf/${import.meta.env.VITE_GLOB_APP_TITLE}`)}>
-              <Iconify icon="mdi:github" size={24} />
+              <IconifyIcon icon="mdi:github" size={24} />
             </IconButton>
             <Notice />
             <SettingButton />

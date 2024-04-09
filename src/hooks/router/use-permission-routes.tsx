@@ -2,8 +2,7 @@ import { isEmpty } from 'lodash'
 import { Suspense, lazy, useMemo } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 
-import { CircleLoading } from '@/components/Loading'
-import Iconify from '@/components/icon/IconifyIcon'
+import { CircleLoading, IconifyIcon } from '@/components'
 import { useUserPermission } from '@/store/userStore'
 import { flattenTrees } from '@/utils/tree'
 
@@ -89,7 +88,7 @@ function transformPermissionToMenuRoutes(
       appRoute.meta!.frameSrc = frameSrc
     if (newFeature) {
       appRoute.meta!.suffix = (
-        <ProTag color="cyan" icon={<Iconify icon="solar:bell-bing-bold-duotone" size={14} />}>
+        <ProTag color="cyan" icon={<IconifyIcon icon="solar:bell-bing-bold-duotone" size={14} />}>
           NEW
         </ProTag>
       )

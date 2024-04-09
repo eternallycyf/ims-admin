@@ -1,12 +1,11 @@
 import type { ItemType } from 'antd/es/menu/hooks/useItems'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import SvgIcon from '@/components/icon/SvgIcon'
 import { useSettings } from '@/store/settingStore'
 
 import { ThemeLayout } from '#/enum'
 import type { AppRouteObject } from '#/router'
-import Iconify from '@/components/icon/IconifyIcon'
+import { IconifyIcon, SvgIcon } from '@/components'
 
 /**
  *   routes -> menus
@@ -27,8 +26,7 @@ export function useRouteToMenuFn() {
             menuItem.disabled = disabled
             menuItem.label = (
               <div
-                className={`inline-flex w-full items-center ${
-                  themeLayout === ThemeLayout.Horizontal ? 'justify-start' : 'justify-between'
+                className={`inline-flex w-full items-center ${themeLayout === ThemeLayout.Horizontal ? 'justify-start' : 'justify-between'
                 } `}
               >
                 <div className="">{t(label)}</div>
@@ -40,7 +38,7 @@ export function useRouteToMenuFn() {
                 if (icon.startsWith('ic'))
                   menuItem.icon = <SvgIcon icon={icon} size={24} className="ant-menu-item-icon" />
                 else
-                  menuItem.icon = <Iconify icon={icon} size={24} className="ant-menu-item-icon" />
+                  menuItem.icon = <IconifyIcon icon={icon} size={24} className="ant-menu-item-icon" />
               }
               else {
                 menuItem.icon = icon

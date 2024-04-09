@@ -9,9 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { useBoolean, useEventListener, useKeyPress } from 'ahooks'
 import styled from 'styled-components'
 
-import SvgIcon from '@/components/icon/SvgIcon'
-import IconButton from '@/components/icon/IconButton'
-import Scrollbar from '@/components/scrollbar'
+import { IconButton, ScrollBar, SvgIcon } from '@/components'
 import { useFlattenedRoutes, useRouter } from '@/hooks/router'
 import { useThemeToken } from '@/hooks/theme'
 import ProTag from '@/theme/antd/tag'
@@ -203,7 +201,7 @@ export default function SearchBar() {
             <Empty />
             )
           : (
-            <Scrollbar>
+            <ScrollBar>
               <div ref={listRef} className="py-2">
                 {searchResult.map(({ key, label }, index) => {
                   const partsTitle = parse(t(label), match(t(label), searchQuery))
@@ -252,7 +250,7 @@ export default function SearchBar() {
                   )
                 })}
               </div>
-            </Scrollbar>
+            </ScrollBar>
             )}
       </Modal>
     </>

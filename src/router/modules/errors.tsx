@@ -1,8 +1,7 @@
 import { Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
 
-import { CircleLoading } from '@/components/Loading'
-import Iconify from '@/components/icon/IconifyIcon'
+import { CircleLoading, IconifyIcon } from '@/components'
 
 import type { AppRouteObject } from '#/router'
 import { Page403, Page404, Page500 } from '@/layouts/core'
@@ -18,7 +17,7 @@ const errors: AppRouteObject[] = [
     ),
     meta: {
       label: 'sys.menu.error.index',
-      icon: <Iconify icon="bxs:error-alt" className="ant-menu-item-icon" size="24" />,
+      icon: <IconifyIcon icon="bxs:error-alt" className="ant-menu-item-icon" size="24" />,
       key: '/error',
     },
     children: [

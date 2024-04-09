@@ -64,4 +64,10 @@ router
 ## TODO
 - 整理路由使用方法
 - 多余页面的demo
-- menuDrawOpen 自己组件内部使用
+- 工作台变成Home tab样式判断
+
+## docker-compose
+
+```shell
+docker-compose up -d
+```

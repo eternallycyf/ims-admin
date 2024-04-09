@@ -10,10 +10,8 @@ interface LoginStateContextType {
 
 const LoginStateContext = createContext<LoginStateContextType>({
   loginState: LoginStateEnum.LOGIN,
-  setLoginState: () => {
-  },
-  backToLogin: () => {
-  },
+  setLoginState: () => { },
+  backToLogin: () => { },
 })
 
 export function useLoginStateContext() {

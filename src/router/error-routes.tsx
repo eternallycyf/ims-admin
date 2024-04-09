@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
 
-import { CircleLoading } from '@/components/Loading'
+import { CircleLoading } from '@/components'
 import { Authorized, Page403, Page404, Page500 } from '@/layouts/core'
 
 import type { AppRouteObject } from '#/router'

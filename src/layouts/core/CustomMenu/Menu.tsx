@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 import { useLocation, useMatches, useNavigate } from 'react-router-dom'
 
 import { MENU_COLLAPSED_WIDTH, MENU_WIDTH } from '@/layouts/helpers/config'
-import Scrollbar from '@/components/scrollbar'
+import { ScrollBar } from '@/components'
 import { menuFilter } from '@/router/utils'
 import { useSettingActions, useSettings } from '@/store/settingStore'
 
@@ -106,7 +106,7 @@ export default function Menu(props: Props) {
         borderRight: `1px dashed ${Color(colorBorder).alpha(0.6).toString()}`,
       }}
     >
-      <Scrollbar
+      <ScrollBar
         style={{
           height: 'calc(100vh - 70px)',
         }}
@@ -125,7 +125,7 @@ export default function Menu(props: Props) {
           style={menuStyle}
           inlineCollapsed={collapsed}
         />
-      </Scrollbar>
+      </ScrollBar>
     </div>
   )
 }

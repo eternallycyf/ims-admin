@@ -6,8 +6,7 @@ import { USER_LIST } from '@/_mock/assets'
 
 import type { Role, UserInfo } from '#/entity'
 import { BasicStatus } from '#/enum'
-import IconButton from '@/components/icon/IconButton'
-import Iconify from '@/components/icon/IconifyIcon'
+import { IconButton, IconifyIcon } from '@/components'
 import { usePathname, useRouter } from '@/hooks/router'
 import { useThemeToken } from '@/hooks/theme'
 import ProTag from '@/theme/antd/tag'
@@ -68,14 +67,14 @@ export default function RolePage() {
               push(`${pathname}/${record.id}`)
             }}
           >
-            <Iconify icon="mdi:card-account-details" size={18} />
+            <IconifyIcon icon="mdi:card-account-details" size={18} />
           </IconButton>
-          <IconButton onClick={() => {}}>
-            <Iconify icon="solar:pen-bold-duotone" size={18} />
+          <IconButton onClick={() => { }}>
+            <IconifyIcon icon="solar:pen-bold-duotone" size={18} />
           </IconButton>
           <Popconfirm title="Delete the User" okText="Yes" cancelText="No" placement="left">
             <IconButton>
-              <Iconify icon="mingcute:delete-2-fill" size={18} className="text-error" />
+              <IconifyIcon icon="mingcute:delete-2-fill" size={18} className="text-error" />
             </IconButton>
           </Popconfirm>
         </div>
@@ -87,7 +86,7 @@ export default function RolePage() {
     <Card
       title="User List"
       extra={(
-        <Button type="primary" onClick={() => {}}>
+        <Button type="primary" onClick={() => { }}>
           New
         </Button>
       )}

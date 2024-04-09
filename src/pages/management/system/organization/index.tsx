@@ -22,8 +22,7 @@ import orgService from '@/api/services/orgService'
 
 import type { Organization } from '#/entity'
 import ProTag from '@/theme/antd/tag'
-import IconButton from '@/components/icon/IconButton'
-import Iconify from '@/components/icon/IconifyIcon'
+import { IconButton, IconifyIcon } from '@/components'
 
 type SearchFormFieldType = Pick<Organization, 'name' | 'status'>
 
@@ -76,11 +75,11 @@ export default function OrganizationPage() {
       render: (_, record) => (
         <div className="w-full flex justify-center text-gray">
           <IconButton onClick={() => onEdit(record)}>
-            <Iconify icon="solar:pen-bold-duotone" size={18} />
+            <IconifyIcon icon="solar:pen-bold-duotone" size={18} />
           </IconButton>
           <Popconfirm title="Delete the Organization" okText="Yes" cancelText="No" placement="left">
             <IconButton>
-              <Iconify icon="mingcute:delete-2-fill" size={18} className="text-error" />
+              <IconifyIcon icon="mingcute:delete-2-fill" size={18} className="text-error" />
             </IconButton>
           </Popconfirm>
         </div>

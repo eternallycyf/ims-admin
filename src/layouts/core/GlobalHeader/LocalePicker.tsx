@@ -1,8 +1,7 @@
 import { Dropdown } from 'antd'
 
 import type { MenuProps } from 'antd'
-import SvgIcon from '@/components/icon/SvgIcon'
-import IconButton from '@/components/icon/IconButton'
+import { IconButton, SvgIcon } from '@/components'
 import useLocale, { LANGUAGE_MAP } from '@/locales/useLocale'
 
 import type { LocalEnum } from '#/enum'

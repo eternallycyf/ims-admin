@@ -1,8 +1,7 @@
 import { Suspense, lazy } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 
-import { CircleLoading } from '@/components/Loading'
-import Iconify from '@/components/icon/IconifyIcon'
+import { CircleLoading, IconifyIcon } from '@/components'
 
 import type { AppRouteObject } from '#/router'
 
@@ -18,7 +17,7 @@ const functions: AppRouteObject = {
   ),
   meta: {
     label: 'sys.menu.functions',
-    icon: <Iconify icon="solar:plain-2-bold-duotone" className="ant-menu-item-icon" size="24" />,
+    icon: <IconifyIcon icon="solar:plain-2-bold-duotone" className="ant-menu-item-icon" size="24" />,
     key: '/functions',
   },
   children: [

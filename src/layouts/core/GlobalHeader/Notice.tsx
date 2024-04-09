@@ -5,9 +5,7 @@ import Color from 'color'
 import type { CSSProperties, ReactNode } from 'react'
 import { useState } from 'react'
 
-import Iconify from '@/components/icon/IconifyIcon'
-import SvgIcon from '@/components/icon/SvgIcon'
-import IconButton from '@/components/icon/IconButton'
+import { IconButton, IconifyIcon, SvgIcon } from '@/components'
 import CyanBlur from '@/assets/images/background/cyan-blur.png'
 import RedBlur from '@/assets/images/background/red-blur.png'
 import { useThemeToken } from '@/hooks/theme'
@@ -239,7 +237,7 @@ export default function Notice() {
             indicator: { color: '#fff' },
           }}
         >
-          <Iconify icon="solar:bell-bing-bold-duotone" size={24} />
+          <IconifyIcon icon="solar:bell-bing-bold-duotone" size={24} />
         </Badge>
       </IconButton>
       <Drawer
@@ -262,7 +260,7 @@ export default function Notice() {
               setDrawerOpen(false)
             }}
           >
-            <Iconify icon="solar:check-read-broken" size={20} />
+            <IconifyIcon icon="solar:check-read-broken" size={20} />
           </IconButton>
         )}
         footer={(

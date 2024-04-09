@@ -3,8 +3,7 @@ import { Card, Col, Input, Row, Tooltip, Typography } from 'antd'
 import type { ChangeEvent } from 'react'
 import { useState } from 'react'
 
-import Iconify from '@/components/icon/IconifyIcon'
-import IconButton from '@/components/icon/IconButton'
+import { IconButton, IconifyIcon } from '@/components'
 
 import { useCopyToClipboard } from '@/hooks/event'
 
@@ -19,7 +18,7 @@ export default function ClipboardPage() {
   const CopyButton = (
     <Tooltip title="Copy">
       <IconButton className="text-gray" onClick={() => copyFn(value)}>
-        <Iconify icon="eva:copy-fill" size={20} />
+        <IconifyIcon icon="eva:copy-fill" size={20} />
       </IconButton>
     </Tooltip>
   )

@@ -20,7 +20,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import Color from 'color'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
-import Iconify from '@/components/icon/IconifyIcon'
+import { IconifyIcon } from '@/components'
 import { type KeepAliveTab, useKeepAlive } from '@/hooks/router'
 
 import { MultiTabOperation, ThemeLayout } from '#/enum'
@@ -121,17 +121,17 @@ export default function MultiTabs(_props: Props) {
         {
           label: t(`sys.tab.${MultiTabOperation.FULLSCREEN}`),
           key: MultiTabOperation.FULLSCREEN,
-          icon: <Iconify icon="material-symbols:fullscreen" size={18} />,
+          icon: <IconifyIcon icon="material-symbols:fullscreen" size={18} />,
         },
         {
           label: t(`sys.tab.${MultiTabOperation.REFRESH}`),
           key: MultiTabOperation.REFRESH,
-          icon: <Iconify icon="mdi:reload" size={18} />,
+          icon: <IconifyIcon icon="mdi:reload" size={18} />,
         },
         {
           label: t(`sys.tab.${MultiTabOperation.CLOSE}`),
           key: MultiTabOperation.CLOSE,
-          icon: <Iconify icon="material-symbols:close" size={18} />,
+          icon: <IconifyIcon icon="material-symbols:close" size={18} />,
           disabled: tabsList.length === 1 || openDropdownTabKey === HOMEPAGE,
         },
         {
@@ -141,7 +141,7 @@ export default function MultiTabs(_props: Props) {
           label: t(`sys.tab.${MultiTabOperation.CLOSELEFT}`),
           key: MultiTabOperation.CLOSELEFT,
           icon: (
-            <Iconify
+            <IconifyIcon
               icon="material-symbols:tab-close-right-outline"
               size={18}
               className="rotate-180"
@@ -152,7 +152,7 @@ export default function MultiTabs(_props: Props) {
         {
           label: t(`sys.tab.${MultiTabOperation.CLOSERIGHT}`),
           key: MultiTabOperation.CLOSERIGHT,
-          icon: <Iconify icon="material-symbols:tab-close-right-outline" size={18} />,
+          icon: <IconifyIcon icon="material-symbols:tab-close-right-outline" size={18} />,
           disabled: currentIndex === tabsList.length - 1,
         },
         {
@@ -161,13 +161,13 @@ export default function MultiTabs(_props: Props) {
         {
           label: t(`sys.tab.${MultiTabOperation.CLOSEOTHERS}`),
           key: MultiTabOperation.CLOSEOTHERS,
-          icon: <Iconify icon="material-symbols:tab-close-outline" size={18} />,
+          icon: <IconifyIcon icon="material-symbols:tab-close-outline" size={18} />,
           disabled: otherLength.length === 0,
         },
         {
           label: t(`sys.tab.${MultiTabOperation.CLOSEALL}`),
           key: MultiTabOperation.CLOSEALL,
-          icon: <Iconify icon="mdi:collapse-all-outline" size={18} />,
+          icon: <IconifyIcon icon="mdi:collapse-all-outline" size={18} />,
           disabled: tabsList.length === 1,
         },
       ]
@@ -288,7 +288,7 @@ export default function MultiTabs(_props: Props) {
               {t(tab.label)}
             </div>
             {tab?.key !== HOMEPAGE && (
-              <Iconify
+              <IconifyIcon
                 icon="ion:close-outline"
                 size={18}
                 className="cursor-pointer opacity-50"

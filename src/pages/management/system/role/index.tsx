@@ -8,8 +8,7 @@ import { ROLE_LIST } from '@/_mock/assets'
 
 import type { Role } from '#/entity'
 import { BasicStatus } from '#/enum'
-import IconButton from '@/components/icon/IconButton'
-import Iconify from '@/components/icon/IconifyIcon'
+import { IconButton, IconifyIcon } from '@/components'
 import ProTag from '@/theme/antd/tag'
 
 const ROLES: Role[] = ROLE_LIST
@@ -86,11 +85,11 @@ export default function RolePage() {
       render: (_, record) => (
         <div className="w-full flex justify-center text-gray">
           <IconButton onClick={() => onEdit(record)}>
-            <Iconify icon="solar:pen-bold-duotone" size={18} />
+            <IconifyIcon icon="solar:pen-bold-duotone" size={18} />
           </IconButton>
           <Popconfirm title="Delete the Role" okText="Yes" cancelText="No" placement="left">
             <IconButton>
-              <Iconify icon="mingcute:delete-2-fill" size={18} className="text-error" />
+              <IconifyIcon icon="mingcute:delete-2-fill" size={18} className="text-error" />
             </IconButton>
           </Popconfirm>
         </div>

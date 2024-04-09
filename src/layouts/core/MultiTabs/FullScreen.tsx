@@ -1,7 +1,7 @@
 import { Button } from 'antd'
 import { useState } from 'react'
 import screenfull from 'screenfull'
-import SvgIcon from '@/components/icon/SvgIcon'
+import { SvgIcon } from '@/components'
 import { useThemeToken } from '@/hooks/theme'
 import { t } from '@/locales/i18n'
 
