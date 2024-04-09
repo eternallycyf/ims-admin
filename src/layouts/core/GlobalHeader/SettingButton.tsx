@@ -8,8 +8,7 @@ import { Card, Drawer, Radio, type RadioChangeEvent, Switch, Tooltip } from 'ant
 import { type CSSProperties, useState } from 'react'
 import { m } from 'framer-motion'
 import Color from 'color'
-import { IconButton, SvgIcon } from '@/components'
-import { varHover } from '@/components/animate/variants'
+import { IconButton, SvgIcon, varHover } from '@/components'
 import RedBlur from '@/assets/images/background/red-blur.png'
 import CyanBlur from '@/assets/images/background/cyan-blur.png'
 import { ComponentSize, type ThemeColorPresets, ThemeLayout } from '#/enum'
@@ -285,7 +284,7 @@ function SettingButton() {
                     <div className="flex flex-grow border-b border-dashed" />
                     <RightOutlined />
                   </div>
-                  )
+                )
                 : (
                   <div
                     className="w-1/2 flex items-center justify-between"
@@ -297,7 +296,7 @@ function SettingButton() {
                     <div className="flex-grow border-b border-dashed" />
                     <LeftOutlined />
                   </div>
-                  )}
+                )}
             </Card>
           </div>
 

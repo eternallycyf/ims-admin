@@ -4,8 +4,7 @@ import { Helmet } from 'react-helmet-async'
 
 import type { FallbackProps } from 'react-error-boundary'
 import Character5 from '@/assets/images/characters/character_5.png'
-import MotionContainer from '@/components/animate/motion-container'
-import { varBounce } from '@/components/animate/variants/bounce'
+import { MotionContainer, varBounce } from '@/components'
 import { useRouter } from '@/hooks/router'
 import { useThemeToken } from '@/hooks/theme'
 
