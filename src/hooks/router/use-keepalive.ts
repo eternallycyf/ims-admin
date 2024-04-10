@@ -132,7 +132,7 @@ export function useKeepAlive() {
     const existed = tabsList.find(item => item.key === key)
 
     if (!existed) {
-      const { outlet = '', params = undefined, search = '', state = undefined, ...info } = currentRouteMeta
+      const { outlet = '', params = undefined, search = '', state = undefined, suffix, ...info } = currentRouteMeta
 
       const item: KeepAliveTab = {
         ...info,
