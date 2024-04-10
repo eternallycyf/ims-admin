@@ -1,27 +1,32 @@
 import { Suspense } from 'react'
 
 import Color from 'color'
+import withWrapper from '../Enhance/withWrapper'
 import ProgressBar from '@/components/ProgressBar'
 import { Content, Header, Menu, MenuHorizontal } from '@/layouts/core'
-import { useSettings } from '@/store/settingStore'
 
 import { ThemeLayout } from '#/enum'
 import { useThemeToken } from '@/hooks/theme'
 import { CircleLoading } from '@/components'
 
-function DashboardLayout() {
-  const { colorBgElevated, colorTextBase, colorBorder } = useThemeToken()
-  const { themeLayout } = useSettings()
+interface Props {
+  themeLayout?: `${ThemeLayout}`
+  collapsed?: boolean
+}
 
-  const navVertical = (
-    <div className="z-50 hidden h-full flex-shrink-0 md:block">
-      <Menu />
-    </div>
-  )
+function BasicLayout(props: Props) {
+  const { colorBgElevated, colorTextBase, colorBorder } = useThemeToken()
+  const { themeLayout, collapsed } = props
 
   const border = `1px dashed ${Color(colorBorder).alpha(0.6).toString()}`
 
-  const menu = themeLayout === ThemeLayout.Horizontal ? <MenuHorizontal /> : navVertical
+  const menu = themeLayout === ThemeLayout.Horizontal
+    ? <MenuHorizontal />
+    : (
+      <div className="z-50 hidden h-full flex-shrink-0 md:block">
+        <Menu collapsed={collapsed} themeLayout={themeLayout} />
+      </div>
+      )
 
   return (
     <section h-full w-full>
@@ -40,7 +45,7 @@ function DashboardLayout() {
           <Header />
           <main className={`flex-start overflow-y-auto h-full w-full flex flex-1 ${themeLayout === 'horizontal' && 'flex-col'}`}>
             <aside style={{ flex: 'unset', borderBottom: themeLayout === ThemeLayout.Horizontal ? border : 'none' }}>
-              { menu }
+              {menu}
             </aside>
             <Content />
           </main>
@@ -50,4 +55,4 @@ function DashboardLayout() {
   )
 }
 
-export default DashboardLayout
+export default withWrapper(BasicLayout)

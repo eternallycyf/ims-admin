@@ -9,28 +9,23 @@ import { useLocation, useMatches, useNavigate } from 'react-router-dom'
 import { MENU_COLLAPSED_WIDTH, MENU_WIDTH } from '@/layouts/helpers/config'
 import { ScrollBar } from '@/components'
 import { menuFilter } from '@/router/utils'
-import { useSettingActions, useSettings } from '@/store/settingStore'
 
-import { ThemeLayout } from '#/enum'
 import { useThemeToken } from '@/hooks/theme'
 import { useFlattenedRoutes, usePermissionRoutes, useRouteToMenuFn } from '@/hooks/router'
+import { ThemeLayout } from '#/enum'
 
 interface Props {
   closeSideBarDrawer?: () => void
+  themeLayout: `${ThemeLayout}`
+  collapsed: boolean
 }
 
 export default function Menu(props: Props) {
+  const { themeLayout, collapsed } = props
+  const { colorBgElevated, colorBorder } = useThemeToken()
   const navigate = useNavigate()
   const matches = useMatches()
   const { pathname } = useLocation()
-
-  const { colorBgElevated, colorBorder } = useThemeToken()
-
-  const settings = useSettings()
-  const { themeLayout } = settings
-  const { setSettings } = useSettingActions()
-
-  const { collapsed } = settings
 
   const menuStyle: CSSProperties = {
     background: colorBgElevated,
@@ -44,10 +39,9 @@ export default function Menu(props: Props) {
   /**
    * state
    */
-  const [openKeys, setOpenKeys] = useState<string[]>([])
-  const [selectedKeys, setSelectedKeys] = useState<string[]>([''])
+  const [openKeys, setOpenKeys] = useState<string[]>()
+  const [selectedKeys, setSelectedKeys] = useState<string[]>()
   const [menuList, setMenuList] = useState<ItemType[]>([])
-  const [menuMode, setMenuMode] = useState<MenuProps['mode']>('inline')
 
   useEffect(() => {
     if (themeLayout === ThemeLayout.Vertical) {
@@ -64,17 +58,6 @@ export default function Menu(props: Props) {
     const menus = routeToMenuFn(menuRoutes)
     setMenuList(menus)
   }, [permissionRoutes, routeToMenuFn])
-
-  useEffect(() => {
-    if (themeLayout === ThemeLayout.Vertical) {
-      setSettings({ collapsed: false })
-      setMenuMode('inline')
-    }
-    if (themeLayout === ThemeLayout.Mini) {
-      setSettings({ collapsed: true })
-      setMenuMode('inline')
-    }
-  }, [themeLayout])
 
   /**
    * events
@@ -113,7 +96,7 @@ export default function Menu(props: Props) {
       >
         {/* <!-- Sidebar Menu --> */}
         <AntdMenu
-          mode={menuMode}
+          mode="inline"
           items={menuList}
           className="h-full !border-none"
           defaultOpenKeys={openKeys}
