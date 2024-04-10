@@ -54,20 +54,11 @@ html {
 - 其他变量自行添加即可 但已全局注入antd所有的主题变量为less变量 使用antd的就行
 - ims-admin/public/style/antd.less
 
-## 编辑
-
-components
-layouts
-pages
-router
-
-## TODO
-- 整理路由使用方法
-- 多余页面的demo
-- 工作台变成Home tab样式判断
-
 ## docker-compose
 
 ```shell
 docker-compose up -d
 ```
+
+## TODO
+- 整理路由使用方法

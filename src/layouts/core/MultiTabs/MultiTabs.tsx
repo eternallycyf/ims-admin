@@ -23,7 +23,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { IconifyIcon } from '@/components'
 import { type KeepAliveTab, useKeepAlive } from '@/hooks/router'
 
-import { MultiTabOperation, ThemeLayout } from '#/enum'
+import { MultiTabOperation, ThemeLayout, ThemeMode } from '#/enum'
 import { useResponsive, useThemeToken } from '@/hooks/theme'
 import { useMenuInfo, useMenuInfoActions } from '@/store/useMenuInfo'
 import { replaceDynamicParams, useMatchRouteMeta } from '@/hooks/router'
@@ -72,7 +72,7 @@ export default function MultiTabs(_props: Props) {
   const [hoveringTabKey, setHoveringTabKey] = useState('')
   const [openDropdownTabKey, setopenDropdownTabKey] = useState('')
 
-  const { collapsed, themeLayout, menuDrawOpen } = useSettings()
+  const { collapsed, themeLayout, menuDrawOpen, themeMode } = useSettings()
   const { setSettings } = useSettingActions()
   const { tabsList } = useMenuInfo()
   const currentRouteMeta = useMatchRouteMeta()
@@ -283,28 +283,43 @@ export default function MultiTabs(_props: Props) {
             }}
             onMouseLeave={() => setHoveringTabKey('')}
           >
-            <div>
-              {tab?.state?.[TAB_TITLE] ? `${tab?.state?.[TAB_TITLE]}-` : ''}
-              {t(tab.label)}
-            </div>
-            {tab?.key !== HOMEPAGE && (
-              <IconifyIcon
-                icon="ion:close-outline"
-                size={18}
-                className="cursor-pointer opacity-50"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  closeTab(tab.key)
-                }}
-                style={{
-                  visibility:
-                    (tab.key !== activeTabRoutePath && tab.key !== hoveringTabKey)
-                    || tabsList.length === 1
-                      ? 'hidden'
-                      : 'visible',
-                }}
-              />
-            )}
+            {tab?.key === HOMEPAGE
+              ? (
+                <>
+                  <IconifyIcon
+                    height={22}
+                    size={18}
+                    className="cursor-pointer"
+                    icon={themeMode === ThemeMode.Light ? 'ant-design:home-outlined' : 'ant-design:home-filled'}
+                  />
+                </>
+              )
+              : (
+                <>
+                  <div>
+                    {tab?.state?.[TAB_TITLE] ? `${tab?.state?.[TAB_TITLE]}-` : ''}
+                    {t(tab.label)}
+                  </div>
+                  {tab?.key !== HOMEPAGE && (
+                    <IconifyIcon
+                      icon="ion:close-outline"
+                      size={18}
+                      className="cursor-pointer opacity-50"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        closeTab(tab.key)
+                      }}
+                      style={{
+                        visibility:
+                          (tab.key !== activeTabRoutePath && tab.key !== hoveringTabKey)
+                            || tabsList.length === 1
+                            ? 'hidden'
+                            : 'visible',
+                      }}
+                    />
+                  )}
+                </>
+              )}
           </div>
         </Dropdown>
       )
