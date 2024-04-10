@@ -284,7 +284,7 @@ function SettingButton() {
                     <div className="flex flex-grow border-b border-dashed" />
                     <RightOutlined />
                   </div>
-                )
+                  )
                 : (
                   <div
                     className="w-1/2 flex items-center justify-between"
@@ -296,7 +296,7 @@ function SettingButton() {
                     <div className="flex-grow border-b border-dashed" />
                     <LeftOutlined />
                   </div>
-                )}
+                  )}
             </Card>
           </div>
 
