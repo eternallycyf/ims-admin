@@ -1,7 +1,16 @@
 .ant-breadcrumb {
+
   ol li,
   .ant-breadcrumb-overlay-link {
     display: flex !important;
     align-items: center;
+  }
+
+  .ant-breadcrumb-overlay-link:hover {
+
+    .ant-breadcrumb-link,
+    .anticon {
+      color: @primary-color;
+    }
   }
 }
