@@ -39,8 +39,8 @@ export default function Menu(props: Props) {
   /**
    * state
    */
-  const [openKeys, setOpenKeys] = useState<string[]>()
-  const [selectedKeys, setSelectedKeys] = useState<string[]>()
+  const [openKeys, setOpenKeys] = useState<string[]>([])
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([])
   const [menuList, setMenuList] = useState<ItemType[]>([])
 
   useEffect(() => {
@@ -51,7 +51,7 @@ export default function Menu(props: Props) {
       setOpenKeys(openKeys)
     }
     setSelectedKeys([pathname])
-  }, [pathname, matches, collapsed, themeLayout])
+  }, [pathname, matches])
 
   useEffect(() => {
     const menuRoutes = menuFilter(permissionRoutes)

@@ -26,7 +26,7 @@ export default function MenuHorizontal() {
    * state
    */
   const [openKeys, setOpenKeys] = useState<string[]>([])
-  const [selectedKeys, setSelectedKeys] = useState<string[]>([''])
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([])
   const [menuList, setMenuList] = useState<ItemType[]>([])
 
   useEffect(() => {
