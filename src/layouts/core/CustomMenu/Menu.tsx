@@ -6,6 +6,7 @@ import type { CSSProperties } from 'react'
 import { useEffect, useState } from 'react'
 import { useLocation, useMatches, useNavigate } from 'react-router-dom'
 
+import _ from 'lodash'
 import { MENU_COLLAPSED_WIDTH, MENU_WIDTH } from '@/layouts/helpers/config'
 import { ScrollBar } from '@/components'
 import { menuFilter } from '@/router/utils'
@@ -45,12 +46,16 @@ export default function Menu(props: Props) {
 
   useEffect(() => {
     if (themeLayout === ThemeLayout.Vertical) {
-      const openKeys = matches
+      const _openKeys = matches
         .filter(match => match.pathname !== '/')
         .map(match => match.pathname)
-      setOpenKeys(openKeys)
+      if (!_.isEqual(_openKeys, openKeys))
+        setOpenKeys(_openKeys)
     }
-    setSelectedKeys([pathname])
+
+    if (pathname && pathname !== selectedKeys?.[0])
+      setSelectedKeys([pathname])
+
   }, [pathname, matches])
 
   useEffect(() => {
