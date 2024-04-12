@@ -145,12 +145,11 @@ export function useKeepAlive() {
         item.search = search
       if (state)
         item.state = state
-
       setCacheTabs([...tabsList, {
         ...item,
         outlet,
-      }])
-      setRouteInfo({ tabsList: [...tabsList, item] })
+      }].filter(item => !item.hideTab))
+      setRouteInfo({ tabsList: [...tabsList, item].filter(item => !item.hideTab) })
     }
     else {
       const newTabList = [...tabsList]
@@ -201,7 +200,7 @@ export function useKeepAlive() {
           ...newCacheTabsList[index],
           timeStamp: getTimeStamp(),
         }
-        setCacheTabs([...newCacheTabsList])
+        setCacheTabs([...newCacheTabsList].filter(item => !item.hideTab))
       }
 
       if (isRefresh && !_.isEqual(newTabList[index], tabsList[index])) {
@@ -209,7 +208,7 @@ export function useKeepAlive() {
           ...newTabList[index],
           timeStamp: getTimeStamp(),
         }
-        setRouteInfo({ tabsList: newTabList })
+        setRouteInfo({ tabsList: newTabList.filter(item => !item.hideTab) })
       }
 
       isRefresh = false
