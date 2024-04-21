@@ -113,10 +113,22 @@ function transformPermissionToMenuRoutes(
     }
     else if (type === PermissionType.MENU) {
       const Element = lazy(resolveComponent(component!) as any)
-      if (frameSrc)
-        appRoute.element = <Element src={frameSrc} />
-      else
-        appRoute.element = <Element />
+      if (frameSrc) {
+        appRoute.element = (
+          <Suspense fallback={<CircleLoading />}>
+            <Element src={frameSrc} />
+          </Suspense>
+        )
+      }
+
+      else {
+        appRoute.element
+          = (
+            <Suspense fallback={<CircleLoading />}>
+              <Element />
+            </Suspense>
+          )
+      }
     }
 
     return appRoute
