@@ -17,7 +17,7 @@
 
 |![login.png](https://raw.githubusercontent.com/eternallycyf/ims-admin/main/public/login.jpeg)|![login_dark.png](https://raw.githubusercontent.com/eternallycyf/ims-admin/main/public/login_dark.jpeg)
 | ----------------------------------------------------------------- | ------------------------------------------------------------------- |
-|![analysis.png](https://raw.githubusercontent.com/eternallycyf/ims-admin/main/public/analysis.png)|![workbench.png](https://raw.githubusercontent.com/eternallycyf/ims-admin/main/public/workbench.png)
+|![workbench.png](https://raw.githubusercontent.com/eternallycyf/ims-admin/main/public/workbench.png)|![analysis.png](https://raw.githubusercontent.com/eternallycyf/ims-admin/main/public/analysis.png)
 
 ## 特性
 
@@ -159,3 +159,8 @@ html {
 
 - 其他变量自行添加即可 但已全局注入antd所有的主题变量为less变量 使用antd的就行
 - ims-admin/public/style/antd.less
+
+## 参考
+
+- [Slash admin](https://github.com/d3george/slash-admin)
+

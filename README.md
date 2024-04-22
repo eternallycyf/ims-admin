@@ -156,3 +156,7 @@ html {
 
 - Other variables can be added by themselves, but antd has been globally injected. All theme variables are less variables
 - ims-admin/public/style/antd.less
+
+## reference
+
+- [Slash admin](https://github.com/d3george/slash-admin)
