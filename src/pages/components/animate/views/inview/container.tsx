@@ -41,7 +41,7 @@ export default function ContainerView({ isText, variant, isMulti }: Props) {
               </m.div>
             ))}
           </MotionContainer>
-        )
+          )
         : (
           <MotionContainer className="flex flex-col items-center gap-6">
             {imgs.map((img, index) => (
@@ -59,7 +59,7 @@ export default function ContainerView({ isText, variant, isMulti }: Props) {
               />
             ))}
           </MotionContainer>
-        )}
+          )}
     </div>
   )
 }

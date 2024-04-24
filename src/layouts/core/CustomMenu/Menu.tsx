@@ -55,7 +55,6 @@ export default function Menu(props: Props) {
 
     if (pathname && pathname !== selectedKeys?.[0])
       setSelectedKeys([pathname])
-
   }, [pathname, matches])
 
   useEffect(() => {

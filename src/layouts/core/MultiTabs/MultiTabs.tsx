@@ -293,7 +293,7 @@ export default function MultiTabs(_props: Props) {
                     icon={themeMode === ThemeMode.Light ? 'ant-design:home-outlined' : 'ant-design:home-filled'}
                   />
                 </>
-              )
+                )
               : (
                 <>
                   <div>
@@ -312,14 +312,14 @@ export default function MultiTabs(_props: Props) {
                       style={{
                         visibility:
                           (tab.key !== activeTabRoutePath && tab.key !== hoveringTabKey)
-                            || tabsList.length === 1
+                          || tabsList.length === 1
                             ? 'hidden'
                             : 'visible',
                       }}
                     />
                   )}
                 </>
-              )}
+                )}
           </div>
         </Dropdown>
       )
