@@ -4,7 +4,7 @@
 <img src="https://raw.githubusercontent.com/eternallycyf/ims-admin/main/public/logo.png" height="140" />
 <h1> ims admin </h1>
 <p style="font-size: 14px">
-  ims admin is a modern admin dashboard template built with React 18, Vite, Ant Design, and TypeScript. It is designed to help developers quickly create powerful admin management systems.
+  ims admin is a modern admin dashboard template built with React 18, Vite5, Unocss, Ant Design, and TypeScript. It is designed to help developers quickly create powerful admin management systems.
 </p>
 </div>
 
