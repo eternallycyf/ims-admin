@@ -10,6 +10,7 @@ import type { Permission } from '#/entity'
 import { BasicStatus, PermissionType } from '#/enum'
 import type { AppRouteObject } from '#/router'
 import ProTag from '@/theme/antd/tag'
+import { getRoutesFromModules } from '@/router/utils'
 
 // 使用 import.meta.glob 获取所有路由组件
 const entryPath = '/src/pages'
@@ -34,11 +35,16 @@ export function usePermissionRoutes() {
   const permissions = useUserPermission()
 
   return useMemo(() => {
+    // 切换回静态路由
+    if (import.meta.env.VITE_ROUTER_TYPE === 'static')
+      return getRoutesFromModules()
+
     const flattenedPermissions = flattenTrees(permissions!)
     const permissionRoutes = transformPermissionToMenuRoutes(
       permissions || [],
       flattenedPermissions,
     )
+
     return [...permissionRoutes]
   }, [permissions])
 }

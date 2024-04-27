@@ -1,12 +1,12 @@
 import { Navigate } from 'react-router-dom'
 
 import { Authorized } from '@/layouts/core'
-import { getMenuModules } from '@/router/utils'
+import { getRoutesFromModules } from '@/router/utils'
 
 import type { AppRouteObject } from '#/router'
 import { BasicLayout } from '@/layouts/layout'
 
-const menuModuleRoutes = getMenuModules()
+const menuModuleRoutes = getRoutesFromModules()
 
 const { VITE_APP_HOMEPAGE: HOMEPAGE } = import.meta.env
 

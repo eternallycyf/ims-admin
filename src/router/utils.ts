@@ -21,7 +21,7 @@ export function menuFilter(items: AppRouteObject[]) {
 /**
  * 基于 src/router/routes/modules 文件结构动态生成路由
  */
-export function getMenuModules() {
+export function getRoutesFromModules() {
   const menuModules: AppRouteObject[] = []
 
   const modules = import.meta.glob('./modules/**/*.tsx', { eager: true })
@@ -37,7 +37,9 @@ export function getMenuModules() {
  * return the routes will be used in sidebar menu
  */
 export function getMenuRoutes(appRouteObjects: AppRouteObject[]) {
-  // return menuFilter(getMenuModules());
+  if (import.meta.env.VITE_ROUTER_TYPE === 'static')
+    return menuFilter(getRoutesFromModules())
+
   return menuFilter(appRouteObjects)
 }
 
