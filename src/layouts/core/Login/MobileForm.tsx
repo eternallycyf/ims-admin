@@ -69,7 +69,7 @@ function MobileForm() {
                         format="ss"
                         onFinish={reset}
                       />
-                      <span className="ml-1">{t('sys.login.sendSmsText', { second })}</span>
+                      <span className="ml-1">{t('sys.login.sendSmsText', { second } as any) as any}</span>
                     </div>
                     )}
               </Button>

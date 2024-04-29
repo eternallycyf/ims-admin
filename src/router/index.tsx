@@ -29,7 +29,7 @@ function Title() {
       <title>
         {currentRouteMeta?.key === import.meta.env.VITE_APP_HOMEPAGE
           ? GLOBAL_TITLE
-          : t(currentRouteMeta?.label) || GLOBAL_TITLE}
+          : t(currentRouteMeta?.label as any) || GLOBAL_TITLE}
       </title>
     </Helmet>
   )

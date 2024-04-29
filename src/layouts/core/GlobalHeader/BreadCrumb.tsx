@@ -38,13 +38,13 @@ export default function BreadCrumb() {
         ?.children?.filter(item => !item.meta?.hideMenu)
       const result: ItemType = {
         key,
-        title: t(label),
+        title: t(label as any),
       }
       if (items) {
         result.menu = {
           items: items.map(item => ({
             key: item.meta?.key,
-            label: <Link to={item.meta!.key!}>{t(item.meta!.label)}</Link>,
+            label: <Link to={item.meta!.key!}>{t(item.meta!.label as any)}</Link>,
           })),
         }
       }

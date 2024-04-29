@@ -29,7 +29,7 @@ export function useRouteToMenuFn() {
                 className={`inline-flex w-full items-center ${themeLayout === ThemeLayout.Horizontal ? 'justify-start' : 'justify-between'
                 } `}
               >
-                <div className="">{t(label)}</div>
+                <div className="">{t(label as any)}</div>
                 {suffix}
               </div>
             )

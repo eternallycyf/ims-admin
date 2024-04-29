@@ -298,7 +298,7 @@ export default function MultiTabs(_props: Props) {
                 <>
                   <div>
                     {tab?.state?.[TAB_TITLE] ? `${tab?.state?.[TAB_TITLE]}-` : ''}
-                    {t(tab.label)}
+                    {t(tab.label as any)}
                   </div>
                   {tab?.key !== HOMEPAGE && (
                     <IconifyIcon
