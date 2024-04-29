@@ -2,11 +2,12 @@ import i18n from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import { initReactI18next } from 'react-i18next'
 
-import en_US from './lang/en_US'
 import zh_CN from './lang/zh_CN'
+import en_US from './lang/en_US'
 import { getStringItem } from '@/utils/storage'
 
 import { LocalEnum, StorageEnum } from '#/enum'
+import type { TranslateFnType } from '#/utils'
 
 const defaultLng = getStringItem(StorageEnum.I18N) || (LocalEnum.zh_CN as string)
 i18n
@@ -31,4 +32,7 @@ i18n
   })
 
 export default i18n
-export const { t } = i18n
+
+const t = i18n.t as TranslateFnType
+
+export { t }
