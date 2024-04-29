@@ -7,7 +7,6 @@ import en_US from './lang/en_US'
 import { getStringItem } from '@/utils/storage'
 
 import { LocalEnum, StorageEnum } from '#/enum'
-import type { TranslateFnType } from '#/utils'
 
 const defaultLng = getStringItem(StorageEnum.I18N) || (LocalEnum.zh_CN as string)
 i18n
@@ -33,6 +32,4 @@ i18n
 
 export default i18n
 
-const t = i18n.t as TranslateFnType
-
-export { t }
+export const { t } = i18n
