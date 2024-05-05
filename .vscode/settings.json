@@ -67,4 +67,7 @@
     "toml",
     "astro",
   ],
+  "[jsx]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
 }
