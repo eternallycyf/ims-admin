@@ -1,32 +1,30 @@
 import { Suspense } from 'react'
 
 import Color from 'color'
-import withWrapper from '../Enhance/withWrapper'
 import ProgressBar from '@/components/ProgressBar'
 import { Content, Header, Menu, MenuHorizontal } from '@/layouts/core'
 
 import { ThemeLayout } from '#/enum'
 import { useThemeToken } from '@/hooks/theme'
 import { CircleLoading } from '@/components'
+import { useSettings } from '@/store/settingStore'
 
-interface Props {
-  themeLayout?: `${ThemeLayout}`
-  collapsed?: boolean
-}
-
-function BasicLayout(props: Props) {
+function BasicLayout() {
   const { colorBgElevated, colorTextBase, colorBorder } = useThemeToken()
-  const { themeLayout, collapsed } = props
+  const { themeLayout } = useSettings()
 
   const border = `1px dashed ${Color(colorBorder).alpha(0.6).toString()}`
 
-  const menu = themeLayout === ThemeLayout.Horizontal
-    ? <MenuHorizontal />
-    : (
-      <div className="z-50 hidden h-full flex-shrink-0 md:block">
-        <Menu collapsed={collapsed} themeLayout={themeLayout} />
-      </div>
-      )
+  const menu
+    = themeLayout === ThemeLayout.Horizontal
+      ? (
+        <MenuHorizontal />
+        )
+      : (
+        <div className="z-50 hidden h-full flex-shrink-0 md:block">
+          <Menu />
+        </div>
+        )
 
   return (
     <section h-full w-full>
@@ -43,8 +41,16 @@ function BasicLayout(props: Props) {
       >
         <Suspense fallback={<CircleLoading />}>
           <Header />
-          <main className={`flex-start overflow-y-auto h-full w-full flex flex-1 ${themeLayout === 'horizontal' && 'flex-col'}`}>
-            <aside style={{ flex: 'unset', borderBottom: themeLayout === ThemeLayout.Horizontal ? border : 'none' }}>
+          <main
+            className={`flex-start overflow-y-auto h-full w-full flex flex-1 ${themeLayout === 'horizontal' && 'flex-col'}`}
+          >
+            <aside
+              style={{
+                flex: 'unset',
+                borderBottom:
+                  themeLayout === ThemeLayout.Horizontal ? border : 'none',
+              }}
+            >
               {menu}
             </aside>
             <Content />
@@ -55,4 +61,4 @@ function BasicLayout(props: Props) {
   )
 }
 
-export default withWrapper(BasicLayout)
+export default BasicLayout

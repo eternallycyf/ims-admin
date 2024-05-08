@@ -128,7 +128,7 @@ export default function Header({ className = '' }: Props) {
         }}
         width="auto"
       >
-        <Menu collapsed={collapsed} themeLayout={themeLayout} closeSideBarDrawer={() => setSettings({ menuDrawOpen: false })} />
+        <Menu closeSideBarDrawer={() => setSettings({ menuDrawOpen: false })} />
       </Drawer>
     </>
   )

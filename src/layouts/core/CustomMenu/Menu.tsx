@@ -6,27 +6,34 @@ import type { CSSProperties } from 'react'
 import { useEffect, useState } from 'react'
 import { useLocation, useMatches, useNavigate } from 'react-router-dom'
 
-import _ from 'lodash'
 import { MENU_COLLAPSED_WIDTH, MENU_WIDTH } from '@/layouts/helpers/config'
 import { ScrollBar } from '@/components'
 import { menuFilter } from '@/router/utils'
 
 import { useThemeToken } from '@/hooks/theme'
-import { useFlattenedRoutes, usePermissionRoutes, useRouteToMenuFn } from '@/hooks/router'
+import {
+  useFlattenedRoutes,
+  usePermissionRoutes,
+  useRouteToMenuFn,
+} from '@/hooks/router'
 import { ThemeLayout } from '#/enum'
+import { useSettingActions, useSettings } from '@/store/settingStore'
 
 interface Props {
   closeSideBarDrawer?: () => void
-  themeLayout: `${ThemeLayout}`
-  collapsed: boolean
 }
 
 export default function Menu(props: Props) {
-  const { themeLayout, collapsed } = props
   const { colorBgElevated, colorBorder } = useThemeToken()
   const navigate = useNavigate()
   const matches = useMatches()
   const { pathname } = useLocation()
+
+  const settings = useSettings()
+  const { themeLayout } = settings
+  const { setSettings } = useSettingActions()
+
+  const { collapsed } = settings
 
   const menuStyle: CSSProperties = {
     background: colorBgElevated,
@@ -43,18 +50,16 @@ export default function Menu(props: Props) {
   const [openKeys, setOpenKeys] = useState<string[]>([])
   const [selectedKeys, setSelectedKeys] = useState<string[]>([])
   const [menuList, setMenuList] = useState<ItemType[]>([])
+  const [menuMode, setMenuMode] = useState<MenuProps['mode']>('inline')
 
   useEffect(() => {
     if (themeLayout === ThemeLayout.Vertical) {
-      const _openKeys = matches
+      const openKeys = matches
         .filter(match => match.pathname !== '/')
         .map(match => match.pathname)
-      if (!_.isEqual(_openKeys, openKeys))
-        setOpenKeys(_openKeys)
+      setOpenKeys(openKeys)
     }
-
-    if (pathname && pathname !== selectedKeys?.[0])
-      setSelectedKeys([pathname])
+    setSelectedKeys([pathname])
   }, [pathname, matches])
 
   useEffect(() => {
@@ -62,6 +67,17 @@ export default function Menu(props: Props) {
     const menus = routeToMenuFn(menuRoutes)
     setMenuList(menus)
   }, [permissionRoutes, routeToMenuFn])
+
+  useEffect(() => {
+    if (themeLayout === ThemeLayout.Vertical) {
+      setSettings({ collapsed: false })
+      setMenuMode('inline')
+    }
+    if (themeLayout === ThemeLayout.Mini) {
+      setSettings({ collapsed: true })
+      setMenuMode('inline')
+    }
+  }, [themeLayout])
 
   /**
    * events
@@ -100,7 +116,7 @@ export default function Menu(props: Props) {
       >
         {/* <!-- Sidebar Menu --> */}
         <AntdMenu
-          mode="inline"
+          mode={menuMode}
           items={menuList}
           className="h-full !border-none"
           defaultOpenKeys={openKeys}
