@@ -1,6 +1,6 @@
-import { faker } from '@faker-js/faker'
+import { faker } from '@faker-js/faker';
 
-import { BasicStatus, PermissionType } from '#/enum'
+import { BasicStatus, PermissionType } from '#/enum';
 
 /**
  * Organization data mock
@@ -13,9 +13,27 @@ export const ORG_LIST = [
     desc: faker.lorem.words(),
     order: 1,
     children: [
-      { id: '1-1', name: 'R&D Department', status: 'disable', desc: '', order: 1 },
-      { id: '1-2', name: 'Marketing Department', status: 'enable', desc: '', order: 2 },
-      { id: '1-3', name: 'Finance Department', status: 'enable', desc: '', order: 3 },
+      {
+        id: '1-1',
+        name: 'R&D Department',
+        status: 'disable',
+        desc: '',
+        order: 1,
+      },
+      {
+        id: '1-2',
+        name: 'Marketing Department',
+        status: 'enable',
+        desc: '',
+        order: 2,
+      },
+      {
+        id: '1-3',
+        name: 'Finance Department',
+        status: 'enable',
+        desc: '',
+        order: 3,
+      },
     ],
   },
   {
@@ -25,24 +43,30 @@ export const ORG_LIST = [
     desc: faker.lorem.words(),
     order: 2,
     children: [
-      { id: '2-1', name: 'R&D Department', status: 'disable', desc: '', order: 1 },
-      { id: '2-2', name: 'Marketing Department', status: 'enable', desc: '', order: 2 },
-      { id: '2-3', name: 'Finance Department', status: 'enable', desc: '', order: 3 },
+      {
+        id: '2-1',
+        name: 'R&D Department',
+        status: 'disable',
+        desc: '',
+        order: 1,
+      },
+      {
+        id: '2-2',
+        name: 'Marketing Department',
+        status: 'enable',
+        desc: '',
+        order: 2,
+      },
+      {
+        id: '2-3',
+        name: 'Finance Department',
+        status: 'enable',
+        desc: '',
+        order: 3,
+      },
     ],
   },
-  {
-    id: '3',
-    name: 'Northwest Branch',
-    status: 'enable',
-    desc: faker.lorem.words(),
-    order: 3,
-    children: [
-      { id: '3-1', name: 'R&D Department', status: 'disable', desc: '', order: 1 },
-      { id: '3-2', name: 'Marketing Department', status: 'enable', desc: '', order: 2 },
-      { id: '3-3', name: 'Finance Department', status: 'enable', desc: '', order: 3 },
-    ],
-  },
-]
+];
 
 /**
  * User permission mock
@@ -76,7 +100,7 @@ const DASHBOARD_PERMISSION = {
       component: '/dashboard/analysis/index.tsx',
     },
   ],
-}
+};
 const MANAGEMENT_PERMISSION = {
   id: '0901673425580518',
   parentId: '',
@@ -172,7 +196,7 @@ const MANAGEMENT_PERMISSION = {
       ],
     },
   ],
-}
+};
 const COMPONENTS_PERMISSION = {
   id: '2271615060673773',
   parentId: '',
@@ -256,7 +280,7 @@ const COMPONENTS_PERMISSION = {
       component: '/components/chart/index.tsx',
     },
   ],
-}
+};
 const FUNCTIONS_PERMISSION = {
   id: '8132044808088488',
   parentId: '',
@@ -277,7 +301,7 @@ const FUNCTIONS_PERMISSION = {
       component: '/functions/clipboard/index.tsx',
     },
   ],
-}
+};
 const MENU_LEVEL_PERMISSION = {
   id: '0194818428516575',
   parentId: '',
@@ -329,7 +353,8 @@ const MENU_LEVEL_PERMISSION = {
               name: 'Menu Level 3a',
               type: PermissionType.MENU,
               route: 'menu-level-3a',
-              component: '/menu-level/menu-level-1b/menu-level-2b/menu-level-3a/index.tsx',
+              component:
+                '/menu-level/menu-level-1b/menu-level-2b/menu-level-3a/index.tsx',
             },
             {
               id: '3298034742548454',
@@ -338,14 +363,15 @@ const MENU_LEVEL_PERMISSION = {
               name: 'Menu Level 3b',
               type: PermissionType.MENU,
               route: 'menu-level-3b',
-              component: '/menu-level/menu-level-1b/menu-level-2b/menu-level-3b/index.tsx',
+              component:
+                '/menu-level/menu-level-1b/menu-level-2b/menu-level-3b/index.tsx',
             },
           ],
         },
       ],
     },
   ],
-}
+};
 const ERRORS_PERMISSION = {
   id: '9406067785553476',
   parentId: '',
@@ -384,7 +410,7 @@ const ERRORS_PERMISSION = {
       component: '/sys/error/Page500.tsx',
     },
   ],
-}
+};
 const OTHERS_PERMISSION = [
   {
     id: '3981225257359246',
@@ -470,7 +496,7 @@ const OTHERS_PERMISSION = [
     route: 'blank',
     component: '/sys/others/blank.tsx',
   },
-]
+];
 
 export const PERMISSION_LIST = [
   DASHBOARD_PERMISSION,
@@ -480,7 +506,7 @@ export const PERMISSION_LIST = [
   MENU_LEVEL_PERMISSION,
   ERRORS_PERMISSION,
   ...OTHERS_PERMISSION,
-]
+];
 
 /**
  * User role mock
@@ -493,7 +519,7 @@ const ADMIN_ROLE = {
   order: 1,
   desc: 'Super Admin',
   permission: PERMISSION_LIST,
-}
+};
 const TEST_ROLE = {
   id: '9931665660771476',
   name: 'Test',
@@ -501,9 +527,13 @@ const TEST_ROLE = {
   status: BasicStatus.ENABLE,
   order: 2,
   desc: 'test',
-  permission: [DASHBOARD_PERMISSION, COMPONENTS_PERMISSION, FUNCTIONS_PERMISSION],
-}
-export const ROLE_LIST = [ADMIN_ROLE, TEST_ROLE]
+  permission: [
+    DASHBOARD_PERMISSION,
+    COMPONENTS_PERMISSION,
+    FUNCTIONS_PERMISSION,
+  ],
+};
+export const ROLE_LIST = [ADMIN_ROLE, TEST_ROLE];
 
 /**
  * User data mock
@@ -518,7 +548,7 @@ export const DEFAULT_USER = {
   password: 'demo1234',
   role: ADMIN_ROLE,
   permissions: ADMIN_ROLE.permission,
-}
+};
 export const TEST_USER = {
   id: 'efaa20ea-4dc5-47ee-a200-8a899be29494',
   username: 'test',
@@ -529,5 +559,5 @@ export const TEST_USER = {
   updatedAt: faker.date.recent(),
   role: TEST_ROLE,
   permissions: TEST_ROLE.permission,
-}
-export const USER_LIST = [DEFAULT_USER, TEST_USER]
+};
+export const USER_LIST = [DEFAULT_USER, TEST_USER];
