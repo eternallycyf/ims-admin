@@ -35,6 +35,7 @@ export default antfu({
     markdown: 'prettier',
   },
   ignores: [
+    'vite.config.ts.*',
     '*.sh',
     '**/*.sh/**',
     'node_modules',

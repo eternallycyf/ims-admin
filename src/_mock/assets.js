@@ -1,6 +1,6 @@
-import { faker } from '@faker-js/faker';
+import { faker } from '@faker-js/faker'
 
-import { BasicStatus, PermissionType } from '#/enum';
+import { BasicStatus, PermissionType } from '#/enum'
 
 /**
  * Organization data mock
@@ -66,7 +66,7 @@ export const ORG_LIST = [
       },
     ],
   },
-];
+]
 
 /**
  * User permission mock
@@ -100,7 +100,7 @@ const DASHBOARD_PERMISSION = {
       component: '/dashboard/analysis/index.tsx',
     },
   ],
-};
+}
 const MANAGEMENT_PERMISSION = {
   id: '0901673425580518',
   parentId: '',
@@ -196,7 +196,7 @@ const MANAGEMENT_PERMISSION = {
       ],
     },
   ],
-};
+}
 const COMPONENTS_PERMISSION = {
   id: '2271615060673773',
   parentId: '',
@@ -280,7 +280,7 @@ const COMPONENTS_PERMISSION = {
       component: '/components/chart/index.tsx',
     },
   ],
-};
+}
 const FUNCTIONS_PERMISSION = {
   id: '8132044808088488',
   parentId: '',
@@ -301,7 +301,7 @@ const FUNCTIONS_PERMISSION = {
       component: '/functions/clipboard/index.tsx',
     },
   ],
-};
+}
 const MENU_LEVEL_PERMISSION = {
   id: '0194818428516575',
   parentId: '',
@@ -371,7 +371,7 @@ const MENU_LEVEL_PERMISSION = {
       ],
     },
   ],
-};
+}
 const ERRORS_PERMISSION = {
   id: '9406067785553476',
   parentId: '',
@@ -410,7 +410,7 @@ const ERRORS_PERMISSION = {
       component: '/sys/error/Page500.tsx',
     },
   ],
-};
+}
 const OTHERS_PERMISSION = [
   {
     id: '3981225257359246',
@@ -496,7 +496,7 @@ const OTHERS_PERMISSION = [
     route: 'blank',
     component: '/sys/others/blank.tsx',
   },
-];
+]
 
 export const PERMISSION_LIST = [
   DASHBOARD_PERMISSION,
@@ -506,7 +506,7 @@ export const PERMISSION_LIST = [
   MENU_LEVEL_PERMISSION,
   ERRORS_PERMISSION,
   ...OTHERS_PERMISSION,
-];
+]
 
 /**
  * User role mock
@@ -519,7 +519,7 @@ const ADMIN_ROLE = {
   order: 1,
   desc: 'Super Admin',
   permission: PERMISSION_LIST,
-};
+}
 const TEST_ROLE = {
   id: '9931665660771476',
   name: 'Test',
@@ -532,8 +532,8 @@ const TEST_ROLE = {
     COMPONENTS_PERMISSION,
     FUNCTIONS_PERMISSION,
   ],
-};
-export const ROLE_LIST = [ADMIN_ROLE, TEST_ROLE];
+}
+export const ROLE_LIST = [ADMIN_ROLE, TEST_ROLE]
 
 /**
  * User data mock
@@ -542,22 +542,22 @@ export const DEFAULT_USER = {
   id: 'b34719e1-ce46-457e-9575-99505ecee828',
   username: 'admin',
   email: faker.internet.email(),
-  avatar: faker.image.avatarLegacy(),
+  avatar: faker.image.avatarGitHub(),
   createdAt: faker.date.anytime(),
   updatedAt: faker.date.recent(),
   password: 'demo1234',
   role: ADMIN_ROLE,
   permissions: ADMIN_ROLE.permission,
-};
+}
 export const TEST_USER = {
   id: 'efaa20ea-4dc5-47ee-a200-8a899be29494',
   username: 'test',
   password: 'demo1234',
   email: faker.internet.email(),
-  avatar: faker.image.avatarLegacy(),
+  avatar: faker.image.avatarGitHub(),
   createdAt: faker.date.anytime(),
   updatedAt: faker.date.recent(),
   role: TEST_ROLE,
   permissions: TEST_ROLE.permission,
-};
-export const USER_LIST = [DEFAULT_USER, TEST_USER];
+}
+export const USER_LIST = [DEFAULT_USER, TEST_USER]

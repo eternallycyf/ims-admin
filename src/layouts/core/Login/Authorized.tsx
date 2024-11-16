@@ -1,9 +1,10 @@
 import type React from 'react'
-import { useCallback, useEffect } from 'react'
+import { lazy, useCallback, useEffect } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
-import { PageError } from '@/layouts/core'
-import { useRouter } from '@/hooks/router'
 import { useUserToken } from '@/store/userStore'
+import { useRouter } from '@/hooks/router'
+
+const PageError = lazy(() => import('@/layouts/core/Error/PageError'))
 
 interface Props {
   children: React.ReactNode
@@ -22,5 +23,7 @@ export function Authorized({ children }: Props) {
     check()
   }, [check])
 
-  return <ErrorBoundary FallbackComponent={PageError}>{children}</ErrorBoundary>
+  return (
+    <ErrorBoundary FallbackComponent={PageError}>{children}</ErrorBoundary>
+  )
 }

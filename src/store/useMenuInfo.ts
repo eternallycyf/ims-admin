@@ -1,8 +1,12 @@
 import { create } from 'zustand'
 import type { ItemType } from 'antd/es/breadcrumb/Breadcrumb'
+import type { BreadcrumbProps } from 'antd/lib/breadcrumb'
+import type { GetProp } from 'antd'
 import { getItem, removeItem, setItem } from '@/utils/storage'
 import { StorageEnum } from '#/enum'
 import type { KeepAliveTab } from '@/hooks/router'
+
+export type MenuItem = GetProp<BreadcrumbProps, 'items'>[number]
 
 interface MenuRouteInfo {
   breadCrumbList: ItemType[]
@@ -36,5 +40,9 @@ const useMenuRouteInfo = create<UserMenuRouteInfo>((set, get) => ({
   },
 }))
 
-export const useMenuInfo = () => useMenuRouteInfo(state => state.menuRouteInfo)
-export const useMenuInfoActions = () => useMenuRouteInfo(state => state.actions)
+export function useMenuInfo() {
+  return useMenuRouteInfo(state => state.menuRouteInfo)
+}
+export function useMenuInfoActions() {
+  return useMenuRouteInfo(state => state.actions)
+}

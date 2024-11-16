@@ -16,13 +16,22 @@ function NoticeTab() {
   const tabChildren: ReactNode = (
     <div className="text-sm">
       <div className="flex">
-        <img className="h-10 w-10 rounded-full" src={faker.image.avatar()} alt="" />
+        <img
+          className="h-10 w-10 rounded-full"
+          src={faker.image.avatarGitHub()}
+          alt=""
+        />
         <div className="ml-2">
           <div>
             <span className="font-medium">{faker.person.fullName()}</span>
-            <span className="text-xs font-light"> sent you a frind request</span>
+            <span className="text-xs font-light">
+              {' '}
+              sent you a frind request
+            </span>
           </div>
-          <span className="text-xs font-light opacity-60">about 1 hour ago</span>
+          <span className="text-xs font-light opacity-60">
+            about 1 hour ago
+          </span>
           <div className="mt-2">
             <Space>
               <Button type="primary">Accept</Button>
@@ -33,7 +42,11 @@ function NoticeTab() {
       </div>
 
       <div className="mt-8 flex">
-        <img className="h-10 w-10 rounded-full" src={faker.image.avatar()} alt="" />
+        <img
+          className="h-10 w-10 rounded-full"
+          src={faker.image.avatarGitHub()}
+          alt=""
+        />
         <div className="ml-2">
           <div>
             <span className="font-medium">{faker.person.fullName()}</span>
@@ -62,12 +75,18 @@ function NoticeTab() {
       </div>
 
       <div className="mt-8 flex">
-        <img className="h-10 w-10 rounded-full" src={faker.image.avatar()} alt="" />
+        <img
+          className="h-10 w-10 rounded-full"
+          src={faker.image.avatarGitHub()}
+          alt=""
+        />
         <div className="ml-2">
           <div>
             <span className="font-medium">{faker.person.fullName()}</span>
             <span className="text-xs font-light"> mentioned you in</span>
-            <span className="font-medium">{import.meta.env.VITE_GLOB_APP_TITLE}</span>
+            <span className="font-medium">
+              {import.meta.env.VITE_GLOB_APP_TITLE}
+            </span>
           </div>
           <span className="text-xs font-light opacity-60">1 days ago</span>
           <div className="mt-2">
@@ -79,7 +98,11 @@ function NoticeTab() {
       </div>
 
       <div className="mt-8 flex">
-        <img className="h-10 w-10 rounded-full" src={faker.image.avatar()} alt="" />
+        <img
+          className="h-10 w-10 rounded-full"
+          src={faker.image.avatarGitHub()}
+          alt=""
+        />
         <div className="ml-2">
           <div>
             <span className="font-medium">{faker.person.fullName()}</span>
@@ -102,7 +125,11 @@ function NoticeTab() {
       </div>
 
       <div className="mt-8 flex">
-        <img className="h-10 w-10 rounded-full" src={faker.image.avatar()} alt="" />
+        <img
+          className="h-10 w-10 rounded-full"
+          src={faker.image.avatarGitHub()}
+          alt=""
+        />
         <div className="ml-2">
           <div>
             <span className="font-medium">{faker.person.fullName()}</span>
@@ -125,7 +152,9 @@ function NoticeTab() {
         </IconButton>
         <div className="ml-2">
           <div>
-            <span className="font-light">Your order is placed waiting for shipping</span>
+            <span className="font-light">
+              Your order is placed waiting for shipping
+            </span>
           </div>
           <span className="text-xs font-light opacity-60">4 days ago</span>
           {' '}
@@ -151,7 +180,9 @@ function NoticeTab() {
         </IconButton>
         <div className="ml-2">
           <div>
-            <span className="font-light">You have new message 5 unread message</span>
+            <span className="font-light">
+              You have new message 5 unread message
+            </span>
           </div>
           <span className="text-xs font-light opacity-60">7 days ago</span>
         </div>
@@ -163,7 +194,9 @@ function NoticeTab() {
         </IconButton>
         <div className="ml-2">
           <div>
-            <span className="font-light">Delivery processing your order is being shipped</span>
+            <span className="font-light">
+              Delivery processing your order is being shipped
+            </span>
           </div>
           <span className="text-xs font-light opacity-60">8 days ago</span>
           {' '}
