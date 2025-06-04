@@ -105,6 +105,7 @@
       "functions": "功能",
       "clipboard": "剪贴板",
       "token_expired": "Token失效",
+      "ims_view": "ims-view",
       "menulevel": {
         "index": "多级菜单",
         "1a": "多级菜单 1a",

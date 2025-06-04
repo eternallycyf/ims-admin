@@ -1,33 +1,35 @@
-import { Alert, Button, Checkbox, Col, Divider, Form, Input, Row } from 'antd';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Alert, Button, Checkbox, Col, Divider, Form, Input, Row } from 'antd'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { useLoginStateContext } from '@/Application';
-import { DEFAULT_USER, TEST_USER } from '@/_mock/assets';
-import { useSignIn } from '@/store/userStore';
-import type { SignInReq } from '@/api/services/userService';
-import { useThemeToken } from '@/hooks/theme';
-import ProTag from '@/theme/antd/tag';
-import { LoginStateEnum } from '#/enum';
+import { useLoginStateContext } from '@/Application'
+import { DEFAULT_USER, TEST_USER } from '@/_mock/assets'
+import { useSignIn } from '@/store/userStore'
+import type { SignInReq } from '@/api/services/userService'
+import { useThemeToken } from '@/hooks/theme'
+import ProTag from '@/theme/antd/tag'
+import { LoginStateEnum } from '#/enum'
 
 function LoginForm() {
-  const { t } = useTranslation();
-  const themeToken = useThemeToken();
-  const [loading, setLoading] = useState(false);
+  const { t } = useTranslation()
+  const themeToken = useThemeToken()
+  const [loading, setLoading] = useState(false)
 
-  const { loginState, setLoginState } = useLoginStateContext();
-  const signIn = useSignIn();
+  const { loginState, setLoginState } = useLoginStateContext()
+  const signIn = useSignIn()
 
-  if (loginState !== LoginStateEnum.LOGIN) return null;
+  if (loginState !== LoginStateEnum.LOGIN)
+    return null
 
   const handleFinish = async ({ username, password }: SignInReq) => {
-    setLoading(true);
+    setLoading(true)
     try {
-      await signIn({ username, password });
-    } finally {
-      setLoading(false);
+      await signIn({ username, password })
     }
-  };
+    finally {
+      setLoading(false)
+    }
+  }
   return (
     <>
       <div className="mb-4 text-2xl font-bold xl:text-3xl">
@@ -46,12 +48,13 @@ function LoginForm() {
         <div className="mb-4 flex flex-col">
           <Alert
             type="info"
-            description={
+            description={(
               <div className="flex flex-col">
                 <div className="flex">
                   <ProTag className="flex-shrink-0">
                     Admin
-                    {t('sys.login.userName')}:
+                    {t('sys.login.userName')}
+                    :
                   </ProTag>
                   <strong
                     className="ml-1"
@@ -64,7 +67,8 @@ function LoginForm() {
                 <div className="flex">
                   <ProTag className="flex-shrink-0">
                     Test
-                    {t('sys.login.userName')}:
+                    {t('sys.login.userName')}
+                    :
                   </ProTag>
                   <strong
                     className="ml-1"
@@ -76,7 +80,8 @@ function LoginForm() {
 
                 <div>
                   <ProTag className="flex-shrink-0">
-                    {t('sys.login.password')}:
+                    {t('sys.login.password')}
+                    :
                   </ProTag>
                   <strong
                     className="ml-1"
@@ -86,7 +91,7 @@ function LoginForm() {
                   </strong>
                 </div>
               </div>
-            }
+            )}
             showIcon
           />
         </div>
@@ -111,19 +116,21 @@ function LoginForm() {
           />
         </Form.Item>
         <Form.Item>
-          <Row>
+          <Row align="middle">
             <Col span={12}>
               <Form.Item name="remember" valuePropName="checked" noStyle>
                 <Checkbox>{t('sys.login.rememberMe')}</Checkbox>
               </Form.Item>
             </Col>
             <Col span={12} className="text-right">
-              <button
+              <Button
+                type="link"
                 className="!underline"
                 onClick={() => setLoginState(LoginStateEnum.RESET_PASSWORD)}
+                size="small"
               >
                 {t('sys.login.forgetPassword')}
-              </button>
+              </Button>
             </Col>
           </Row>
         </Form.Item>
@@ -175,7 +182,7 @@ function LoginForm() {
         </div>
       </Form>
     </>
-  );
+  )
 }
 
-export default LoginForm;
+export default LoginForm

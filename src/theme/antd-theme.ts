@@ -28,6 +28,8 @@ const customComponentConfig: ThemeConfig['components'] = {
     fontSize: 14,
     colorFillAlter: 'transparent',
     itemColor: 'rgb(145, 158, 171)',
+    motionDurationMid: '0.125s',
+    motionDurationSlow: '0.125s',
   },
 }
 
@@ -61,4 +63,9 @@ const themeModeToken: Record<'dark' | 'light', ThemeConfig> = {
   light: {},
 }
 
-export { customThemeTokenConfig, customComponentConfig, colorPrimarys, themeModeToken }
+export {
+  customThemeTokenConfig,
+  customComponentConfig,
+  colorPrimarys,
+  themeModeToken,
+}

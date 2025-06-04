@@ -7,6 +7,7 @@ interface ImportMetaEnv {
   readonly VITE_APP_BASE_API: '/api'
   readonly VITE_APP_HOMEPAGE: '/dashboard/workbench'
   readonly VITE_APP_ENV: 'development' | 'production'
+  readonly VITE_APP_BASE_PATH: '/'
 }
 
 interface ImportMeta {

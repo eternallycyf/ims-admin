@@ -1,19 +1,19 @@
-import { Agent } from 'node:https'
-import { resolve } from 'node:path'
-import react from '@vitejs/plugin-react'
-import { visualizer } from 'rollup-plugin-visualizer'
-import { defineConfig } from 'vite'
-import tsconfigPaths from 'vite-tsconfig-paths'
-import UnoCSS from 'unocss/vite'
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
-import { initGlobalLessVaribles } from './src/theme/initLessVar.js'
+// import { Agent } from 'node:https'
+import { resolve } from 'node:path';
+import react from '@vitejs/plugin-react';
+import { visualizer } from 'rollup-plugin-visualizer';
+import { defineConfig } from 'vite';
+import tsconfigPaths from 'vite-tsconfig-paths';
+import UnoCSS from 'unocss/vite';
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
+import { initGlobalLessVaribles } from './src/theme/initLessVar.js';
 
 export function generateModifyVars(): any {
   return {
     ...initGlobalLessVaribles,
     // reference:  Avoid repeated references
     hack: `true; @import (reference) "${resolve('src/style/config.less')}";`,
-  }
+  };
 }
 
 // https://vitejs.dev/config/
@@ -63,24 +63,24 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:8000',
         changeOrigin: true,
-        rewrite: path => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/api/, ''),
         // https://github.com/vitejs/vite/discussions/8998#discussioncomment-4408695
-        agent: new Agent({ keepAlive: true, keepAliveMsecs: 20000 }),
+        // agent: new Agent({ keepAlive: true, keepAliveMsecs: 20000 }),
       },
       '/file': {
         target: 'http://localhost:9000',
         changeOrigin: true,
-        rewrite: path => path.replace(/^\/file/, ''),
+        rewrite: (path) => path.replace(/^\/file/, ''),
         // https://github.com/vitejs/vite/discussions/8998#discussioncomment-4408695
-        agent: new Agent({ keepAlive: true, keepAliveMsecs: 20000 }),
+        // agent: new Agent({ keepAlive: true, keepAliveMsecs: 20000 }),
       },
       '/ws': {
         target: 'ws://localhost:7000',
         changeOrigin: true,
         ws: true,
-        rewrite: path => path.replace(/^\/ws/, ''),
+        rewrite: (path) => path.replace(/^\/ws/, ''),
         // https://github.com/vitejs/vite/discussions/8998#discussioncomment-4408695
-        agent: new Agent({ keepAlive: true, keepAliveMsecs: 20000 }),
+        // agent: new Agent({ keepAlive: true, keepAliveMsecs: 20000 }),
       },
     },
   },
@@ -111,4 +111,4 @@ export default defineConfig({
       },
     },
   },
-})
+});
