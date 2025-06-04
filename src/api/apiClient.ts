@@ -1,10 +1,9 @@
 import { message as Message } from 'antd'
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import axios from 'axios'
-import { isEmpty } from 'lodash'
 
 import { t } from '@/locales/i18n'
-
+import userStore from '@/store/userStore'
 import type { Result } from '#/api'
 import { ResultEnum } from '#/enum'
 
@@ -36,7 +35,8 @@ axiosInstance.interceptors.response.use(
 
     const { status, data, message } = res.data
     // 业务请求成功
-    const hasSuccess = data && Reflect.has(res.data, 'status') && status === ResultEnum.SUCCESS
+    const hasSuccess
+      = data && Reflect.has(res.data, 'status') && status === ResultEnum.SUCCESS
     if (hasSuccess)
       return data
 
@@ -45,20 +45,15 @@ axiosInstance.interceptors.response.use(
   },
   (error: AxiosError<Result>) => {
     const { response, message } = error || {}
-    let errMsg = ''
-    try {
-      errMsg = response?.data?.message || message
-    }
-    catch (error) {
-      throw new Error(error as unknown as string)
-    }
-    // 对响应错误做点什么
-    if (isEmpty(errMsg)) {
-      // checkStatus
-      // errMsg = checkStatus(response.data.status);
-      errMsg = t('sys.api.errorMessage')
-    }
+    const errMsg
+      = response?.data?.message || message || t('sys.api.errorMessage')
+
     Message.error(errMsg)
+
+    const status = response?.status
+    if (status === 401)
+      userStore.getState().actions.clearUserInfoAndToken()
+
     return Promise.reject(error)
   },
 )

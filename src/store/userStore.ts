@@ -1,6 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
 import { App } from 'antd'
-import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { create } from 'zustand'
@@ -94,14 +93,9 @@ export function useSignIn() {
         duration: 3,
       })
     }
-    finally {
-      notification.success({
-        message: t('sys.login.loginSuccessTitle'),
-        description: `${t('sys.login.loginSuccessDesc')}: ${data.username}`,
-        duration: 3,
-      })
-    }
   }
 
-  return useCallback(signIn, [])
+  return signIn
 }
+
+export default useUserStore
