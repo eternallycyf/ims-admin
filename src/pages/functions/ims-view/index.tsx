@@ -20,25 +20,25 @@ function Demo() {
   const {
     ActionRef,
     FormRef,
-    setLoading,
+    // setLoading,
     loading,
     searchParams,
     setSearchParams,
     handleSearch,
     handleSelect,
-    handleClearSelected,
+    // handleClearSelected,
     selectedRows,
     selectedRowKeys,
     expandedRowKeys,
     handleExpand,
-    handleRefreshPage,
+    // handleRefreshPage,
     handleDynamicParams,
   } = useBaseComponent<Record, ExtraSearchParams, SearchesValues, RestParams>({
     expandKeys: rowKey,
-    onSelect(selectRowKeys, selectedRows) {
+    onSelect() {
       // console.log(selectRowKeys, selectedRows);
     },
-    onExpand(expanded, record) {
+    onExpand() {
       // console.log(expanded, record);
     },
   })
@@ -71,7 +71,7 @@ function Demo() {
         selectType="checkbox"
         onSelect={handleSelect}
         pagination={{ defaultPageSize: 30 }}
-        onRow={(record, index) => {
+        onRow={() => {
           return {
             onClick: () => {
               // console.log(record, index);
@@ -80,8 +80,8 @@ function Demo() {
         }}
         expandable={{
           expandedRowKeys,
-          expandedRowRender: (record, index) => <div>1</div>,
-          rowExpandable: (record) => {
+          expandedRowRender: () => <div>1</div>,
+          rowExpandable: () => {
             return true
           },
           onExpand: handleExpand,
@@ -190,7 +190,7 @@ function Demo() {
             ),
           },
         ]}
-        itemButton={(text, record, index) => [
+        itemButton={() => [
           {
             type: 'default',
             buttonType: 'link',
@@ -212,7 +212,7 @@ function Demo() {
             },
           },
         ]}
-        dataHandler={(data, dataSource) => {
+        dataHandler={(data) => {
           return data?.map((item, index) => ({
             ...item,
             index: index + 1,
