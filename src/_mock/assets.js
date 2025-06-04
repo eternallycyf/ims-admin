@@ -309,15 +309,6 @@ const FUNCTIONS_PERMISSION = {
       route: 'token-expired',
       component: '/functions/token-expired/index.tsx',
     },
-    {
-      id: '3667930780705752',
-      parentId: '8132044808088488',
-      label: 'sys.menu.ims_view',
-      name: 'ims-view',
-      type: PermissionType.MENU,
-      route: 'ims-view',
-      component: '/functions/ims-view/index.tsx',
-    },
   ],
 }
 const MENU_LEVEL_PERMISSION = {
