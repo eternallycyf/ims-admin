@@ -27,7 +27,9 @@ export default function BackgroundView() {
       selectedVariant: 'kenburnsTop',
     }
   }, [])
-  const [selectedVariant, setSelectedVariant] = useState(defaultValue.selectedVariant)
+  const [selectedVariant, setSelectedVariant] = useState(
+    defaultValue.selectedVariant,
+  )
 
   const onRefresh = () => {
     setSelectedVariant(defaultValue.selectedVariant)
@@ -35,15 +37,15 @@ export default function BackgroundView() {
   return (
     <Card>
       <Row>
-        <Col xs={24} md={18}>
+        <Col xs={24} md="18">
           <Toolbar onRefresh={onRefresh} />
         </Col>
       </Row>
       <Row justify="space-between">
-        <Col xs={24} md={18}>
+        <Col xs={24} md="18">
           <ContainerView variant={selectedVariant} />
         </Col>
-        <Col xs={24} md={5}>
+        <Col xs={24} md="5">
           <ControlPanel
             variantKey={variantKey}
             selectedVariant={selectedVariant}

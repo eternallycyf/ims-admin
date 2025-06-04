@@ -14,7 +14,8 @@ export default function ClipboardPage() {
 
   const textOnClick = faker.lorem.paragraphs({ min: 3, max: 5 })
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value)
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setValue(e.target.value)
   const CopyButton = (
     <Tooltip title="Copy">
       <IconButton className="text-gray" onClick={() => copyFn(value)}>
@@ -25,13 +26,15 @@ export default function ClipboardPage() {
   return (
     <Card>
       <Row gutter={[16, 16]}>
-        <Col span={24} md={12}>
+        <Col span="24" md="12">
           <Typography.Title level={5}>ON CHANGE</Typography.Title>
           <Input suffix={CopyButton} value={value} onChange={handleChange} />
         </Col>
-        <Col span={24} md={12}>
+        <Col span="24" md="12">
           <Typography.Title level={5}>ON DOUBLE CLICK</Typography.Title>
-          <Typography onDoubleClick={() => copyFn(textOnClick)}>{textOnClick}</Typography>
+          <Typography onDoubleClick={() => copyFn(textOnClick)}>
+            {textOnClick}
+          </Typography>
         </Col>
       </Row>
     </Card>

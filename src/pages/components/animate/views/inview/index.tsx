@@ -21,7 +21,13 @@ const variantKey = [
   },
   {
     type: 'fade out',
-    values: ['fadeOut', 'fadeOutUp', 'fadeOutDown', 'fadeOutLeft', 'fadeOutRight'],
+    values: [
+      'fadeOut',
+      'fadeOutUp',
+      'fadeOutDown',
+      'fadeOutLeft',
+      'fadeOutRight',
+    ],
   },
   {
     type: 'zoom in',
@@ -29,15 +35,33 @@ const variantKey = [
   },
   {
     type: 'zoom out',
-    values: ['zoomOut', 'zoomOutUp', 'zoomOutDown', 'zoomOutLeft', 'zoomOutRight'],
+    values: [
+      'zoomOut',
+      'zoomOutUp',
+      'zoomOutDown',
+      'zoomOutLeft',
+      'zoomOutRight',
+    ],
   },
   {
     type: 'bounce in',
-    values: ['bounceIn', 'bounceInUp', 'bounceInDown', 'bounceInLeft', 'bounceInRight'],
+    values: [
+      'bounceIn',
+      'bounceInUp',
+      'bounceInDown',
+      'bounceInLeft',
+      'bounceInRight',
+    ],
   },
   {
     type: 'bounce out',
-    values: ['bounceOut', 'bounceOutUp', 'bounceOutDown', 'bounceOutLeft', 'bounceOutRight'],
+    values: [
+      'bounceOut',
+      'bounceOutUp',
+      'bounceOutDown',
+      'bounceOutLeft',
+      'bounceOutRight',
+    ],
   },
   {
     type: 'flip in',
@@ -77,7 +101,9 @@ export default function Inview() {
   const [isText, setIsText] = useState(defaultValue.isText)
   const [isMulti, setIsMulti] = useState(defaultValue.isMulti)
 
-  const [selectedVariant, setSelectedVariant] = useState(defaultValue.selectedVariant)
+  const [selectedVariant, setSelectedVariant] = useState(
+    defaultValue.selectedVariant,
+  )
 
   const onRefresh = () => {
     setIsText(defaultValue.isText)
@@ -88,7 +114,7 @@ export default function Inview() {
   return (
     <Card>
       <Row>
-        <Col xs={24} md={18}>
+        <Col xs={24} md="18">
           <Toolbar
             isText={isText}
             onChnageText={() => setIsText(!isText)}
@@ -99,10 +125,14 @@ export default function Inview() {
         </Col>
       </Row>
       <Row justify="space-between">
-        <Col xs={24} md={18}>
-          <ContainerView variant={selectedVariant} isText={isText} isMulti={isMulti} />
+        <Col xs={24} md="18">
+          <ContainerView
+            variant={selectedVariant}
+            isText={isText}
+            isMulti={isMulti}
+          />
         </Col>
-        <Col xs={24} md={5}>
+        <Col xs={24} md="5">
           <ControlPanel
             variantKey={variantKey}
             selectedVariant={selectedVariant}

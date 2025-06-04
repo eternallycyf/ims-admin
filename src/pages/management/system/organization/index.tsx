@@ -29,21 +29,22 @@ type SearchFormFieldType = Pick<Organization, 'name' | 'status'>
 export default function OrganizationPage() {
   const [searchForm] = Form.useForm()
 
-  const [organizationModalPros, setOrganizationModalProps] = useState<OrganizationModalProps>({
-    formValue: {
-      id: '',
-      name: '',
-      status: 'enable',
-    },
-    title: 'New',
-    show: false,
-    onOk: () => {
-      setOrganizationModalProps(prev => ({ ...prev, show: false }))
-    },
-    onCancel: () => {
-      setOrganizationModalProps(prev => ({ ...prev, show: false }))
-    },
-  })
+  const [organizationModalPros, setOrganizationModalProps]
+    = useState<OrganizationModalProps>({
+      formValue: {
+        id: '',
+        name: '',
+        status: 'enable',
+      },
+      title: 'New',
+      show: false,
+      onOk: () => {
+        setOrganizationModalProps(prev => ({ ...prev, show: false }))
+      },
+      onCancel: () => {
+        setOrganizationModalProps(prev => ({ ...prev, show: false }))
+      },
+    })
 
   const onEdit = (formValue: Organization) => {
     setOrganizationModalProps(prev => ({
@@ -63,7 +64,9 @@ export default function OrganizationPage() {
       align: 'center',
       width: 120,
       render: status => (
-        <ProTag color={status === 'enable' ? 'success' : 'error'}>{status}</ProTag>
+        <ProTag color={status === 'enable' ? 'success' : 'error'}>
+          {status}
+        </ProTag>
       ),
     },
     { title: 'Desc', dataIndex: 'desc', align: 'center', width: 300 },
@@ -77,9 +80,18 @@ export default function OrganizationPage() {
           <IconButton onClick={() => onEdit(record)}>
             <IconifyIcon icon="solar:pen-bold-duotone" size={18} />
           </IconButton>
-          <Popconfirm title="Delete the Organization" okText="Yes" cancelText="No" placement="left">
+          <Popconfirm
+            title="Delete the Organization"
+            okText="Yes"
+            cancelText="No"
+            placement="left"
+          >
             <IconButton>
-              <IconifyIcon icon="mingcute:delete-2-fill" size={18} className="text-error" />
+              <IconifyIcon
+                icon="mingcute:delete-2-fill"
+                size={18}
+                className="text-error"
+              />
             </IconButton>
           </Popconfirm>
         </div>
@@ -88,9 +100,7 @@ export default function OrganizationPage() {
   ]
 
   // rowSelection objects indicates the need for row selection
-  const rowSelection: TableRowSelection<Organization> = {
-
-  }
+  const rowSelection: TableRowSelection<Organization> = {}
 
   const { data } = useQuery({
     queryKey: ['orgs'],
@@ -122,13 +132,21 @@ export default function OrganizationPage() {
       <Card>
         <Form form={searchForm}>
           <Row gutter={[16, 16]}>
-            <Col span={24} lg={6}>
-              <Form.Item<SearchFormFieldType> label="Name" name="name" className="!mb-0">
+            <Col span="24" lg="6">
+              <Form.Item<SearchFormFieldType>
+                label="Name"
+                name="name"
+                className="!mb-0"
+              >
                 <Input />
               </Form.Item>
             </Col>
-            <Col span={24} lg={6}>
-              <Form.Item<SearchFormFieldType> label="Status" name="status" className="!mb-0">
+            <Col span="24" lg="6">
+              <Form.Item<SearchFormFieldType>
+                label="Status"
+                name="status"
+                className="!mb-0"
+              >
                 <Select>
                   <Select.Option value="enable">
                     <ProTag color="success">Enable</ProTag>
@@ -139,7 +157,7 @@ export default function OrganizationPage() {
                 </Select>
               </Form.Item>
             </Col>
-            <Col span={24} lg={12}>
+            <Col span="24" lg="12">
               <div className="flex justify-end">
                 <Button onClick={onSearchFormReset}>Reset</Button>
                 <Button type="primary" className="ml-4">
@@ -183,7 +201,13 @@ interface OrganizationModalProps {
   onCancel: VoidFunction
 }
 
-function OrganizationModal({ title, show, formValue, onOk, onCancel }: OrganizationModalProps) {
+function OrganizationModal({
+  title,
+  show,
+  formValue,
+  onOk,
+  onCancel,
+}: OrganizationModalProps) {
   const [form] = Form.useForm()
   useEffect(() => {
     form.setFieldsValue({ ...formValue })
