@@ -1,19 +1,19 @@
 // import { Agent } from 'node:https'
-import { resolve } from 'node:path';
-import react from '@vitejs/plugin-react';
-import { visualizer } from 'rollup-plugin-visualizer';
-import { defineConfig } from 'vite';
-import tsconfigPaths from 'vite-tsconfig-paths';
-import UnoCSS from 'unocss/vite';
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
-import { initGlobalLessVaribles } from './src/theme/initLessVar.js';
+import { resolve } from 'node:path'
+import react from '@vitejs/plugin-react'
+import { visualizer } from 'rollup-plugin-visualizer'
+import { defineConfig } from 'vite'
+import tsconfigPaths from 'vite-tsconfig-paths'
+import UnoCSS from 'unocss/vite'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import { initGlobalLessVaribles } from './src/theme/initLessVar.js'
 
 export function generateModifyVars(): any {
   return {
     ...initGlobalLessVaribles,
     // reference:  Avoid repeated references
     hack: `true; @import (reference) "${resolve('src/style/config.less')}";`,
-  };
+  }
 }
 
 // https://vitejs.dev/config/
@@ -53,6 +53,22 @@ export default defineConfig({
       gzipSize: true,
       brotliSize: true,
     }),
+    // 处理 ims-view-pc 包中的导入问题
+    {
+      name: 'fix-ims-view-pc-imports',
+      resolveId(id) {
+        if (id.includes('ims-view-pc') && id.includes('iconfont.js'))
+          return id
+
+        return null
+      },
+      load(id) {
+        if (id.includes('ims-view-pc') && id.includes('iconfont.js'))
+          return 'export default {};'
+
+        return null
+      },
+    },
   ],
   server: {
     // 自动打开浏览器
@@ -63,14 +79,14 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:8000',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        rewrite: path => path.replace(/^\/api/, ''),
         // https://github.com/vitejs/vite/discussions/8998#discussioncomment-4408695
         // agent: new Agent({ keepAlive: true, keepAliveMsecs: 20000 }),
       },
       '/file': {
         target: 'http://localhost:9000',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/file/, ''),
+        rewrite: path => path.replace(/^\/file/, ''),
         // https://github.com/vitejs/vite/discussions/8998#discussioncomment-4408695
         // agent: new Agent({ keepAlive: true, keepAliveMsecs: 20000 }),
       },
@@ -78,7 +94,7 @@ export default defineConfig({
         target: 'ws://localhost:7000',
         changeOrigin: true,
         ws: true,
-        rewrite: (path) => path.replace(/^\/ws/, ''),
+        rewrite: path => path.replace(/^\/ws/, ''),
         // https://github.com/vitejs/vite/discussions/8998#discussioncomment-4408695
         // agent: new Agent({ keepAlive: true, keepAliveMsecs: 20000 }),
       },
@@ -89,11 +105,12 @@ export default defineConfig({
   },
   build: {
     target: 'esnext',
-    minify: 'esbuild',
+    minify: 'terser',
     sourcemap: false,
     cssCodeSplit: true,
     chunkSizeWarningLimit: 1000, // 提高警告阈值到 1000 KB
     rollupOptions: {
+      external: [],
       output: {
         manualChunks: {
           'vendor-react': ['react', 'react-dom', 'react-router-dom'],
@@ -101,6 +118,18 @@ export default defineConfig({
           'vendor-utils': ['axios', 'dayjs', 'i18next', 'zustand'],
           'vendor-ui': ['framer-motion', 'styled-components', '@iconify/react'],
         },
+      },
+      onwarn(warning, warn) {
+        // 忽略关于模块没有默认导出的警告
+        if (warning.code === 'MODULE_LEVEL_DIRECTIVE')
+          return
+
+        // 忽略关于THIS_IS_UNDEFINED的警告
+        if (warning.code === 'THIS_IS_UNDEFINED')
+          return
+
+        // 其他警告正常显示
+        warn(warning)
       },
     },
     terserOptions: {
@@ -111,4 +140,4 @@ export default defineConfig({
       },
     },
   },
-});
+})
